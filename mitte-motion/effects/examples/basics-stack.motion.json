@@ -1,0 +1,16 @@
+{ "motion": 1,
+  "comps": { "main": { "size": [1280, 720], "fps": 30, "duration": 3, "background": "#0B0B0F",
+    "layers": [
+      { "id": "title", "type": "text", "text": "EFFECTS", "origin": "center", "position": [640, 360],
+        "style": { "font": "Inter", "weight": 800, "size": 160, "fill": "#F7F3E8" },
+        "masks": [ { "id": "left", "shape": "ellipse", "mode": "none", "size": [500, 500] } ],
+        "effects": [
+          { "id": "soft", "type": "blur.gaussian", "params": { "radius": { "keys": [ { "t": 0, "v": 40, "ease": "expo.out" }, { "t": 0.8, "v": 0 } ] } } },
+          { "id": "glow", "type": "light.glow",
+            "params": { "threshold": 0.6, "radius": 90, "tint": "#FFB347",
+                        "intensity": { "keys": [ { "t": 0.4, "v": 0 }, { "t": 1.2, "v": 1.4 } ] } } },
+          { "id": "tint", "type": "color.tint", "params": { "black": "#1B1F3B", "white": "#7CF2FF", "amount": 100 },
+            "mask": { "masks": ["left"], "feather": 12 }, "blend": { "mode": "normal", "amount": 70 } },
+          { "id": "grain", "type": "stylize.grain", "params": { "amount": 20, "size": 1.2, "preset": "kodak5219" } }
+        ] }
+    ] } } }

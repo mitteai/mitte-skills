@@ -1,0 +1,92 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Theme: a brand kit data asset between the library theme and the override",
+    "x-skills": {
+      "note": "01-theme-brand-kit.assets.json maps the brandKit asset to the local brand-kit.json so the check runs offline; on the service the https URL is fetched."
+    }
+  },
+  "assets": {
+    "brandKit": {
+      "src": "https://media.mitte.ai/u/p0/brand-kit.json",
+      "type": "data"
+    }
+  },
+  "theme": {
+    "use": "mitte/clean@1",
+    "brand": {
+      "asset": "brandKit"
+    },
+    "override": {
+      "color": {
+        "muted": "#5B6472"
+      }
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 4,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "title",
+          "type": "text",
+          "text": "Quarterly review",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.5",
+            "fill": "$theme.color.accent"
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "46%"
+          ]
+        },
+        {
+          "id": "sub",
+          "type": "text",
+          "text": "Kit colors and fonts, override muted",
+          "style": {
+            "font": "$theme.font.body",
+            "size": "$theme.type.size.0",
+            "fill": "$theme.color.muted"
+          },
+          "origin": "top",
+          "align": {
+            "to": "title",
+            "y": "below",
+            "gap": "$theme.space.3",
+            "x": "center"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "target": "title",
+          "preset": "rise",
+          "at": 0.2
+        },
+        {
+          "target": "sub",
+          "preset": "fadeIn",
+          "at": "<0.3"
+        },
+        {
+          "target": [
+            "title",
+            "sub"
+          ],
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 3.4
+        }
+      ]
+    }
+  }
+}

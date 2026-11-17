@@ -1,0 +1,49 @@
+{
+ "motion": 1,
+ "comps": {
+  "main": {
+   "size": [
+    960,
+    540
+   ],
+   "fps": 30,
+   "duration": 3,
+   "background": "#101418",
+   "layers": [
+    {
+     "id": "target",
+     "type": "solid",
+     "color": "#1C2230",
+     "effects": [
+      {
+       "id": "fx",
+       "type": "utility.shader",
+       "params": {
+        "code": "fn hash(p: vec2f) -> f32 {\n  return fract(sin(dot(p, vec2f(127.1, 311.7))) * 43758.5453);\n}\nfn vnoise(p: vec2f) -> f32 {\n  let i = floor(p);\n  let f = fract(p);\n  let u = f * f * (3.0 - 2.0 * f);\n  let a = hash(i);\n  let b = hash(i + vec2f(1.0, 0.0));\n  let c = hash(i + vec2f(0.0, 1.0));\n  let d = hash(i + vec2f(1.0, 1.0));\n  return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);\n}\nfn effect(uv: vec2f, t: f32) -> vec4f {\n  let p = uv * vec2f(rexx.size.x / rexx.size.y, 1.0) * params.scale + vec2f(t * params.drift, 0.0);\n  var v = 0.0;\n  var amp = 0.5;\n  var q = p;\n  // four octaves of fractional Brownian motion: a constant-bounded loop\n  for (var i = 0; i < 4; i++) {\n    v += amp * vnoise(q + vec2f(0.0, t * 0.3));\n    q *= 2.0;\n    amp *= 0.5;\n  }\n  let col = mix(params.dark.rgb, params.light.rgb, v);\n  return vec4f(col, 1.0);  // an opaque generator: straight == premultiplied at alpha 1\n}",
+        "params": {
+         "scale": {
+          "type": "float",
+          "default": 4
+         },
+         "drift": {
+          "type": "float",
+          "default": 0.4
+         },
+         "dark": {
+          "type": "color",
+          "default": "#14213D"
+         },
+         "light": {
+          "type": "color",
+          "default": "#2EC4B6"
+         }
+        },
+        "inputs": []
+       }
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

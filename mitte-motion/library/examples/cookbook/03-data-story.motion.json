@@ -1,0 +1,258 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 03: data story: title, bar chart from data, three KPIs, takeaway, scenes with library transitions",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.missing_exit",
+        "lint.motion_blur_off_fast_motion",
+        "lint.offscreen_while_visible"
+      ],
+      "note": "Scenes end on transitions by design. The built-in push and transition.shape move scenes and sweeps fast by design; the sweeps start offscreen."
+    }
+  },
+  "theme": {
+    "use": "mitte/clean@1"
+  },
+  "data": {
+    "rows": [
+      {
+        "label": "Jan",
+        "value": 12
+      },
+      {
+        "label": "Feb",
+        "value": 19
+      },
+      {
+        "label": "Mar",
+        "value": 24
+      },
+      {
+        "label": "Apr",
+        "value": 21
+      },
+      {
+        "label": "May",
+        "value": 33
+      },
+      {
+        "label": "Jun",
+        "value": 41
+      }
+    ],
+    "kpis": [
+      {
+        "value": 41,
+        "suffix": "K",
+        "label": "Signups in June"
+      },
+      {
+        "value": 98,
+        "suffix": "%",
+        "label": "Uptime"
+      },
+      {
+        "value": 140,
+        "suffix": "+",
+        "label": "Countries"
+      }
+    ]
+  },
+  "comps": {
+    "intro": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 3,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "t",
+          "type": "component",
+          "use": "mitte/title.card@1",
+          "in": 0.2,
+          "props": {
+            "kicker": "H1 2027",
+            "headline": "Signups doubled",
+            "subline": "Monthly signups, thousands",
+            "hold": 1.5
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        }
+      ]
+    },
+    "chart": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 7,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "title",
+          "type": "text",
+          "text": "Signups, H1 2027 (thousands)",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.2",
+            "fill": "$theme.color.fg"
+          },
+          "align": {
+            "to": "safe",
+            "x": "left",
+            "y": "top"
+          }
+        },
+        {
+          "id": "chart",
+          "type": "component",
+          "use": "mitte/chart.bar@1",
+          "in": 0.4,
+          "props": {
+            "series": "$data.rows",
+            "max": 45,
+            "highlight": "Jun",
+            "hold": 3
+          },
+          "origin": "bottom",
+          "align": {
+            "to": "safe",
+            "x": "center",
+            "y": "bottom"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "target": "title",
+          "preset": "rise",
+          "at": 0.1
+        }
+      ]
+    },
+    "kpis": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 5,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "row",
+          "type": "component",
+          "use": "mitte/stat.row@1",
+          "in": 0.2,
+          "props": {
+            "stats": "$data.kpis",
+            "hold": 2.6
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        }
+      ]
+    },
+    "outro": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 3,
+      "background": "$theme.color.accent",
+      "layers": [
+        {
+          "id": "t",
+          "type": "text",
+          "text": "Ship faster.",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.6",
+            "fill": "$theme.color.accent.on"
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "t/words",
+          "preset": "rise",
+          "stagger": 0.1,
+          "at": 0.2
+        },
+        {
+          "target": "t",
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 2.5
+        }
+      ]
+    },
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": "auto",
+      "scenes": [
+        {
+          "comp": "intro",
+          "dur": 3
+        },
+        {
+          "transition": {
+            "type": "mitte/transition.wipe@1",
+            "dur": 0.7,
+            "props": {
+              "angle": 100
+            }
+          }
+        },
+        {
+          "comp": "chart",
+          "dur": 7
+        },
+        {
+          "transition": {
+            "type": "push",
+            "dir": "up",
+            "dur": 0.5
+          }
+        },
+        {
+          "comp": "kpis",
+          "dur": 5
+        },
+        {
+          "transition": {
+            "type": "mitte/transition.shape@1",
+            "dur": 0.8
+          }
+        },
+        {
+          "comp": "outro",
+          "dur": 3
+        }
+      ],
+      "layers": []
+    }
+  }
+}

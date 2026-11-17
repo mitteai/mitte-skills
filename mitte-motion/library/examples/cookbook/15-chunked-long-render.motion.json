@@ -1,0 +1,187 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 15: a 150 s piece (looping grid background with a long credits crawl) that the service chunks across workers; renders byte-identically in one process or in chunks",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.crawl_duration_mismatch",
+        "lint.text_outside_safe_area",
+        "lint.offscreen_while_visible"
+      ],
+      "note": "The crawl sheet is taller than the frame; the whole-pixel speed changes the requested length slightly."
+    }
+  },
+  "theme": {
+    "use": "mitte/mono@1"
+  },
+  "data": {
+    "sections": [
+      {
+        "kind": "card",
+        "role": "Directed by",
+        "names": [
+          "Ana Ruiz"
+        ]
+      },
+      {
+        "kind": "card",
+        "role": "Produced by",
+        "names": [
+          "Ida Park",
+          "Noa Weiss"
+        ],
+        "join": "and"
+      },
+      {
+        "kind": "heading",
+        "text": "Cast"
+      },
+      {
+        "kind": "pairs",
+        "rows": [
+          {
+            "role": "Mara",
+            "names": [
+              "Lena Holt"
+            ]
+          },
+          {
+            "role": "Joe",
+            "names": [
+              "Sam Li"
+            ]
+          },
+          {
+            "role": "Fisherman",
+            "names": [
+              "Diego McAllister"
+            ]
+          },
+          {
+            "role": "The Mayor",
+            "names": [
+              "Ola Nowak"
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Crew"
+      },
+      {
+        "kind": "pairs",
+        "rows": [
+          {
+            "role": "Director of Photography",
+            "names": [
+              "Ida Park"
+            ]
+          },
+          {
+            "role": "Editor",
+            "names": [
+              "Noa Weiss"
+            ]
+          },
+          {
+            "role": "Sound",
+            "names": [
+              "Kai Berg"
+            ]
+          },
+          {
+            "role": "Colour",
+            "names": [
+              "Mia Lund"
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "grid",
+        "title": "Visual Effects",
+        "names": [
+          "A. One",
+          "B. Two",
+          "C. Three",
+          "D. Four",
+          "E. Five",
+          "F. Six",
+          "G. Seven",
+          "H. Eight"
+        ],
+        "columns": 0
+      },
+      {
+        "kind": "list",
+        "title": "Special Thanks",
+        "names": [
+          "The people of Alfama",
+          "Café Central",
+          "North Light Fund"
+        ]
+      },
+      {
+        "kind": "song",
+        "title": "Night Drive",
+        "lines": [
+          "Written by K. Moss",
+          "Performed by The Vales"
+        ]
+      },
+      {
+        "kind": "text",
+        "text": "Filmed on location in Lisbon, Portugal."
+      },
+      {
+        "kind": "legal",
+        "text": "© 2027 North Light Films. All Rights Reserved."
+      }
+    ]
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 24,
+      "duration": 150,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "grid",
+          "type": "component",
+          "use": "mitte/bg.grid@1",
+          "in": 0,
+          "out": 150,
+          "props": {
+            "cell": 120,
+            "speed": 10,
+            "glow": 10
+          }
+        },
+        {
+          "id": "roll",
+          "type": "component",
+          "use": "mitte/credits.crawl@1",
+          "in": 2,
+          "out": 148,
+          "props": {
+            "sections": "$data.sections",
+            "duration": 140,
+            "font": "$theme.font.mono",
+            "size": 30,
+            "width": "70%"
+          }
+        }
+      ]
+    }
+  },
+  "output": {
+    "format": "mp4",
+    "codec": "h264",
+    "quality": "high"
+  }
+}

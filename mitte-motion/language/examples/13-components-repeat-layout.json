@@ -1,0 +1,80 @@
+{
+  "motion": 1,
+  "meta": { "title": "Components with every param type, slots, enabled templates, repeat, every layout" },
+  "assets": { "mark": { "src": "library:mitte/demo/logo@1", "type": "svg" } },
+  "data": { "rows": [ { "label": "Alpha", "value": 42 }, { "label": "Beta", "value": 68 }, { "label": "Gamma", "value": 25 } ],
+            "grid": [ [1, 2, 3], [4, 5, 6] ] },
+  "components": {
+    "chip": {
+      "description": "A pill with a label and an optional icon slot.",
+      "params": {
+        "label":   { "type": "text", "default": "Label", "maxChars": 24, "maxLines": 1, "multiline": false, "description": "Chip text." },
+        "size":    { "type": "number", "default": 40, "min": 16, "max": 120, "step": 1 },
+        "accent":  { "type": "color", "default": "$theme.color.accent" },
+        "hold":    { "type": "time", "default": 2, "min": 0.5, "max": 20 },
+        "logo":    { "type": "asset", "default": null, "accepts": ["svg", "image"] },
+        "style":   { "type": "enum", "values": ["pill", "square"], "default": "pill" },
+        "outline": { "type": "boolean", "default": false },
+        "curve":   { "type": "ease", "default": "$theme.ease.enter" },
+        "enter":   { "type": "preset", "default": "popIn", "kind": "enter" },
+        "tags":    { "type": "list", "default": [], "item": { "type": "text", "default": "" }, "minItems": 0, "maxItems": 6 },
+        "box":     { "type": "object", "default": { "pad": 20 }, "fields": { "pad": { "type": "number", "default": 20 } } },
+        "offset":  { "type": "vector", "default": [0, 0] },
+        "anchorTo": { "type": "layer", "default": null, "accepts": ["text", "shape"] },
+        "font":    { "type": "font", "default": "$theme.font.body" }
+      },
+      "size": "auto", "duration": "auto",
+      "slots": { "icon": { "size": [64, 64], "fit": "contain", "description": "An icon.", "required": false } },
+      "layers": [
+        { "id": "plate", "type": "shape", "contents": [
+            { "type": "rect", "roundness": "{{8 + ($props.style == 'pill') * 991}}", "fitTo": { "layers": ["text"], "padding": ["{{$props.box.pad}}", "{{$props.box.pad / 2}}"] } },
+            { "type": "fill", "color": "$props.accent.a20" },
+            { "type": "stroke", "color": "$props.accent", "width": 2 } ], "enabled": "$props.outline" },
+        { "id": "plateFlat", "type": "shape", "contents": [
+            { "type": "rect", "roundness": "{{8 + ($props.style == 'pill') * 991}}", "fitTo": { "layers": ["text"], "padding": ["{{$props.box.pad}}", "{{$props.box.pad / 2}}"] } },
+            { "type": "fill", "color": "$props.accent.a20" } ], "enabled": "{{$props.outline == false}}" },
+        { "id": "text", "type": "text", "text": "$props.label", "style": { "font": "$props.font", "size": "$props.size", "fill": "$props.accent" }, "origin": "left", "position": ["{{80 + $props.offset[0]}}", "{{40 + $props.offset[1]}}"] },
+        { "id": "icon", "type": "slot", "slot": "icon", "position": [32, 40], "scale": [60, 60] }
+      ],
+      "timeline": [
+        { "target": ["plate", "plateFlat", "text", "icon"], "preset": "$props.enter", "ease": "$props.curve", "at": 0 },
+        { "target": ["plate", "plateFlat", "text", "icon"], "preset": "fadeOut", "at": "+=$props.hold" }
+      ]
+    },
+    "row": {
+      "description": "Two chips in a row; forwards the outer icon slot.",
+      "params": { "a": { "type": "text", "default": "One" }, "b": { "type": "text", "default": "Two" } },
+      "size": [900, 120], "duration": "parent",
+      "slots": { "icon": { "size": [64, 64] } },
+      "layers": [
+        { "id": "c1", "type": "component", "use": "chip", "props": { "label": "$props.a", "outline": true }, "slots": { "icon": "$slots.icon" }, "position": [0, 0] },
+        { "id": "c2", "type": "component", "use": "chip", "props": { "label": "$props.b", "style": "square" }, "position": [400, 0] }
+      ],
+      "layout": { "type": "stack", "direction": "row", "gap": "$theme.space.3", "align": "center", "justify": "start", "padding": [0, 0], "wrap": false, "children": ["c1", "c2"], "box": [0, 0, 900, 120] }
+    }
+  },
+  "comps": { "main": {
+    "size": [1920, 1080], "fps": 30, "duration": 6, "background": "#0B0B0F",
+    "layers": [
+      { "id": "chip1", "type": "component", "use": "chip", "props": { "label": "Hello chips", "hold": 3, "tags": ["x", "y"], "offset": [4, 0] },
+        "slots": { "icon": [ { "id": "ic", "type": "image", "asset": "mark", "fit": "contain" } ] }, "in": 0.2, "align": { "to": "safe", "x": "left", "y": "top" } },
+      { "id": "row1", "type": "component", "use": "row", "props": { "a": "Forwarded", "b": "Slots" }, "slots": { "icon": [ { "id": "ic2", "type": "image", "asset": "mark", "fit": "contain" } ] }, "in": 0.5, "out": 5, "origin": "top-left", "position": [120, 240] },
+      { "id": "bars", "type": "repeat", "data": "$data.rows", "ids": "{{$item.label | lower}}",
+        "layout": { "type": "stack", "direction": "row", "gap": 40, "align": "end", "justify": "center", "box": [1100, 500, 700, 400] },
+        "layer": { "type": "shape", "contents": [ { "type": "rect", "size": [80, "{{$item.value * 4}}"] }, { "type": "fill", "color": "$theme.color.palette.$index" } ], "origin": "bottom" } },
+      { "id": "ring", "type": "repeat", "count": 10, "layout": { "type": "radial", "radius": 160, "startAngle": -90, "sweep": 360, "center": [400, 760], "orient": true },
+        "layer": { "type": "shape", "shape": "polygon", "sides": 3, "radius": 14, "fill": "$theme.color.palette.$index" } },
+      { "id": "cells", "type": "repeat", "data": "$data.grid", "layout": { "type": "grid", "columns": 3, "gap": [16, 16], "cell": [60, 60], "align": "center", "box": [700, 700, 240, 160] },
+        "layer": { "type": "repeat", "data": "$item", "layer": { "type": "shape", "shape": "roundedRect", "size": [48, 48], "radius": 10, "fill": "$theme.color.palette.$index",
+                   "opacity": "{{40 + $parent.index * 20 + $item * 5}}" } } },
+      { "id": "guide", "type": "shape", "contents": [ { "type": "path", "id": "p", "d": "M1100 950 C1300 850 1500 1050 1700 950" }, { "type": "stroke", "color": "#2A2A35", "width": 2 } ] },
+      { "id": "beads", "type": "repeat", "count": 7, "layout": { "type": "path", "path": "guide", "spacing": "even", "orient": true },
+        "layer": { "type": "shape", "shape": "roundedRect", "size": [30, 12], "radius": 6, "fill": "#FACC15" } }
+    ],
+    "timeline": [
+      { "target": "bars.*", "from": { "scaleY": 0 }, "stagger": 0.08, "at": 1 },
+      { "target": ["ring.*", "beads.*"], "preset": "popIn", "stagger": { "each": 0.04, "from": "start" }, "at": "<" },
+      { "target": "cells.*", "preset": "fadeIn", "at": "<" }
+    ]
+  } }
+}

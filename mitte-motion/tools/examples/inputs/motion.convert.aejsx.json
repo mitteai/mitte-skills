@@ -1,0 +1,10 @@
+{
+  "doc_url": "library:mitte/demo/lower-third@1",
+  "to": "aejsx",
+  "options": {
+    "bake_expressions": true,
+    "font_map": {
+      "Inter": "Inter-Bold"
+    }
+  }
+}

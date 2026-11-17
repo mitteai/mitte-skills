@@ -1,0 +1,109 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Every kind of library reference in one document",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.offscreen_while_visible"
+      ],
+      "note": "lint.offscreen_while_visible on lower-third.bar's `tick` is a known false positive: the tick is aligned to the plate inside the generated comp and renders on screen."
+    }
+  },
+  "theme": {
+    "use": "mitte/midnight@1",
+    "override": {
+      "color": {
+        "accent": "#FF4D00"
+      }
+    }
+  },
+  "assets": {
+    "logo": {
+      "src": "library:mitte/demo/logo@1",
+      "type": "svg"
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 7,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "mark",
+          "type": "shape",
+          "fromSvg": "logo",
+          "fit": {
+            "width": 360
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "38%"
+          ]
+        },
+        {
+          "id": "word",
+          "type": "text",
+          "text": "Motion",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.5",
+            "fill": "$theme.color.fg"
+          },
+          "origin": "top",
+          "align": {
+            "to": "mark",
+            "y": "below",
+            "gap": "$theme.space.4",
+            "x": "center"
+          }
+        },
+        {
+          "id": "lt",
+          "type": "component",
+          "use": "mitte/lower-third.bar@1",
+          "in": 2.5,
+          "props": {
+            "name": "Ada Lovelace",
+            "role": "Analyst, Engine Co.",
+            "hold": 2
+          },
+          "align": {
+            "to": "safe",
+            "x": "left",
+            "y": "bottom"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "target": "mark",
+          "preset": "popIn",
+          "at": 0.2
+        },
+        {
+          "target": "word",
+          "preset": "mitte/kinetic.slam@1",
+          "props": {
+            "from": 180
+          },
+          "at": 0.5
+        },
+        {
+          "target": [
+            "mark",
+            "word"
+          ],
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 6.4
+        }
+      ]
+    }
+  }
+}

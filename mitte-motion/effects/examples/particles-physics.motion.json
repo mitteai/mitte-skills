@@ -1,0 +1,403 @@
+{
+ "motion": 1,
+ "comps": {
+  "shapes": {
+   "size": [
+    64,
+    64
+   ],
+   "fps": 30,
+   "duration": 1,
+   "background": null,
+   "layers": [
+    {
+     "id": "sq",
+     "type": "shape",
+     "shape": "roundedRect",
+     "size": [
+      40,
+      24
+     ],
+     "radius": 3,
+     "fill": "#FFFFFF",
+     "position": [
+      32,
+      32
+     ]
+    }
+   ]
+  },
+  "main": {
+   "size": [
+    1280,
+    720
+   ],
+   "fps": 30,
+   "duration": 4,
+   "background": "#0B0B0F",
+   "layers": [
+    {
+     "id": "shapes",
+     "type": "comp",
+     "comp": "shapes",
+     "visible": false
+    },
+    {
+     "id": "flow",
+     "type": "solid",
+     "color": "#808080",
+     "visible": false,
+     "effects": [
+      {
+       "id": "curl",
+       "type": "generate.curlNoise",
+       "params": {
+        "output": "vectorField",
+        "scale": 240,
+        "composite": "replace"
+       }
+      }
+     ]
+    },
+    {
+     "id": "floorBar",
+     "type": "shape",
+     "shape": "roundedRect",
+     "size": [
+      500,
+      20
+     ],
+     "radius": 10,
+     "fill": "#2E3A59",
+     "position": [
+      320,
+      660
+     ]
+    },
+    {
+     "id": "sparks",
+     "type": "particles",
+     "seed": 5,
+     "position": [
+      320,
+      300
+     ],
+     "motionBlur": true,
+     "systems": [
+      {
+       "id": "hot",
+       "emitter": {
+        "type": "point",
+        "direction": [
+         0,
+         0,
+         0
+        ],
+        "spread": 40,
+        "velocity": 500,
+        "velocityRandom": 40,
+        "rate": 120
+       },
+       "particle": {
+        "life": 2.5,
+        "sprite": "streaklet",
+        "size": 5,
+        "palette": [
+         "#FFFFFF",
+         "#FFB347",
+         "#FF4D2E"
+        ],
+        "blend": "add",
+        "glow": {
+         "size": 260,
+         "opacity": 20
+        }
+       },
+       "physics": {
+        "gravity": 900,
+        "air": {
+         "resistance": 0.4,
+         "resistanceRotation": false
+        },
+        "bounce": {
+         "floor": {
+          "y": 350,
+          "enabled": true
+         },
+         "walls": false,
+         "layers": [
+          "floorBar"
+         ],
+         "elasticity": 35,
+         "friction": 20,
+         "collisionEvent": "bounce"
+        }
+       },
+       "aux": {
+        "emit": "atBounce",
+        "rate": 6,
+        "life": 0.5,
+        "sprite": "sphere",
+        "size": 2,
+        "colorFromMain": 100,
+        "inheritVelocity": 20,
+        "velocity": 80,
+        "spread": 90,
+        "opacityOverLife": [
+         [
+          0,
+          1
+         ],
+         [
+          1,
+          0
+         ]
+        ],
+        "physics": {
+         "gravity": 300,
+         "air": {
+          "resistance": 1
+         }
+        },
+        "blend": "add"
+       }
+      }
+     ],
+     "render": {
+      "motionBlur": "streaks"
+     }
+    },
+    {
+     "id": "confetti",
+     "type": "particles",
+     "seed": 12,
+     "position": [
+      960,
+      0
+     ],
+     "threeD": false,
+     "systems": [
+      {
+       "id": "paper",
+       "emitter": {
+        "type": "box",
+        "size": [
+         500,
+         10,
+         0
+        ],
+        "direction": [
+         0,
+         0,
+         180
+        ],
+        "spread": 40,
+        "velocity": 200,
+        "velocityRandom": 50
+       },
+       "emission": {
+        "rate": 0,
+        "bursts": [
+         {
+          "at": 0.3,
+          "count": 300
+         }
+        ]
+       },
+       "particle": {
+        "life": 4,
+        "sprite": {
+         "texture": {
+          "layer": "shapes",
+          "time": "still",
+          "frames": 1,
+          "colorize": true,
+          "aspect": 1
+         }
+        },
+        "size": 16,
+        "sizeRandom": 40,
+        "colorOverLife": {
+         "type": "fromBirth",
+         "gradient": [
+          [
+           0,
+           "#FF4D6D"
+          ],
+          [
+           0.5,
+           "#FFD166"
+          ],
+          [
+           1,
+           "#06D6A0"
+          ]
+         ],
+         "by": "random"
+        },
+        "rotationRandom": 100,
+        "spin": [
+         200,
+         300,
+         120
+        ],
+        "spinRandom": 60,
+        "faceCamera": false,
+        "opacityOverLife": [
+         [
+          0,
+          1
+         ],
+         [
+          0.9,
+          1
+         ],
+         [
+          1,
+          0
+         ]
+        ]
+       },
+       "physics": {
+        "gravity": 400,
+        "air": {
+         "resistance": 1.2,
+         "turbulence": {
+          "position": 40,
+          "rotation": 120,
+          "scale": 120,
+          "complexity": 2,
+          "evolutionSpeed": 50,
+          "affectOpacity": 0,
+          "seed": 1
+         }
+        },
+        "attractors": [
+         {
+          "position": [
+           0,
+           500,
+           0
+          ],
+          "strength": 40,
+          "radius": 600,
+          "falloff": "linear"
+         }
+        ],
+        "fields": [
+         {
+          "layer": "flow",
+          "channel": "rg",
+          "strength": 60,
+          "mode": "velocity"
+         }
+        ]
+       }
+      }
+     ],
+     "render": {
+      "motionBlur": "off"
+     }
+    },
+    {
+     "id": "smoke",
+     "type": "particles",
+     "seed": 8,
+     "position": [
+      640,
+      700
+     ],
+     "systems": [
+      {
+       "id": "puffs",
+       "emitter": {
+        "type": "point",
+        "direction": [
+         0,
+         0,
+         0
+        ],
+        "spread": 15,
+        "velocity": 90,
+        "rate": 30
+       },
+       "particle": {
+        "life": 3.5,
+        "sprite": "cloudlet",
+        "size": 40,
+        "sizeOverLife": [
+         [
+          0,
+          0.3
+         ],
+         [
+          1,
+          1.4
+         ]
+        ],
+        "opacity": 35,
+        "opacityOverLife": [
+         [
+          0,
+          0
+         ],
+         [
+          0.2,
+          1
+         ],
+         [
+          1,
+          0
+         ]
+        ],
+        "color": "#9FB4FF",
+        "colorRandom": 10,
+        "blend": "screen"
+       },
+       "physics": {
+        "gravity": -20,
+        "air": {
+         "resistance": 0.6,
+         "wind": [
+          20,
+          0,
+          0
+         ],
+         "turbulence": {
+          "position": 60,
+          "scale": 140,
+          "complexity": 3
+         },
+         "spherical": {
+          "strength": 30,
+          "position": [
+           0,
+           -200,
+           0
+          ],
+          "radius": 120,
+          "feather": 60
+         }
+        }
+       },
+       "aux": {
+        "emit": "continuously",
+        "rate": 2,
+        "startEmit": 20,
+        "stopEmit": 80,
+        "life": 1,
+        "sprite": "sphere",
+        "size": 2,
+        "color": "#FFFFFF",
+        "blend": "add"
+       }
+      }
+     ],
+     "render": {
+      "motionBlur": "off"
+     }
+    }
+   ]
+  }
+ }
+}

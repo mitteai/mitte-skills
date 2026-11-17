@@ -1,0 +1,33 @@
+{
+  "motion": 1,
+  "meta": { "title": "Media layers: image fit/box/focus/crop/frame, video timing, audio fades, ducking, comp loopMode" },
+  "assets": {
+    "photo": { "src": "https://media.mitte.ai/u/demo/hero.jpg", "type": "image" },
+    "clip":  { "src": "https://media.mitte.ai/u/demo/clip.mp4", "type": "video", "alpha": "ignore", "range": "limited", "orient": "auto" },
+    "vo":    { "src": "https://media.mitte.ai/u/demo/vo.mp3", "type": "audio" },
+    "music": { "src": "https://media.mitte.ai/u/demo/bed.mp3", "type": "audio" },
+    "seq":   { "src": "https://media.mitte.ai/u/demo/boom.zip", "type": "video", "sequence": { "pattern": "boom_%04d.png", "start": 1, "fps": 24 }, "loop": 2 }
+  },
+  "comps": {
+    "loopy": { "size": [300, 300], "fps": 30, "duration": 1,
+      "layers": [ { "id": "d", "type": "shape", "shape": "circle", "radius": 60, "fill": "#22D3EE", "position": [150, 150],
+                    "scale": { "keys": [ { "t": 0, "v": [60, 60], "ease": "sine.inOut" }, { "t": 1, "v": [100, 100] } ] } } ] },
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 12, "background": "#000000",
+      "layers": [
+        { "id": "cover", "type": "image", "asset": "photo", "fit": "cover", "focus": [0.5, 0.3] },
+        { "id": "crop", "type": "image", "asset": "photo", "crop": [100, 50, 800, 450], "fit": "contain", "box": [480, 270], "origin": "top-left", "position": [40, 40] },
+        { "id": "still", "type": "image", "asset": "clip", "frame": 2.5, "fit": "cover", "box": [480, 270], "origin": "top-left", "position": [560, 40] },
+        { "id": "clip", "type": "video", "asset": "clip", "in": 1, "sourceIn": 3, "dur": 4, "speed": 1.5, "hold": "both", "frameBlend": "mix",
+          "fit": "cover", "box": [960, 540], "origin": "center", "position": ["50%", "60%"], "volume": -6, "fadeIn": 0.5, "audioTrack": 0 },
+        { "id": "looped", "type": "video", "asset": "clip", "in": 5, "out": 11, "loop": true, "reverse": true, "mute": true,
+          "fit": "contain", "box": [480, 270], "origin": "top-left", "position": [1400, 40] },
+        { "id": "boom", "type": "video", "asset": "seq", "in": 6, "fit": "none", "origin": "center", "position": [300, 800] },
+        { "id": "loopComp", "type": "comp", "comp": "loopy", "loopMode": "pingpong", "in": 0, "out": 12, "origin": "center", "position": [1600, 800], "hold": "none" },
+        { "id": "vo", "type": "audio", "asset": "vo", "in": 1, "volume": 0, "channels": "mono", "fadeOut": { "dur": 0.4, "curve": "exp" } },
+        { "id": "music", "type": "audio", "asset": "music", "in": 0, "out": 12, "loop": true, "volume": -8, "pan": 0,
+          "fadeIn": 1, "fadeOut": 1.5, "duck": { "under": ["vo"], "by": 9, "threshold": -36, "attack": 0.08, "release": 0.45, "hold": 0.15 } }
+      ]
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "motion": 1,
+  "meta": { "title": "Media and audio: interpretation fields, sequences, Lottie, analysis, submixes, captions" },
+  "assets": {
+    "plate": { "src": "https://media.mitte.ai/u/demo/plate.mov", "type": "video", "colorSpace": "rec709", "range": "limited", "alpha": "premultiplied", "orient": "auto", "pixelAspect": 1, "field": "progressive", "loop": 1, "audioTrack": 0, "videoTrack": 0, "sha256": "0000000000000000000000000000000000000000000000000000000000000000" },
+    "phone": { "src": "https://media.mitte.ai/u/demo/phone.mp4", "type": "video", "fps": 30, "alpha": "stacked-bottom" },
+    "seq":   { "src": "https://media.mitte.ai/u/demo/boom.zip", "type": "video", "sequence": { "pattern": "boom_%04d.png", "start": 1, "fps": 24 } },
+    "hdr":   { "src": "https://media.mitte.ai/u/demo/sky.exr", "type": "image", "colorSpace": "linear-srgb" },
+    "sticker": { "src": "https://media.mitte.ai/u/demo/confetti.lottie", "type": "lottie" },
+    "music": { "src": "https://media.mitte.ai/u/demo/bed.mp3", "type": "audio" },
+    "vo":    { "src": "https://media.mitte.ai/u/demo/vo.wav", "type": "audio" },
+    "transcript": { "src": "https://media.mitte.ai/u/demo/vo.words.json", "type": "data" }
+  },
+  "data": { "words": [ { "text": "Ship", "start": 0.42, "end": 0.71, "speaker": "A" }, { "text": "faster", "start": 0.71, "end": 1.18, "emphasis": true }, { "text": "with", "start": 1.3, "end": 1.44 }, { "text": "mitte.", "start": 1.44, "end": 1.95, "confidence": 0.93 } ] },
+  "comps": {
+    "sub": { "size": [600, 300], "fps": 30, "duration": 4, "layers": [
+      { "id": "tone", "type": "audio", "asset": "vo", "volume": -12 },
+      { "id": "card", "type": "solid", "color": "#2A2A35", "size": [600, 300] } ] },
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 12, "background": "#000000",
+      "markers": [ { "from": { "audio": "music", "detect": "beats", "prefix": "beat", "tempo": 120, "meter": 4, "min": 0.1, "fallback": "grid" } },
+                   { "from": { "audio": "music", "detect": "downbeats", "prefix": "bar", "meter": 4, "fallback": "grid" } } ],
+      "layers": [
+        { "id": "plate", "type": "video", "asset": "plate", "fit": "cover", "frameBlend": "flow", "speed": 0.5, "audio": false },
+        { "id": "sky", "type": "image", "asset": "hdr", "fit": "cover", "blend": "screen", "opacity": 40 },
+        { "id": "phone", "type": "video", "asset": "phone", "in": 1, "sourceIn": 2, "sourceOut": 8, "fit": "contain", "box": [540, 960], "origin": "center", "position": ["75%", "50%"], "timeRemap": { "keys": [ { "t": 0, "v": 2, "ease": "power2.inOut" }, { "t": 3, "v": 8 } ] } },
+        { "id": "still", "type": "image", "asset": "phone", "frame": 4, "fit": "cover", "box": [320, 180], "origin": "top-left", "position": [40, 40] },
+        { "id": "boom", "type": "video", "asset": "seq", "in": 2, "loop": true, "hold": "none", "origin": "center", "position": [400, 700] },
+        { "id": "confetti", "type": "comp", "lottie": "sticker", "lottieAnimation": "main", "loopMode": "cycle", "in": 1, "out": 11, "origin": "center", "position": ["50%", "40%"], "collapse": true },
+        { "id": "meter", "type": "shape", "shape": "roundedRect", "size": [40, 200], "radius": 8, "fill": "#34D399", "origin": "bottom", "position": [1800, 1000],
+          "scale": { "value": [100, 100], "audio": { "asset": "music", "band": [30, 120], "gain": [0, 120], "smooth": 0.08, "mode": "level", "floor": 0.05 } } },
+        { "id": "kick", "type": "shape", "shape": "circle", "radius": 30, "fill": "#F472B6", "position": [1700, 1000],
+          "opacity": { "value": 100, "audio": { "asset": "music", "band": [30, 120], "gain": -60, "mode": "onset", "decay": 0.3 } } },
+        { "id": "submix", "type": "comp", "comp": "sub", "in": 3, "origin": "center", "position": [400, 300], "stretch": 150 },
+        { "id": "captions", "type": "component", "use": "mitte/caption.highlight@1", "in": 0.5,
+          "props": { "words": "$data.words", "position": "safe-bottom", "lines": 2 } },
+        { "id": "vo", "type": "audio", "asset": "vo", "in": 0.5, "channels": "mono" },
+        { "id": "music", "type": "audio", "asset": "music", "loop": true, "volume": -10, "fadeIn": 0.5, "fadeOut": { "dur": 1.5, "curve": "sine" },
+          "duck": { "under": ["vo"], "by": 9 } }
+      ],
+      "timeline": [ { "target": "kick", "preset": "pulse", "at": 1 } ]
+    }
+  }
+}

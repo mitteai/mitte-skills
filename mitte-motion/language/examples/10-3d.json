@@ -1,0 +1,43 @@
+{
+  "motion": 1,
+  "meta": { "title": "3D: cameras, DOF, orbit rig, materials, lights, per-character text, nested run" },
+  "comps": {
+    "stack": { "size": [600, 400], "fps": 30, "duration": 6, "layers": [
+      { "id": "c1", "type": "solid", "color": "#22D3EE", "size": [400, 240], "threeD": true, "position": [300, 200, -60], "rotationY": 20 },
+      { "id": "c2", "type": "solid", "color": "#F472B6", "size": [400, 240], "threeD": true, "position": [300, 200, 60], "rotationY": -20 } ] },
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 8, "background": "#0B0B0F", "renderer3d": "classic",
+      "layers": [
+        { "id": "floor", "type": "solid", "color": "#16161D", "size": [3000, 2000], "threeD": true, "position": [960, 900, 0], "rotationX": 90,
+          "material": { "castsShadows": "off", "acceptsShadows": true, "acceptsLights": true, "ambient": 100, "diffuse": 60, "specular": 10, "shininess": 5, "metal": 100, "lightTransmission": 0 } },
+        { "id": "catcher", "type": "solid", "color": "#FFFFFF", "size": [1200, 600], "threeD": true, "position": [960, 899, 0], "rotationX": 90, "material": { "acceptsShadows": "only" } },
+        { "id": "rig", "type": "null", "threeD": true, "position": [960, 540, 0], "rotationY": { "keys": [ { "t": 0, "v": -10, "ease": "sine.inOut" }, { "t": 8, "v": 10 } ] } },
+        { "id": "hero", "type": "shape", "shape": "roundedRect", "size": [520, 320], "radius": 32, "fill": "#7C5CFF", "threeD": true, "parent": "rig",
+          "origin": "center", "position": [0, -80, 0], "orientation": [0, 0, 0], "rotationX": 0, "rotationY": 0, "rotationZ": 0, "scale": [100, 100, 100],
+          "material": { "castsShadows": "on", "acceptsShadows": true, "acceptsLights": true, "diffuse": 70, "specular": 40, "shininess": 12, "metal": 30 } },
+        { "id": "glass", "type": "solid", "color": "#FACC1580", "size": [300, 300], "threeD": true, "position": [1400, 500, 300], "rotationY": -30,
+          "material": { "castsShadows": "on", "lightTransmission": 60 } },
+        { "id": "only", "type": "solid", "color": "#FF0000", "size": [200, 200], "threeD": true, "position": [500, 600, 200], "material": { "castsShadows": "only" } },
+        { "id": "unlit", "type": "shape", "shape": "circle", "radius": 60, "fill": "#34D399", "threeD": true, "position": [1600, 300, -400], "material": { "acceptsLights": false } },
+        { "id": "billboard", "type": "text", "text": "billboard", "style": { "font": "Inter", "weight": 700, "size": 48, "fill": "#F5F5F7" }, "threeD": true, "autoOrient": "camera", "origin": "center", "position": [400, 300, -300] },
+        { "id": "chars", "type": "text", "text": "PER CHARACTER 3D", "style": { "font": "Unbounded", "weight": 800, "size": 96, "fill": "#F5F5F7" }, "paragraph": { "align": "center" },
+          "threeD": true, "threeDPerChar": true, "origin": "center", "position": [960, 880, -200],
+          "material": { "castsShadows": "on" },
+          "animators": [ { "id": "flip", "props": { "rotationX": 90, "position": [0, 0, 200], "opacity": 0 },
+            "selectors": [ { "type": "stagger", "by": "chars", "skipSpaces": true, "start": 0.3, "each": 0.05, "dur": 0.6, "ease": "back.out(1.5)", "direction": "out" } ] } ] },
+        { "id": "nested", "type": "comp", "comp": "stack", "threeD": true, "collapse": true, "origin": "center", "position": [1500, 800, 100] },
+        { "id": "overlay2d", "type": "text", "text": "a 2D layer above the run", "style": { "font": "Inter", "size": 32, "fill": "#8A8A99" }, "align": { "to": "safe", "x": "left", "y": "bottom" } },
+        { "id": "behind", "type": "solid", "color": "#2A2A35", "size": [300, 300], "threeD": true, "position": [200, 200, 800] },
+        { "id": "amb", "type": "light", "kind": "ambient", "color": "#FFFFFF", "intensity": 35 },
+        { "id": "key", "type": "light", "kind": "spot", "position": [500, 100, -900], "pointOfInterest": [960, 540, 0], "color": "#FFF2E0", "intensity": 120,
+          "coneAngle": 70, "coneFeather": 60, "falloff": "inverseSquare", "radius": 1400, "falloffDistance": 500, "castsShadows": true, "shadowDarkness": 70, "shadowDiffusion": 24 },
+        { "id": "fill", "type": "light", "kind": "point", "position": [1500, 300, -600], "color": "#7C5CFF", "intensity": 60, "falloff": "smooth", "radius": 800, "falloffDistance": 900 },
+        { "id": "rim", "type": "light", "kind": "parallel", "position": [960, -500, 800], "pointOfInterest": [960, 540, 0], "color": "#22D3EE", "intensity": 40, "castsShadows": false, "in": 2 },
+        { "id": "camA", "type": "camera", "cameraType": "twoNode", "focalLength": 35, "filmSize": 36, "position": [700, 400, -2200], "pointOfInterest": [960, 540, 0], "rotationZ": 2,
+          "dof": { "enabled": true, "focusOn": "hero", "focusOffset": 0, "fStop": 2.8, "blurLevel": 100, "iris": "hexagon", "irisRotation": 0, "irisRoundness": 0, "irisAspect": 1, "highlightGain": 0, "highlightThreshold": 1, "highlightSaturation": 0, "perCard": false }, "out": 3 },
+        { "id": "camB", "type": "camera", "cameraType": "oneNode", "fov": 60, "position": [960, 540, -2000], "orientation": [0, 0, 0], "rotationY": { "keys": [ { "t": 3, "v": -5 }, { "t": 5, "v": 5 } ] }, "in": 3, "out": 5 },
+        { "id": "camC", "type": "camera", "zoom": 2666.7, "in": 5, "orbit": { "center": "hero", "radius": 2600, "azimuth": { "keys": [ { "t": 5, "v": -25, "ease": "sine.inOut" }, { "t": 8, "v": 25 } ] }, "elevation": 12, "roll": 0 } }
+      ]
+    }
+  }
+}

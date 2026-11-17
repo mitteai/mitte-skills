@@ -1,0 +1,14 @@
+{
+  "motion": 1,
+  "meta": { "title": "HDR output: HLG HEVC with the ACES 2.0 tonescale", "notes": "For PQ use { \"hdr\": \"pq\", \"hdrPeak\": 1000 }; the codec defaults to hevc in mp4/mov and av1 in webm." },
+  "output": { "format": "mp4", "codec": "hevc", "profile": "main10", "quality": "high", "hdr": "hlg", "toneMap": "aces2", "pixelFormat": "yuv420p10", "signalRange": "limited", "audio": { "codec": "aac", "bitrate": 256 } },
+  "comps": { "main": {
+    "size": [1920, 1080], "fps": 30, "duration": 3, "background": "#000000",
+    "layers": [
+      { "id": "sun", "type": "shape", "shape": "circle", "radius": 200, "position": ["50%", "50%"], "fill": { "r": 12, "g": 9, "b": 4, "a": 1 }, "blend": "add",
+        "effects": [ { "id": "glow", "type": "light.glow", "params": { "intensity": 1.5, "radius": 200 } } ] },
+      { "id": "t", "type": "text", "text": "HLG", "style": { "font": "Anton", "size": 240, "fill": "#F5F5F7" }, "paragraph": { "align": "center" }, "origin": "center", "position": ["50%", "50%"] }
+    ],
+    "timeline": [ { "target": "t", "preset": "blurIn", "at": 0.3 } ]
+  } }
+}

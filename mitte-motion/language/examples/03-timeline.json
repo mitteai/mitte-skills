@@ -1,0 +1,53 @@
+{
+  "motion": 1,
+  "meta": { "title": "Timeline: every at form, every action, targets, shorthands, staggers" },
+  "data": { "bars": [ { "label": "Q1", "v": 12 }, { "label": "Q2", "v": 19 }, { "label": "Q3", "v": 33 }, { "label": "Q4", "v": 27 } ] },
+  "comps": {
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 10, "background": "#0B0B0F",
+      "markers": [ { "t": 0.5, "name": "beat1" }, { "t": 1.0, "name": "beat2" } ],
+      "layers": [
+        { "id": "bg", "type": "solid", "color": "#16161D" },
+        { "id": "title", "type": "text", "text": "Timeline grammar",
+          "style": { "font": "Inter", "weight": 800, "size": 120, "fill": "#F5F5F7" },
+          "paragraph": { "align": "center" }, "origin": "center", "position": ["50%", "30%"] },
+        { "id": "kicker", "type": "text", "text": [ { "text": "every " }, { "text": "at", "id": "kw", "style": { "fill": "#7C5CFF" } }, { "text": " form" } ],
+          "style": { "font": "Inter", "weight": 500, "size": 48, "fill": "#8A8A99" },
+          "align": { "to": "title", "y": "above", "gap": 16, "x": "center" } },
+        { "id": "ring", "type": "shape", "position": [300, 760], "contents": [
+          { "type": "group", "id": "g", "contents": [
+            { "type": "ellipse", "size": [220, 220] },
+            { "type": "stroke", "id": "st", "color": "#22D3EE", "width": 12, "lineCap": "round" },
+            { "type": "trim", "id": "trim", "end": 100 } ] } ] },
+        { "id": "card", "type": "shape", "shape": "roundedRect", "size": [320, 200], "radius": 24, "fill": "#F472B6",
+          "origin": "center", "position": [960, 760],
+          "effects": [ { "id": "glow", "type": "light.glow", "params": { "intensity": 0.5, "radius": 60 } } ] },
+        { "id": "bars", "type": "repeat", "data": "$data.bars", "layer": {
+          "type": "shape", "contents": [ { "type": "rect", "size": [60, "{{$item.v * 8}}"] }, { "type": "fill", "color": "#FACC15" } ],
+          "origin": "bottom", "position": ["{{1500 + $index * 90}}", 900] } },
+        { "id": "icons", "type": "repeat", "count": 6, "layer": { "type": "shape", "shape": "circle", "radius": 18, "fill": "#34D399",
+          "position": ["{{1400 + ($index % 3) * 60}}", "{{300 + floor($index / 3) * 60}}"] } }
+      ],
+      "timeline": [
+        { "label": "intro", "at": 0 },
+        { "id": "bgIn", "target": "bg", "from": { "opacity": 0 }, "dur": 0.4, "at": 0 },
+        { "target": "title", "from": { "y": "+=80", "opacity": 0, "blur": 20 }, "dur": 0.8, "ease": "expo.out", "at": "<0.1" },
+        { "target": "kicker/chars!", "from": { "opacity": 0, "y": "+=24", "rotation": -12 }, "dur": 0.5, "ease": "back.out(1.6)", "stagger": 0.025, "at": ">-0.3" },
+        { "target": ["title/words", "kicker"], "to": { "opacity": 80 }, "dur": 0.3, "stagger": { "amount": 0.4, "from": "end" }, "at": "intro+=1.6" },
+        { "target": "kicker/span:kw", "to": { "scale": 120, "fill": "#FACC15" }, "dur": 0.4, "ease": "back.out(2)", "stagger": 0.02, "at": "@beat2+0.1" },
+        { "target": "ring", "preset": "drawOn", "at": "@beat1" },
+        { "target": "ring", "to": { "trimEnd": 60, "stroke": "#FFFFFF", "strokeWidth": 20 }, "dur": 0.6, "at": ">" },
+        { "target": "ring.contents.g", "to": { "rotation": "+=90" }, "dur": 1, "ease": "sine.inOut", "at": "<" },
+        { "target": "card", "fromTo": [ { "rotation": -8, "scaleX": 60 }, { "rotation": 0, "scaleX": 100 } ], "dur": 0.6, "ease": "spring(260, 14)", "at": "+=0.2" },
+        { "target": "card.effects.glow", "to": { "intensity": 2 }, "dur": 0.5, "ease": "sine.inOut", "at": "<" },
+        { "target": "card", "to": { "fill": "#7C5CFF", "x": "+=120" }, "dur": 0.4, "repeat": 3, "yoyo": true, "repeatDelay": 0.1, "at": ">0.2" },
+        { "target": "bars.*", "from": { "scaleY": 0, "opacity": 0 }, "dur": 0.6, "ease": "expo.out", "stagger": { "each": 0.08, "from": "center" }, "at": 3 },
+        { "target": "icons.*", "preset": "popIn", "stagger": { "each": 0.04, "grid": [3, 2], "from": [0, 0], "axis": "x", "ease": "power2.in" }, "at": "3.4s" },
+        { "target": "icons.*", "to": { "scale": 80 }, "dur": 0.3, "stagger": { "each": 0.03, "from": "random", "seed": 7 }, "at": "120f" },
+        { "target": "title", "to": { "scale": 106 }, "dur": 4, "ease": "sine.inOut", "at": "intro+0.5" },
+        { "target": "title", "set": { "opacity": 50 }, "at": 2.5 },
+        { "target": ["title", "kicker", "ring", "card", "bars.*", "icons.*"], "preset": "fadeOut", "at": 9.2, "dur": 0.5 }
+      ]
+    }
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Credits: an end crawl from a sections document with a target duration, ProRes delivery",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.crawl_duration_mismatch",
+        "lint.text_outside_safe_area",
+        "lint.offscreen_while_visible"
+      ],
+      "note": "crawl_duration_mismatch: 60 s asked, the whole-pixel speed gives a slightly different length (read the timing sheet). text_outside_safe_area is inherent to a sheet taller than the frame. offscreen_while_visible covers the final hold second after the sheet leaves the frame."
+    }
+  },
+  "theme": {
+    "use": "mitte/default@1"
+  },
+  "data": {
+    "sections": [
+      {
+        "kind": "card",
+        "role": "Directed by",
+        "names": [
+          "Ana Ruiz"
+        ]
+      },
+      {
+        "kind": "card",
+        "role": "Written by",
+        "names": [
+          "Ana Ruiz",
+          "Tom Ek"
+        ],
+        "join": "&"
+      },
+      {
+        "kind": "card",
+        "role": "Produced by",
+        "names": [
+          "Ida Park"
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Cast"
+      },
+      {
+        "kind": "pairs",
+        "rows": [
+          {
+            "role": "Mara",
+            "names": [
+              "Lena Holt"
+            ]
+          },
+          {
+            "role": "Joe",
+            "names": [
+              "Sam Li"
+            ]
+          },
+          {
+            "role": "Fisherman",
+            "names": [
+              "Diego McAllister"
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "heading",
+        "text": "Crew"
+      },
+      {
+        "kind": "pairs",
+        "rows": [
+          {
+            "role": "Director of Photography",
+            "names": [
+              "Ida Park"
+            ]
+          },
+          {
+            "role": "Editor",
+            "names": [
+              "Noa Weiss"
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "grid",
+        "title": "Visual Effects by North Light",
+        "names": [
+          "A. One",
+          "B. Two",
+          "C. Three",
+          "D. Four",
+          "E. Five",
+          "F. Six"
+        ],
+        "columns": 0
+      },
+      {
+        "kind": "list",
+        "title": "Special Thanks",
+        "names": [
+          "Ida Park",
+          "Noa Weiss",
+          "The people of Alfama"
+        ]
+      },
+      {
+        "kind": "song",
+        "title": "Night Drive",
+        "lines": [
+          "Written by K. Moss",
+          "Performed by The Vales",
+          "Courtesy of Vale Records"
+        ]
+      },
+      {
+        "kind": "text",
+        "text": "Filmed on location in Lisbon, Portugal."
+      },
+      {
+        "kind": "logos",
+        "image_urls": [
+          "https://media.mitte.ai/u/p0/logo-northlight.png",
+          "https://media.mitte.ai/u/p0/logo-fund.png"
+        ]
+      },
+      {
+        "kind": "legal",
+        "text": "© 2027 North Light Films. All Rights Reserved."
+      }
+    ]
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 24,
+      "duration": 59,
+      "background": "#000000",
+      "layers": [
+        {
+          "id": "roll",
+          "type": "component",
+          "use": "mitte/credits.crawl@1",
+          "in": 1,
+          "out": 58,
+          "props": {
+            "sections": "$data.sections",
+            "duration": 60,
+            "font": "$theme.font.body",
+            "nameWeight": 600,
+            "roleWeight": 400,
+            "size": 28,
+            "lineHeight": 1.3,
+            "gutter": 48,
+            "columns": 4,
+            "namesCase": "upper",
+            "width": "80%",
+            "white": "#E6E6E6"
+          }
+        }
+      ]
+    }
+  },
+  "output": {
+    "format": "mov",
+    "codec": "prores",
+    "quality": "high",
+    "audio": {
+      "always": true
+    }
+  }
+}

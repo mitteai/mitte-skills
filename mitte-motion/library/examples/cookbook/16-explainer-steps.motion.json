@@ -1,0 +1,131 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 16: explainer: three numbered steps sequenced on voice-over phrase markers, clean theme",
+    "x-skills": {
+      "note": "Instances take numeric `in` values (the markers are kept for the voice-over phrase times): a marker `in` on a component instance miscomputes its default `out` in engine 0.1.48 (see 03-components-using.md)."
+    }
+  },
+  "theme": {
+    "use": "mitte/clean@1"
+  },
+  "assets": {
+    "vo": {
+      "src": "https://media.mitte.ai/u/p0/vo-explainer.wav",
+      "type": "audio"
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 16,
+      "background": "$theme.color.bg",
+      "markers": [
+        {
+          "t": 1.0,
+          "name": "step1"
+        },
+        {
+          "t": 5.5,
+          "name": "step2"
+        },
+        {
+          "t": 10.0,
+          "name": "step3"
+        }
+      ],
+      "layers": [
+        {
+          "id": "voice",
+          "type": "audio",
+          "asset": "vo",
+          "fadeOut": 0.5
+        },
+        {
+          "id": "head",
+          "type": "text",
+          "text": "How it works",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.3",
+            "fill": "$theme.color.fg"
+          },
+          "align": {
+            "to": "safe",
+            "x": "left",
+            "y": "top"
+          }
+        },
+        {
+          "id": "s1",
+          "type": "component",
+          "use": "mitte/explainer.step@1",
+          "in": 1.0,
+          "props": {
+            "n": 1,
+            "title": "Connect your data",
+            "body": "Link your warehouse in two clicks; nothing to install.",
+            "hold": 13.5
+          },
+          "origin": "top-left",
+          "position": [
+            "12%",
+            "26%"
+          ]
+        },
+        {
+          "id": "s2",
+          "type": "component",
+          "use": "mitte/explainer.step@1",
+          "in": 5.5,
+          "props": {
+            "n": 2,
+            "title": "Describe the video",
+            "body": "One sentence per scene. The assistant writes the document.",
+            "hold": 9
+          },
+          "origin": "top-left",
+          "position": [
+            "12%",
+            "48%"
+          ]
+        },
+        {
+          "id": "s3",
+          "type": "component",
+          "use": "mitte/explainer.step@1",
+          "in": 10.0,
+          "props": {
+            "n": 3,
+            "title": "Render everywhere",
+            "body": "16:9, 9:16 and 1:1 from one check.",
+            "connector": false,
+            "hold": 4.5
+          },
+          "origin": "top-left",
+          "position": [
+            "12%",
+            "70%"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "head",
+          "preset": "rise",
+          "at": 0.2
+        },
+        {
+          "target": "head",
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 15.4
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{ "motion": 1,
+  "comps": { "main": { "size": [1280, 720], "fps": 30, "duration": 3, "background": "#07070C",
+    "layers": [
+      { "id": "sun", "type": "shape", "shape": "ellipse", "size": [220, 220], "fill": "#FFF2C8", "position": [640, 360],
+        "effects": [
+          { "id": "rays", "type": "light.rays", "params": { "center": [110, 110], "length": 70, "intensity": 1.2, "threshold": 0.5, "boost": 1,
+              "shimmer": { "amount": 30, "detail": 10, "phase": { "keys": [ { "t": 0, "v": 0 }, { "t": 3, "v": 180 } ] } }, "composite": "add" } },
+          { "id": "flare", "type": "light.flare", "params": { "center": [110, 110], "preset": "anamorphic", "brightness": 60, "scale": 80 } }
+        ] },
+      { "id": "title", "type": "text", "text": "GLOW", "origin": "center", "position": [640, 200],
+        "style": { "font": "Inter", "weight": 800, "size": 180, "fill": "#FFFFFF" },
+        "effects": [
+          { "id": "glow", "type": "light.glow",
+            "params": { "threshold": 0.5, "knee": 0.3, "radius": 120, "falloff": "inverseSquare", "tint": "#7C5CFF", "tintMode": "colorize",
+                        "intensity": { "keys": [ { "t": 0.3, "v": 0, "ease": "expo.out" }, { "t": 1.1, "v": 1.6 } ] } } }
+        ] },
+      { "id": "energy", "type": "text", "text": "SABER", "origin": "center", "position": [640, 540],
+        "style": { "font": "Inter", "weight": 800, "size": 120, "fill": "#000000" },
+        "effects": [
+          { "id": "beam", "type": "light.energy", "params": { "path": "textOutlines", "coreColor": "#FFFFFF", "glowColor": "#2A8CFF", "coreSize": 2, "glowSize": 30,
+              "glowIntensity": 1.5, "end": { "keys": [ { "t": 0.5, "v": 0 }, { "t": 2, "v": 100 } ] }, "distortion": { "amount": 2, "size": 20, "speed": 1 }, "composite": "energyOnly" } },
+          { "id": "neon", "type": "light.neon", "params": { "color": "#FF2BD6", "tubeWidth": 4, "glow": 1, "flicker": { "amount": 10, "rate": 8 } }, "enabled": false }
+        ] },
+      { "id": "card", "type": "shape", "shape": "roundedRect", "size": [360, 120], "radius": 16, "fill": "#2E3A59", "position": [200, 620],
+        "effects": [
+          { "id": "sweep", "type": "light.ccLightSweep", "params": { "center": { "keys": [ { "t": 1.2, "v": ["-20%", "50%"] }, { "t": 1.8, "v": ["120%", "50%"] } ] }, "direction": -30, "width": 60, "sweepIntensity": 50, "edgeIntensity": 100 } },
+          { "id": "burst", "type": "light.ccLightBurst", "params": { "intensity": 0 } },
+          { "id": "spot", "type": "light.ccSpotlight", "params": { "intensity": 100, "coneAngle": 30 }, "enabled": false },
+          { "id": "leak", "type": "light.leak", "params": { "intensity": 0.5, "speed": 1 }, "enabled": false },
+          { "id": "god", "type": "light.godrays3d", "params": { "intensity": 0 } }
+        ] },
+      { "id": "bloom", "type": "adjustment",
+        "effects": [ { "id": "bloom", "type": "light.bloom", "params": { "threshold": 1, "knee": 0.5, "radius": 60, "intensity": 0.4 } } ] }
+    ] } } }

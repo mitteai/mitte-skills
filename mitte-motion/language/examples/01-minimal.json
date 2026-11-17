@@ -1,0 +1,16 @@
+{
+  "motion": 1,
+  "comps": {
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 3, "background": "#0B0B0F",
+      "layers": [
+        { "id": "title", "type": "text", "text": "Hello, 2027",
+          "style": { "font": "Inter", "weight": 700, "size": 160, "fill": "#FFFFFF" },
+          "origin": "center", "position": ["50%", "50%"] }
+      ],
+      "timeline": [
+        { "target": "title", "from": { "opacity": 0, "y": "+=60" }, "at": 0.2, "dur": 0.7, "ease": "expo.out" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{ "motion": 1,
+  "comps": { "main": { "size": [1280, 720], "fps": 30, "duration": 3, "background": "#000000",
+    "layers": [
+      { "id": "plate", "type": "solid", "color": "#000000",
+        "effects": [ { "id": "noise", "type": "generate.fractalNoise", "params": { "fractal": "turbulentBasic", "scale": 140, "complexity": 4, "contrast": 120, "composite": "replace" } },
+                     { "id": "cells", "type": "generate.cells", "params": { "pattern": "bubbles", "size": 80, "opacity": 40, "mode": "screen", "composite": "over" } } ] },
+      { "id": "duo", "type": "adjustment",
+        "effects": [
+          { "id": "map", "type": "color.gradientMap", "params": { "gradient": { "stops": [[0, "#1B1F3B"], [0.5, "#D7263D"], [1, "#FFB347"]] }, "amount": { "keys": [ { "t": 0, "v": 0 }, { "t": 1, "v": 100 } ] } } },
+          { "id": "levels", "type": "color.levels", "params": { "inBlack": 0.05, "gamma": 1.1, "red": { "gamma": 1.2 } } },
+          { "id": "curves", "type": "color.curves", "params": { "rgb": [[0, 0], [0.4, 0.35], [1, 1]] } },
+          { "id": "hs", "type": "color.hueSaturation", "params": { "hue": { "keys": [ { "t": 1, "v": 0 }, { "t": 3, "v": 90 } ] }, "saturation": 10, "space": "oklch" } },
+          { "id": "exp", "type": "color.exposure", "params": { "exposure": 0.3 } },
+          { "id": "bc", "type": "color.brightnessContrast", "params": { "contrast": 12 } },
+          { "id": "vib", "type": "color.vibrance", "params": { "vibrance": 25 } },
+          { "id": "bal", "type": "color.balance", "params": { "shadows": [0, 0, 10], "highlights": [10, 5, 0] } },
+          { "id": "wb", "type": "color.whiteBalance", "params": { "temperature": 8, "tint": -3 } },
+          { "id": "change", "type": "color.changeColor", "params": { "from": "#D7263D", "to": "#2E86AB", "tolerance": 20, "softness": 15, "match": "hue" }, "enabled": false },
+          { "id": "leave", "type": "color.leaveColor", "params": { "keep": "#FFB347", "amount": 0 } },
+          { "id": "tri", "type": "color.tritone", "params": { "amount": 0 } },
+          { "id": "tint", "type": "color.tint", "params": { "amount": 0 } },
+          { "id": "mix", "type": "color.channelMixer", "params": { "monochrome": false } },
+          { "id": "post", "type": "color.posterize", "params": { "levels": 24, "dither": true }, "enabled": false },
+          { "id": "thr", "type": "color.threshold", "params": { "level": 0.5, "softness": 0.1 }, "enabled": false },
+          { "id": "bw", "type": "color.blackWhite", "params": { "reds": 60, "tint": null }, "enabled": false },
+          { "id": "sel", "type": "color.selective", "params": { "method": "relative" } },
+          { "id": "inv", "type": "color.invert", "params": { "channel": "hue", "amount": 0 } },
+          { "id": "photo", "type": "color.photoFilter", "params": { "filter": "warming85", "density": 15 } },
+          { "id": "toner", "type": "color.ccToner", "params": { "tones": "tritone", "blendWithOriginal": 100 } },
+          { "id": "grade", "type": "color.grade", "params": { "exposure": 0.1, "contrast": 8, "temperature": 4, "saturation": 105, "vignette": { "amount": 0.3, "feather": 60 } } }
+        ] }
+    ] } } }

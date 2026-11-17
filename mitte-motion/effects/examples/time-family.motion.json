@@ -1,0 +1,25 @@
+{ "motion": 1,
+  "comps": {
+    "ball": { "size": [1280, 720], "fps": 30, "duration": 3, "background": null,
+      "layers": [ { "id": "dot", "type": "shape", "shape": "ellipse", "size": [120, 120], "fill": "#FFB347",
+                    "position": { "keys": [ { "t": 0, "v": [160, 360], "ease": "sine.inOut" }, { "t": 1.5, "v": [1120, 360], "ease": "sine.inOut" }, { "t": 3, "v": [160, 360] } ] } } ] },
+    "main": { "size": [1280, 720], "fps": 30, "duration": 3, "background": "#0B0B0F",
+      "layers": [
+        { "id": "trail", "type": "comp", "comp": "ball", "blend": "add",
+          "effects": [
+            { "id": "echo", "type": "time.echo", "params": { "echoTime": -0.04, "count": 6, "startingIntensity": 1, "decay": 0.7, "operator": "add" } },
+            { "id": "wide", "type": "time.ccWideTime", "params": { "forwardSteps": 0, "backwardSteps": 0 } },
+            { "id": "blend", "type": "time.frameBlend", "params": { "mode": "mix" }, "enabled": false },
+            { "id": "diff", "type": "time.difference", "params": { "timeOffset": 0 }, "enabled": false }
+          ] },
+        { "id": "stop", "type": "text", "text": "ON TWOS", "origin": "center", "position": [640, 600],
+          "style": { "font": "Inter", "weight": 800, "size": 90, "fill": "#F7F3E8" },
+          "effects": [
+            { "id": "poster", "type": "time.posterize", "params": { "fps": 12 } },
+            { "id": "rough", "type": "stylize.roughenEdges", "params": { "border": 4, "evolution": { "keys": [ { "t": 0, "v": 0 }, { "t": 3, "v": 720 } ] } } },
+            { "id": "strobe", "type": "time.strobe", "params": { "color": "#FFFFFF", "period": 0.25, "duration": 0.05, "blend": { "keys": [ { "t": 1.4, "v": 0 }, { "t": 1.5, "v": 100 }, { "t": 2.2, "v": 100 }, { "t": 2.3, "v": 0 } ] } } }
+          ] },
+        { "id": "map", "type": "solid", "color": "#000000", "visible": false, "effects": [ { "id": "ramp", "type": "generate.gradient", "params": { "composite": "replace" } } ] },
+        { "id": "slit", "type": "comp", "comp": "ball", "opacity": 40,
+          "effects": [ { "id": "tdisp", "type": "time.displacement", "params": { "map": "map", "maxDisplacement": 0.3 } } ], "enabled": false }
+      ] } } }

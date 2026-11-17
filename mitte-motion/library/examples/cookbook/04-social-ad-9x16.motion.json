@@ -1,0 +1,206 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 04: social ad 9:16: hook, footage with captions, offer, CTA end card; 1:1 and 16:9 variants",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.duration_mismatch",
+        "lint.missing_exit",
+        "lint.text_outside_safe_area",
+        "lint.tween_overlap"
+      ],
+      "note": "Caption instances end at their last word; the audio asset is a placeholder offline. cta.endcard lays its line out for 16:9 (no size param) and overlaps its own button pulse: component limitations on 9:16."
+    }
+  },
+  "theme": {
+    "use": "mitte/bold@1"
+  },
+  "assets": {
+    "plate": {
+      "src": "https://media.mitte.ai/u/p0/plate-city-9x16.mp4",
+      "type": "video"
+    },
+    "vo": {
+      "src": "https://media.mitte.ai/u/p0/vo-fathom.wav",
+      "type": "audio"
+    },
+    "logo": {
+      "src": "library:mitte/demo/logo@1",
+      "type": "svg"
+    }
+  },
+  "lint": {
+    "platform": "tiktok"
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1080,
+        1920
+      ],
+      "fps": 30,
+      "duration": 15,
+      "background": "#000000",
+      "safe": "tiktok",
+      "layers": [
+        {
+          "id": "plate",
+          "type": "video",
+          "asset": "plate",
+          "fit": "cover",
+          "mute": true,
+          "out": 12
+        },
+        {
+          "id": "grade",
+          "type": "adjustment",
+          "effects": [
+            {
+              "type": "stylize.vignette",
+              "params": {
+                "amount": -0.35
+              }
+            }
+          ],
+          "out": 12
+        },
+        {
+          "id": "hook",
+          "type": "component",
+          "use": "mitte/title.kinetic@1",
+          "in": 0.2,
+          "props": {
+            "headline": "Stop editing. Start shipping.",
+            "hold": 1.2
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "40%"
+          ]
+        },
+        {
+          "id": "captions",
+          "type": "component",
+          "use": "mitte/caption.pop@1",
+          "in": 3.0,
+          "props": {
+            "words": [
+              {
+                "text": "Every",
+                "start": 0.0,
+                "end": 0.3
+              },
+              {
+                "text": "edit",
+                "start": 0.3,
+                "end": 0.6
+              },
+              {
+                "text": "becomes",
+                "start": 0.7,
+                "end": 1.1
+              },
+              {
+                "text": "a",
+                "start": 1.1,
+                "end": 1.2
+              },
+              {
+                "text": "video",
+                "start": 1.2,
+                "end": 1.6
+              },
+              {
+                "text": "in",
+                "start": 2.0,
+                "end": 2.15
+              },
+              {
+                "text": "minutes.",
+                "start": 2.15,
+                "end": 2.8
+              },
+              {
+                "text": "Not",
+                "start": 3.3,
+                "end": 3.5
+              },
+              {
+                "text": "days.",
+                "start": 3.5,
+                "end": 4.1
+              }
+            ],
+            "position": "safe-center"
+          }
+        },
+        {
+          "id": "offer",
+          "type": "component",
+          "use": "mitte/title.highlight@1",
+          "in": 8,
+          "props": {
+            "lead": "First month",
+            "phrase": "free",
+            "hold": 2.2
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        },
+        {
+          "id": "end",
+          "type": "component",
+          "use": "mitte/cta.endcard@1",
+          "in": 11.5,
+          "props": {
+            "logo": "logo",
+            "line": "Try it today",
+            "button": "Get started",
+            "url": "mitte.ai",
+            "duration": 3.5
+          }
+        },
+        {
+          "id": "voice",
+          "type": "audio",
+          "asset": "vo",
+          "in": 3.0,
+          "fadeOut": 0.5
+        }
+      ]
+    }
+  },
+  "variants": {
+    "square": {
+      "size": [
+        1080,
+        1080
+      ],
+      "safe": "square",
+      "lint": {
+        "platform": "none"
+      },
+      "override": {
+        "captions": {
+          "props": {
+            "lines": 1
+          }
+        }
+      }
+    },
+    "landscape": {
+      "size": [
+        1920,
+        1080
+      ],
+      "safe": "youtube",
+      "lint": {
+        "platform": "youtube"
+      }
+    }
+  }
+}

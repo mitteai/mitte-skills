@@ -1,0 +1,51 @@
+{
+  "video": "library:mitte/demo/tracking-clip@1",
+  "type": "planar",
+  "items": {
+    "screen": {
+      "corners": [
+        [
+          510,
+          180
+        ],
+        [
+          770,
+          180
+        ],
+        [
+          770,
+          360
+        ],
+        [
+          510,
+          360
+        ]
+      ]
+    }
+  },
+  "preview": "sheet",
+  "corrections": [
+    {
+      "item": "screen",
+      "t": 3.2,
+      "corners": [
+        [
+          512,
+          182
+        ],
+        [
+          772,
+          180
+        ],
+        [
+          771,
+          361
+        ],
+        [
+          510,
+          362
+        ]
+      ]
+    }
+  ]
+}

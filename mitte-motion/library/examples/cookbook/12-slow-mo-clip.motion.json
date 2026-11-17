@@ -1,0 +1,70 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 12: a clip slowed 4x with optical-flow frame blending, a chapter title over it",
+    "x-skills": {
+      "note": "The demo tracking clip stands in for footage; frameBlend flow interpolates the in-between frames."
+    }
+  },
+  "theme": {
+    "use": "mitte/editorial@1"
+  },
+  "assets": {
+    "clip": {
+      "src": "library:mitte/demo/tracking-clip@1",
+      "type": "video"
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 8,
+      "background": "#000000",
+      "layers": [
+        {
+          "id": "slow",
+          "type": "video",
+          "asset": "clip",
+          "fit": "cover",
+          "stretch": 400,
+          "frameBlend": "flow",
+          "mute": true
+        },
+        {
+          "id": "shade",
+          "type": "solid",
+          "color": "$theme.color.fg.a30"
+        },
+        {
+          "id": "chapter",
+          "type": "component",
+          "use": "mitte/title.chapter@1",
+          "in": 1.0,
+          "props": {
+            "number": "02",
+            "kicker": "CHAPTER",
+            "title": "Slower, clearer",
+            "hold": 4
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "chapter",
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 7.1
+        }
+      ]
+    }
+  }
+}

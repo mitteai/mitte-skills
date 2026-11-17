@@ -1,0 +1,37 @@
+{
+  "motion": 1,
+  "meta": { "title": "Variants: one document, three aspect ratios" },
+  "theme": { "use": "mitte/clean@1" },
+  "comps": {
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 5, "background": "$theme.color.bg", "safe": "youtube",
+      "layers": [
+        { "id": "title", "type": "text", "text": "Relative placement",
+          "style": { "font": "$theme.font.display", "size": "$theme.type.size.5", "fill": "$theme.color.fg" },
+          "paragraph": { "align": "center" }, "origin": "center", "position": ["50%", "42%"] },
+        { "id": "subtitle", "type": "text", "text": "needs few overrides",
+          "style": { "font": "$theme.font.body", "size": "$theme.type.size.1", "fill": "$theme.color.muted" },
+          "align": { "to": "title", "y": "below", "gap": 24, "x": "center" } },
+        { "id": "sidebar", "type": "shape", "shape": "roundedRect", "size": [360, 200], "radius": 24,
+          "fill": "$theme.color.surface", "origin": "center", "align": { "to": "safe", "x": "right", "y": "center" } }
+      ],
+      "timeline": [
+        { "id": "intro", "target": "title", "preset": "rise", "at": 0.3 },
+        { "target": "subtitle", "preset": "fadeIn", "at": "<0.2" },
+        { "target": "sidebar", "preset": "slideIn", "props": { "dir": "right" }, "at": "<" },
+        { "target": ["title", "subtitle", "sidebar"], "preset": "fadeOut", "at": 4.2, "dur": 0.5 }
+      ]
+    }
+  },
+  "variants": {
+    "vertical": {
+      "size": [1080, 1920], "safe": "tiktok", "lint": { "platform": "tiktok" },
+      "override": {
+        "title": { "style": { "size": 96 } },
+        "sidebar": { "enabled": false },
+        "timeline": { "intro": { "dur": 0.4 } }
+      }
+    },
+    "square": { "size": [1080, 1080], "safe": "square", "override": { "sidebar": { "enabled": false } } }
+  }
+}

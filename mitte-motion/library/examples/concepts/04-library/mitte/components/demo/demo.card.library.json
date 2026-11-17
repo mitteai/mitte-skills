@@ -1,0 +1,40 @@
+{
+  "x-library": {
+    "meta": {
+      "name": "demo.card",
+      "version": "1.0.0",
+      "phase": "P1",
+      "kind": "component",
+      "description": "A title on a rounded plate that pops in, holds, and fades. The smallest complete library entry; copy it to start a new component.",
+      "tags": ["demo", "card"],
+      "author": "SKILLS example",
+      "license": "MIT",
+      "status": "draft",
+      "examples": "demo.card.examples.json",
+      "spec": ["12 §12.3.1", "12 §12.6.1"]
+    },
+    "components": {
+      "demo.card": {
+        "description": "A title on a rounded plate that pops in, holds, and fades.",
+        "params": {
+          "title": { "type": "text", "default": "Title", "maxChars": 30, "description": "The headline, one line." },
+          "accent": { "type": "color", "default": "$theme.color.accent", "description": "Plate color." },
+          "hold": { "type": "time", "default": 2, "min": 0.5, "max": 30, "description": "Seconds fully visible." }
+        },
+        "size": [800, 240],
+        "duration": "auto",
+        "thumbnail": 1.0,
+        "tags": ["card"],
+        "layers": [
+          { "id": "plate", "type": "shape", "shape": "roundedRect", "size": [800, 240], "radius": "$theme.radius.m", "fill": "$props.accent", "origin": "center", "position": [400, 120] },
+          { "id": "title", "type": "text", "text": "$props.title", "style": { "font": "$theme.font.display", "size": "$theme.type.size.3", "fill": "$props.accent.on" }, "origin": "center", "position": [400, 120] }
+        ],
+        "timeline": [
+          { "id": "in", "target": "plate", "preset": "popIn", "dur": "$theme.motion.dur.base", "at": 0 },
+          { "id": "textIn", "target": "title", "preset": "rise", "props": { "distance": 12 }, "at": "<0.15" },
+          { "id": "out", "target": ["plate", "title"], "preset": "fadeOut", "dur": "$theme.motion.dur.s", "ease": "$theme.ease.exit", "at": "+=$props.hold" }
+        ]
+      }
+    }
+  }
+}

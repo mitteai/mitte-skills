@@ -1,0 +1,15 @@
+{
+  "video": "library:mitte/demo/tracking-clip@1",
+  "type": "stabilize",
+  "range": [
+    0,
+    6
+  ],
+  "stabilize": {
+    "mode": "smooth",
+    "smoothness": 0.8,
+    "model": "similarity",
+    "crop": "auto",
+    "maxScale": 1.2
+  }
+}

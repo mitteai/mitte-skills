@@ -1,0 +1,66 @@
+{
+  "motion": 1,
+  "meta": { "title": "Presets: built-ins of every kind, a local preset, a library preset" },
+  "presets": {
+    "riseBlur": {
+      "params": { "distance": { "type": "number", "default": 48 }, "blur": { "type": "number", "default": 16 } },
+      "dur": "$theme.motion.dur.base", "ease": "$theme.ease.enter",
+      "tweens": [ { "from": { "y": "+=$props.distance", "opacity": 0, "blur": "$props.blur" } } ]
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 8, "background": "#0B0B0F",
+      "layers": [
+        { "id": "rig", "type": "null", "position": [960, 540] },
+        { "id": "a", "type": "text", "text": "Enter", "style": { "font": "Inter", "weight": 800, "size": 90, "fill": "#F5F5F7" }, "origin": "center", "position": [300, 200], "parent": "rig", "keepPlace": true },
+        { "id": "b", "type": "text", "text": "Type on", "style": { "font": "Inter", "weight": 800, "size": 90, "fill": "#F5F5F7" }, "origin": "center", "position": [960, 200] },
+        { "id": "c", "type": "text", "text": "1,250 users", "style": { "font": "Inter", "weight": 800, "size": 90, "fill": "#F5F5F7" }, "origin": "center", "position": [1600, 200] },
+        { "id": "d", "type": "shape", "shape": "ring", "radius": 90, "thickness": 14, "stroke": { "color": "#22D3EE", "width": 14 }, "position": [300, 540] },
+        { "id": "e", "type": "shape", "shape": "roundedRect", "size": [260, 160], "radius": 24, "fill": "#F472B6", "origin": "center", "position": [960, 540],
+          "effects": [ { "id": "glow", "type": "light.glow", "params": { "intensity": 0.6, "radius": 50 } } ] },
+        { "id": "f", "type": "text", "text": "Highlight me", "style": { "font": "Inter", "weight": 700, "size": 64, "fill": "#F5F5F7" }, "origin": "center", "position": [1600, 540] },
+        { "id": "g", "type": "shape", "shape": "circle", "radius": 50, "fill": "#FACC15", "position": [300, 880] },
+        { "id": "h", "type": "shape", "shape": "star", "points": 5, "outer": 60, "inner": 26, "fill": "#34D399", "position": [960, 880] },
+        { "id": "i", "type": "text", "text": "Local & library", "style": { "font": "Inter", "weight": 700, "size": 64, "fill": "#F5F5F7" }, "origin": "center", "position": [1600, 880] }
+      ],
+      "timeline": [
+        { "target": "a", "preset": "rise", "props": { "distance": 60 }, "at": 0.2 },
+        { "target": "b", "preset": "typeOn", "props": { "cps": 20, "cursor": true }, "at": "<" },
+        { "target": "c", "preset": "countUp", "props": { "from": 0, "decimals": 0 }, "dur": 1.2, "at": "<" },
+        { "target": "d", "preset": "drawOn", "props": { "from": "center" }, "at": "<" },
+        { "target": "e", "preset": "popIn", "props": { "overshoot": 2.5 }, "at": "<" },
+        { "target": "f", "preset": "scrambleIn", "props": { "chars": "A-Z", "cycles": 4 }, "dur": 0.8, "at": "<" },
+        { "target": "g", "preset": "flipIn", "props": { "axis": "y" }, "at": "<" },
+        { "target": "h", "preset": "zoomIn", "at": "<" },
+        { "target": "i", "preset": "riseBlur", "props": { "distance": 80, "blur": 24 }, "at": "<" },
+        { "target": "e", "preset": "glowPulse", "props": { "amount": 2 }, "dur": 0.8, "at": 1.8 },
+        { "target": "f", "preset": "highlight", "at": "<" },
+        { "target": "a", "preset": "pulse", "props": { "amount": 112 }, "at": "<" },
+        { "target": "g", "preset": "shake", "props": { "amp": 10, "freq": 12 }, "at": "<" },
+        { "target": "h", "preset": "wobble", "at": "<" },
+        { "target": "b", "preset": "bounce", "props": { "height": 30 }, "at": "<" },
+        { "target": "i", "preset": "underline", "props": { "thickness": 8 }, "at": "<" },
+        { "target": "c", "preset": "colorFlash", "props": { "color": "#FACC15" }, "at": "<" },
+        { "target": "g", "preset": "float", "repeat": -1, "at": 3 },
+        { "target": "h", "preset": "spin", "props": { "turns": 2 }, "dur": 3, "repeat": -1, "at": "<" },
+        { "target": "e", "preset": "breathe", "repeat": -1, "at": "<" },
+        { "target": "d", "preset": "sway", "props": { "amp": 6 }, "repeat": -1, "at": "<" },
+        { "target": "i", "preset": "drift", "at": "<" },
+        { "target": "i", "preset": "mitte/ui.pop@1", "at": 3.5 },
+        { "target": "rig", "preset": "pushIn", "props": { "amount": 80 }, "dur": 2, "at": 3 },
+        { "target": "rig", "preset": "handheld", "props": { "amount": 0.6 }, "at": 3 },
+        { "target": "rig", "preset": "pan", "props": { "by": [-60, 0] }, "dur": 1.5, "at": 5 },
+        { "target": "a", "preset": "sink", "at": 7 },
+        { "target": "b", "preset": "typeOff", "at": "<" },
+        { "target": "c", "preset": "trackOut", "at": "<" },
+        { "target": "d", "preset": "drawOff", "at": "<" },
+        { "target": "e", "preset": "popOut", "at": "<" },
+        { "target": "f", "preset": "scrambleOut", "at": "<" },
+        { "target": "g", "preset": "flipOut", "at": "<" },
+        { "target": "h", "preset": "zoomOut", "at": "<" },
+        { "target": "i", "preset": "blurOut", "at": "<" }
+      ]
+    }
+  }
+}

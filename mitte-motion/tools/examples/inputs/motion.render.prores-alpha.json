@@ -1,0 +1,9 @@
+{
+  "doc_url": "library:mitte/demo/lower-third@1",
+  "output": {
+    "format": "mov",
+    "codec": "prores",
+    "alpha": true,
+    "quality": "high"
+  }
+}

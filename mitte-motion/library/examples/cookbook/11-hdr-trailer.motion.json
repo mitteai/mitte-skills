@@ -1,0 +1,156 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 11: HDR trailer card: highlights above white, glow and bloom, delivered as HDR10 (PQ) with aces2",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.expensive_effect",
+        "lint.text_outside_safe_area"
+      ],
+      "note": "glow and bloom are the point of an HDR card. The title is set past the title-safe width on purpose (a trailer card)."
+    }
+  },
+  "theme": {
+    "use": "mitte/neon@1"
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 6,
+      "background": "#050507",
+      "layers": [
+        {
+          "id": "haze",
+          "type": "solid",
+          "color": "#120A1E",
+          "effects": [
+            {
+              "type": "generate.gradient",
+              "params": {
+                "type": "radial",
+                "start": [
+                  "50%",
+                  "50%"
+                ],
+                "end": [
+                  "100%",
+                  "50%"
+                ],
+                "gradient": {
+                  "stops": [
+                    [
+                      0,
+                      "#2A1140"
+                    ],
+                    [
+                      1,
+                      "#050507"
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "text": "ECLIPSE",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.5",
+            "fill": {
+              "r": 4,
+              "g": 1.2,
+              "b": 3.5
+            },
+            "tracking": 60
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "48%"
+          ],
+          "effects": [
+            {
+              "type": "light.glow",
+              "params": {
+                "radius": 60,
+                "intensity": 1.6
+              }
+            }
+          ]
+        },
+        {
+          "id": "date",
+          "type": "text",
+          "text": "SUMMER 2027",
+          "style": {
+            "font": "$theme.font.body",
+            "size": "$theme.type.size.1",
+            "fill": "$theme.color.fg",
+            "tracking": 300
+          },
+          "origin": "top",
+          "align": {
+            "to": "title",
+            "y": "below",
+            "gap": "$theme.space.5",
+            "x": "center"
+          }
+        },
+        {
+          "id": "bloom",
+          "type": "adjustment",
+          "effects": [
+            {
+              "type": "light.bloom",
+              "params": {
+                "threshold": 1.0,
+                "intensity": 0.8,
+                "radius": 120
+              }
+            }
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "title/chars",
+          "preset": "blurIn",
+          "props": {
+            "amount": 40
+          },
+          "stagger": 0.06,
+          "at": 0.3
+        },
+        {
+          "target": "date",
+          "preset": "trackIn",
+          "at": 1.4
+        },
+        {
+          "target": [
+            "title",
+            "date"
+          ],
+          "preset": "fadeOut",
+          "dur": 0.6,
+          "at": 5.2
+        }
+      ]
+    }
+  },
+  "output": {
+    "format": "mp4",
+    "codec": "hevc",
+    "quality": "high",
+    "hdr": "pq",
+    "hdrPeak": 1000,
+    "toneMap": "aces2"
+  }
+}

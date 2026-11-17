@@ -1,0 +1,27 @@
+{ "motion": 1,
+  "comps": { "main": { "size": [1280, 720], "fps": 30, "duration": 3, "background": "#101418",
+    "layers": [
+      { "id": "depth", "type": "solid", "color": "#000000", "visible": false,
+        "effects": [ { "id": "ramp", "type": "generate.gradient", "params": { "type": "linear", "start": ["0%", "100%"], "end": ["0%", "0%"], "composite": "replace" } } ] },
+      { "id": "plate", "type": "solid", "color": "#1C2230",
+        "effects": [
+          { "id": "noise", "type": "generate.fractalNoise", "params": { "fractal": "turbulentSmooth", "scale": 60, "contrast": 160, "composite": "replace" } },
+          { "id": "dof", "type": "blur.camera",
+            "params": { "radius": 24, "depthMap": "depth", "depthMapSource": "effects", "depthChannel": "luminance", "focus": 35,
+                        "iris": { "shape": "hexagon", "roundness": 20 }, "highlights": { "gain": 1.5, "threshold": 0.9 } } },
+          { "id": "tilt", "type": "blur.tiltShift", "params": { "focusCenter": [640, 360], "focusAngle": 90, "focusWidth": 160, "falloff": 240, "radius": 18 }, "enabled": false }
+        ] },
+      { "id": "title", "type": "text", "text": "BLUR", "origin": "center", "position": [640, 300],
+        "style": { "font": "Inter", "weight": 800, "size": 200, "fill": "#F7F3E8" },
+        "effects": [
+          { "id": "soft", "type": "blur.gaussian", "params": { "radius": { "keys": [ { "t": 0, "v": 60, "ease": "expo.out" }, { "t": 1, "v": 0 } ] }, "repeatEdges": false } }
+        ] },
+      { "id": "logo", "type": "shape", "shape": "ellipse", "size": [160, 160], "fill": "#FFB347", "position": [640, 560],
+        "effects": [
+          { "id": "zoom", "type": "blur.radial", "params": { "type": "zoom", "center": [80, 80],
+              "amount": { "keys": [ { "t": 1.4, "v": 0 }, { "t": 1.6, "v": 60, "ease": "power2.out" }, { "t": 2.2, "v": 0 } ] } } },
+          { "id": "spin", "type": "blur.radial", "params": { "type": "spin", "amount": 12, "quality": "best" }, "enabled": false },
+          { "id": "dir", "type": "blur.directional", "params": { "direction": 90, "length": 0 } },
+          { "id": "sharp", "type": "blur.unsharp", "params": { "amount": 60, "radius": 2 } }
+        ] }
+    ] } } }

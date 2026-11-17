@@ -1,0 +1,494 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Writing components: every param type, slots, $slots forwarding, enabled switches, templates, a repeat over a list param, layout, markers",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.offscreen_while_visible",
+        "lint.chroma_text"
+      ],
+      "note": "offscreen_while_visible on `line` (a box text aligned below `title` inside a nested instance) is a lint false positive; chroma_text flags the small accent-colored slot text on purpose."
+    }
+  },
+  "theme": {
+    "use": "mitte/clean@1"
+  },
+  "assets": {
+    "logo": {
+      "src": "library:mitte/demo/logo@1",
+      "type": "svg"
+    }
+  },
+  "components": {
+    "featureCard": {
+      "description": "Icon or logo, title and one line on a surface plate with a tag row; pops in, holds, sinks out. Set `icon` to an SVG asset id or leave it empty for a text badge.",
+      "params": {
+        "title": {
+          "type": "text",
+          "default": "Feature",
+          "maxChars": 24,
+          "description": "Headline, one line."
+        },
+        "line": {
+          "type": "text",
+          "default": "",
+          "maxChars": 60,
+          "description": "Supporting line; empty hides it."
+        },
+        "icon": {
+          "type": "asset",
+          "accepts": [
+            "svg"
+          ],
+          "default": null,
+          "description": "SVG asset id for the badge; `null` shows `badge` as text."
+        },
+        "badge": {
+          "type": "text",
+          "default": "1",
+          "maxChars": 2,
+          "description": "Text badge when `icon` is null."
+        },
+        "accent": {
+          "type": "color",
+          "default": "$theme.color.accent",
+          "description": "Badge and tag color."
+        },
+        "hold": {
+          "type": "time",
+          "default": 2.5,
+          "min": 0.5,
+          "max": 30,
+          "description": "Seconds fully visible."
+        },
+        "side": {
+          "type": "enum",
+          "values": [
+            "left",
+            "right"
+          ],
+          "default": "left",
+          "description": "Which edge the plate slides in from."
+        },
+        "shadow": {
+          "type": "boolean",
+          "default": true,
+          "description": "Soft shadow under the plate."
+        },
+        "ease": {
+          "type": "ease",
+          "default": "$theme.ease.enter",
+          "description": "Entrance ease."
+        },
+        "enter": {
+          "type": "preset",
+          "kind": "enter",
+          "default": "slideIn",
+          "description": "Entrance preset for the plate: slideIn, wipeIn or fadeIn."
+        },
+        "tags": {
+          "type": "list",
+          "minItems": 0,
+          "maxItems": 4,
+          "default": [
+            "new"
+          ],
+          "item": {
+            "type": "text",
+            "maxChars": 12
+          },
+          "description": "Up to four short tags shown as pills."
+        },
+        "size": {
+          "type": "vector",
+          "default": [
+            560,
+            320
+          ],
+          "description": "Plate size in pixels."
+        },
+        "font": {
+          "type": "font",
+          "default": "$theme.font.display",
+          "description": "Title font token."
+        },
+        "layout": {
+          "type": "object",
+          "fields": {
+            "padding": {
+              "type": "number",
+              "default": 28
+            },
+            "gap": {
+              "type": "number",
+              "default": 12
+            }
+          },
+          "default": {
+            "padding": 28,
+            "gap": 12
+          },
+          "description": "Inner spacing."
+        }
+      },
+      "size": [
+        "{{$props.size[0]}}",
+        "{{$props.size[1]}}"
+      ],
+      "duration": "auto",
+      "markers": [
+        {
+          "t": 0.4,
+          "name": "landed"
+        }
+      ],
+      "layers": [
+        {
+          "id": "shadow",
+          "type": "shape",
+          "shape": "roundedRect",
+          "size": "$props.size",
+          "radius": "$theme.radius.l",
+          "fill": "$theme.color.fg.a10",
+          "enabled": "$props.shadow",
+          "origin": "center",
+          "position": [
+            "{{$props.size[0] / 2}}",
+            "{{$props.size[1] / 2 + 14}}"
+          ],
+          "motionBlur": true
+        },
+        {
+          "id": "plate",
+          "type": "shape",
+          "shape": "roundedRect",
+          "size": "$props.size",
+          "radius": "$theme.radius.l",
+          "fill": "$theme.color.surface",
+          "origin": "center",
+          "position": [
+            "{{$props.size[0] / 2}}",
+            "{{$props.size[1] / 2}}"
+          ],
+          "motionBlur": true
+        },
+        {
+          "id": "iconLayer",
+          "type": "shape",
+          "fromSvg": "$props.icon",
+          "fit": {
+            "width": 64
+          },
+          "enabled": "{{$props.icon != null}}",
+          "origin": "top-left",
+          "position": [
+            "$props.layout.padding",
+            "$props.layout.padding"
+          ]
+        },
+        {
+          "id": "badgeDot",
+          "type": "shape",
+          "shape": "circle",
+          "radius": 32,
+          "fill": "$props.accent",
+          "enabled": "{{$props.icon == null}}",
+          "origin": "top-left",
+          "position": [
+            "$props.layout.padding",
+            "$props.layout.padding"
+          ]
+        },
+        {
+          "id": "badgeText",
+          "type": "text",
+          "text": "$props.badge",
+          "enabled": "{{$props.icon == null}}",
+          "style": {
+            "font": "$theme.font.display",
+            "size": 30,
+            "fill": "$props.accent.on"
+          },
+          "origin": "center",
+          "align": {
+            "to": "badgeDot",
+            "x": "center",
+            "y": "center"
+          }
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "text": "$props.title",
+          "style": {
+            "font": "$props.font",
+            "size": "$theme.type.size.2",
+            "fill": "$theme.color.fg"
+          },
+          "origin": "top-left",
+          "position": [
+            "$props.layout.padding",
+            "{{$props.layout.padding + 64 + $props.layout.gap}}"
+          ]
+        },
+        {
+          "id": "line",
+          "type": "text",
+          "text": "$props.line",
+          "enabled": "{{$props.line != ''}}",
+          "box": [
+            "{{$props.size[0] - 2 * $props.layout.padding}}",
+            80
+          ],
+          "style": {
+            "font": "$theme.font.body",
+            "size": "$theme.type.size.0",
+            "fill": "$theme.color.muted"
+          },
+          "paragraph": {
+            "align": "left"
+          },
+          "origin": "top-left",
+          "align": {
+            "to": "title",
+            "y": "below",
+            "gap": "$props.layout.gap",
+            "x": "left"
+          }
+        },
+        {
+          "id": "tags",
+          "type": "repeat",
+          "data": "$props.tags",
+          "enabled": "{{count($props.tags) > 0}}",
+          "layout": {
+            "type": "stack",
+            "direction": "row",
+            "gap": 8,
+            "align": "center",
+            "justify": "start",
+            "box": [
+              "$props.layout.padding",
+              "{{$props.size[1] - $props.layout.padding - 36}}",
+              "{{$props.size[0] - 2 * $props.layout.padding}}",
+              36
+            ]
+          },
+          "layer": {
+            "type": "text",
+            "text": "{{$item | upper}}",
+            "style": {
+              "font": "$theme.font.mono",
+              "size": 18,
+              "fill": "$theme.color.muted",
+              "tracking": 80
+            }
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "id": "plateIn",
+          "target": [
+            "shadow",
+            "plate"
+          ],
+          "preset": "$props.enter",
+          "props": {
+            "dir": "$props.side"
+          },
+          "dur": "$theme.motion.dur.base",
+          "ease": "$props.ease",
+          "at": 0
+        },
+        {
+          "target": [
+            "iconLayer",
+            "badgeDot",
+            "badgeText"
+          ],
+          "preset": "popIn",
+          "at": "@landed"
+        },
+        {
+          "target": [
+            "title",
+            "line"
+          ],
+          "preset": "rise",
+          "props": {
+            "distance": 16
+          },
+          "stagger": "$theme.motion.stagger.base",
+          "at": "<0.1"
+        },
+        {
+          "target": "tags.*",
+          "preset": "fadeIn",
+          "stagger": "$theme.motion.stagger.tight",
+          "at": "<0.2"
+        },
+        {
+          "target": [
+            "shadow",
+            "plate",
+            "iconLayer",
+            "badgeDot",
+            "badgeText",
+            "title",
+            "line",
+            "tags.*"
+          ],
+          "preset": "sink",
+          "dur": "$theme.motion.dur.s",
+          "ease": "$theme.ease.exit",
+          "at": "+=$props.hold",
+          "stagger": "$theme.motion.stagger.tight"
+        }
+      ]
+    },
+    "cardRow": {
+      "description": "Two feature cards side by side; the left one shows whatever the `art` slot holds above its title.",
+      "params": {
+        "titles": {
+          "type": "list",
+          "minItems": 2,
+          "maxItems": 2,
+          "default": [
+            "One",
+            "Two"
+          ],
+          "item": {
+            "type": "text"
+          },
+          "description": "The two titles."
+        }
+      },
+      "size": [
+        1200,
+        340
+      ],
+      "duration": "auto",
+      "slots": {
+        "art": {
+          "size": [
+            560,
+            120
+          ],
+          "fit": "contain",
+          "required": false,
+          "description": "Art shown over the left card."
+        }
+      },
+      "layers": [
+        {
+          "id": "left",
+          "type": "component",
+          "use": "featureCard",
+          "props": {
+            "title": "{{$props.titles[0]}}",
+            "icon": "logo",
+            "line": "Slot content rides on top."
+          },
+          "position": [
+            0,
+            0
+          ]
+        },
+        {
+          "id": "right",
+          "type": "component",
+          "use": "featureCard",
+          "in": 0.2,
+          "props": {
+            "title": "{{$props.titles[1]}}",
+            "badge": "2",
+            "side": "right",
+            "shadow": false,
+            "tags": [
+              "beta",
+              "fast"
+            ]
+          },
+          "position": [
+            640,
+            0
+          ]
+        },
+        {
+          "id": "art",
+          "type": "slot",
+          "slot": "art",
+          "position": [
+            280,
+            120
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "art",
+          "preset": "fadeIn",
+          "at": 0.6
+        }
+      ]
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 6,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "row",
+          "type": "component",
+          "use": "cardRow",
+          "in": 0.3,
+          "props": {
+            "titles": [
+              "Fast",
+              "Safe"
+            ]
+          },
+          "slots": {
+            "art": [
+              {
+                "id": "artText",
+                "type": "text",
+                "text": "art slot",
+                "style": {
+                  "font": "$theme.font.mono",
+                  "size": 28,
+                  "fill": "$theme.color.accent"
+                },
+                "origin": "center",
+                "position": [
+                  280,
+                  60
+                ]
+              }
+            ]
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "row",
+          "preset": "fadeOut",
+          "dur": 0.3,
+          "at": 4.1
+        }
+      ]
+    }
+  }
+}

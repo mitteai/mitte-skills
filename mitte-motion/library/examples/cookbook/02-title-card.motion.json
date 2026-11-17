@@ -1,0 +1,72 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 02: title card on a looping gradient mesh, three aspect ratios"
+  },
+  "theme": {
+    "use": "mitte/midnight@1"
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 6,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "bg",
+          "type": "component",
+          "use": "mitte/bg.gradient-mesh@1",
+          "props": {
+            "drift": 120,
+            "period": 8
+          }
+        },
+        {
+          "id": "title",
+          "type": "component",
+          "use": "mitte/title.card@1",
+          "in": 0.4,
+          "props": {
+            "kicker": "KEYNOTE 2027",
+            "headline": "Motion for\neveryone",
+            "subline": "One document, every format",
+            "hold": 3.2
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "title",
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 5.1
+        }
+      ]
+    }
+  },
+  "variants": {
+    "vertical": {
+      "size": [
+        1080,
+        1920
+      ],
+      "safe": "reels"
+    },
+    "square": {
+      "size": [
+        1080,
+        1080
+      ],
+      "safe": "square"
+    }
+  }
+}

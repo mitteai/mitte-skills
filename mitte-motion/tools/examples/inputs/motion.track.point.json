@@ -1,0 +1,13 @@
+{
+  "video": "library:mitte/demo/tracking-clip@1",
+  "type": "point",
+  "items": {
+    "tag": {
+      "at": [
+        240,
+        300
+      ]
+    }
+  },
+  "preview": "sheet"
+}

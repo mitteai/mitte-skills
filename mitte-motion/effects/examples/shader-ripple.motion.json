@@ -1,0 +1,71 @@
+{
+ "motion": 1,
+ "comps": {
+  "main": {
+   "size": [
+    960,
+    540
+   ],
+   "fps": 30,
+   "duration": 3,
+   "background": "#101418",
+   "layers": [
+    {
+     "id": "target",
+     "type": "text",
+     "text": "SHADER",
+     "origin": "center",
+     "position": [
+      480,
+      270
+     ],
+     "style": {
+      "font": "Inter",
+      "weight": 800,
+      "size": 150,
+      "fill": "#F7F3E8"
+     },
+     "effects": [
+      {
+       "id": "fx",
+       "type": "utility.shader",
+       "params": {
+        "code": "fn effect(uv: vec2f, t: f32) -> vec4f {\n  let aspect = rexx.size.x / rexx.size.y;\n  let p = (uv - 0.5) * vec2f(aspect, 1.0);\n  let d = length(p);\n  let wave = sin(d * params.frequency - t * params.speed) * params.amount;\n  let dir = select(p / d, vec2f(0.0), d < 1e-4);\n  let offset = dir * wave / vec2f(aspect, 1.0);\n  return textureSampleLevel(input, samp, uv + offset, 0.0);\n}",
+        "params": {
+         "amount": {
+          "type": "float",
+          "default": {
+           "keys": [
+            {
+             "t": 0,
+             "v": 0
+            },
+            {
+             "t": 1.5,
+             "v": 0.02
+            },
+            {
+             "t": 3,
+             "v": 0
+            }
+           ]
+          }
+         },
+         "frequency": {
+          "type": "float",
+          "default": 40
+         },
+         "speed": {
+          "type": "float",
+          "default": 6
+         }
+        },
+        "inputs": []
+       }
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

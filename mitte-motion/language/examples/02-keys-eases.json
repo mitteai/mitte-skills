@@ -1,0 +1,55 @@
+{
+  "motion": 1,
+  "meta": { "title": "Every ease form, motion paths, roving keys, loops, separate dimensions, timing, motion blur" },
+  "comps": {
+    "card": {
+      "size": [400, 240], "fps": 30, "duration": 2,
+      "layers": [
+        { "id": "bg", "type": "solid", "color": "#2A2A35", "size": [400, 240] },
+        { "id": "dot", "type": "shape", "shape": "circle", "radius": 30, "fill": "#22D3EE",
+          "position": { "keys": [ { "t": 0, "v": [60, 120], "ease": "sine.inOut" }, { "t": 2, "v": [340, 120] } ] } }
+      ]
+    },
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 6, "background": "#0B0B0F",
+      "motionBlur": { "shutterAngle": 180, "shutterPhase": -90, "samples": 16, "adaptiveLimit": 128, "enabled": true },
+      "layers": [
+        { "id": "arc", "type": "shape", "shape": "circle", "radius": 28, "fill": "#F472B6", "motionBlur": true,
+          "position": { "keys": [
+            { "t": 0.2, "v": [200, 800], "ease": "expo.out", "path": { "out": [300, -400] } },
+            { "t": 1.4, "v": [960, 300], "rove": true, "path": "auto" },
+            { "t": 2.6, "v": [1700, 800], "ease": "linear", "path": { "in": [-300, -400] } },
+            { "t": 3.4, "v": [1700, 1000] }
+          ] } },
+        { "id": "bezier", "type": "shape", "shape": "roundedRect", "size": [160, 160], "radius": 24, "fill": "#7C5CFF",
+          "origin": "center", "position": [300, 200],
+          "scale": { "keys": [ { "t": 0, "v": [100, 100], "ease": { "dims": ["expo.out", "back.out(2)"] } },
+                               { "t": 0.8, "v": [140, 60], "ease": [0.2, 0, 0, 1] },
+                               { "t": 1.6, "v": [100, 100] } ] },
+          "rotation": { "keys": [ { "t": 0, "v": 0, "ease": "steps(8, start)" }, { "t": 2, "v": 360 } ], "loop": "offset" } },
+        { "id": "spring", "type": "shape", "shape": "circle", "radius": 40, "fill": "#FACC15",
+          "position": { "keys": [ { "t": 0, "v": [600, 200], "ease": "spring(300, 10)" }, { "t": 1, "v": [900, 200],
+                                   "ease": { "spring": { "stiffness": 180, "damping": 12, "mass": 1, "velocity": 0, "settle": 0.001 } } },
+                                 { "t": 2.2, "v": [600, 200] } ] } },
+        { "id": "curve", "type": "shape", "shape": "star", "points": 5, "outer": 60, "inner": 26, "fill": "#34D399",
+          "position": [1200, 200],
+          "opacity": { "keys": [ { "t": 0, "v": 0, "ease": { "curve": [[0, 0], [0.3, 1.15], [0.55, 0.95], [0.75, 1.02], [1, 1]] } },
+                                 { "t": 1, "v": 100, "ease": "elastic.out(1.2, 0.35)" }, { "t": 3, "v": 40 } ],
+                       "loop": { "type": "pingpong", "keys": 2, "count": 3 }, "loopIn": "cycle" } },
+        { "id": "ae", "type": "shape", "shape": "rect", "size": [120, 120], "fill": "#F87171", "origin": "center",
+          "position": { "x": { "keys": [ { "t": 0, "v": 1500, "aeOut": { "speed": 0, "influence": 75 } },
+                                          { "t": 1, "v": 1700, "aeIn": { "speed": 0, "influence": 33.33 } } ] },
+                        "y": { "keys": [ { "t": 0, "v": 200, "ease": "bounce.out" }, { "t": 1.5, "v": 420 } ] } } },
+        { "id": "spinner", "type": "shape", "shape": "polygon", "sides": 3, "radius": 70, "fill": "#FFFFFF",
+          "position": [1500, 800], "motionBlur": false,
+          "rotation": { "keys": [ { "t": 0, "v": 0, "ease": "linear" }, { "t": 0.5, "v": 360 } ], "loop": "cycle" } },
+        { "id": "spinnerBlur", "type": "shape", "shape": "polygon", "sides": 3, "radius": 70, "fill": "#FFFFFF",
+          "position": [1700, 800], "motionBlur": true,
+          "rotation": { "keys": [ { "t": 0, "v": 0, "ease": "linear" }, { "t": 0.5, "v": 360 } ], "loop": "cycle" } },
+        { "id": "nested", "type": "comp", "comp": "card", "origin": "center", "position": [960, 900],
+          "in": 1, "out": 5, "offset": 1, "stretch": 200, "frameBlend": "mix",
+          "timeRemap": { "keys": [ { "t": 0, "v": 0, "ease": "power2.inOut" }, { "t": 1.5, "v": 2, "ease": "hold" }, { "t": 2.5, "v": 2 }, { "t": 4, "v": 0 } ] } }
+      ]
+    }
+  }
+}

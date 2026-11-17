@@ -1,0 +1,38 @@
+{ "motion": 1,
+  "comps": { "main": { "size": [1280, 720], "fps": 30, "duration": 3, "background": "#0B0B0F",
+    "layers": [
+      { "id": "rig", "type": "null", "position": [640, 360],
+        "effects": [
+          { "id": "speed", "type": "control.slider", "params": { "value": { "keys": [ { "t": 0, "v": 0 }, { "t": 2, "v": 100 } ] } } },
+          { "id": "ang", "type": "control.angle", "params": { "value": 45 } },
+          { "id": "pt", "type": "control.point", "params": { "value": [100, 200] } },
+          { "id": "pt3", "type": "control.point3d", "params": { "value": [100, 200, 0] } },
+          { "id": "col", "type": "control.color", "params": { "value": "#FFB347" } },
+          { "id": "on", "type": "control.checkbox", "params": { "value": true } },
+          { "id": "ref", "type": "control.layer", "params": { "value": "plate" } },
+          { "id": "menu", "type": "control.dropdown", "params": { "items": ["slow", "fast"], "value": 2 } }
+        ] },
+      { "id": "plate", "type": "solid", "color": "#000000",
+        "effects": [ { "id": "ramp", "type": "generate.gradient", "params": { "type": "radial", "start": ["50%", "50%"], "end": ["100%", "50%"], "gradient": { "stops": [[0, "#F472B6"], [1, "#1B1F3B"]] }, "composite": "replace" } } ] },
+      { "id": "dial", "type": "shape", "shape": "roundedRect", "size": [300, 60], "radius": 30, "fill": "#22D3EE", "position": [640, 360],
+        "rotation": { "expr": "thisComp.layer('rig').effect('speed')('value') * 3.6" },
+        "effects": [
+          { "id": "grow", "type": "utility.growBounds", "params": { "pixels": 20 } },
+          { "id": "comp", "type": "utility.hdrCompander", "params": { "mode": "compress", "gain": 2 } },
+          { "id": "hl", "type": "utility.hdrHighlightCompression", "params": { "amount": 0 } },
+          { "id": "unmat", "type": "utility.removeColorMatting", "params": { "backgroundColor": "#000000" }, "enabled": false },
+          { "id": "comb", "type": "utility.channelCombiner", "params": { "source": "rgbToHls" }, "enabled": false },
+          { "id": "setch", "type": "utility.setChannels", "params": { "alpha": { "source": "plate", "channel": "luminance" } }, "enabled": false },
+          { "id": "shift", "type": "utility.shiftChannels", "params": { "takeRedFrom": "red" } },
+          { "id": "mm", "type": "utility.minMax", "params": { "operation": "maximum", "radius": 0 } },
+          { "id": "arith", "type": "utility.arithmetic", "params": { "operator": "add", "redValue": 0 } },
+          { "id": "blend", "type": "utility.blend", "params": { "blendWithLayer": "plate", "mode": "crossfade", "blendWithOriginal": 100 } },
+          { "id": "calc", "type": "utility.calculations", "params": { "secondLayer": "plate" }, "enabled": false },
+          { "id": "cccomp", "type": "utility.ccComposite", "params": { "compositeOriginal": "inFront", "opacity": 0 } },
+          { "id": "carith", "type": "utility.compoundArithmetic", "params": { "secondSource": "plate", "operator": "copy", "blendWithOriginal": 100 } },
+          { "id": "solid", "type": "utility.solidComposite", "params": { "color": "#FFFFFF", "opacity": 0 } },
+          { "id": "over", "type": "utility.ccOverbrights", "params": { "channel": "maxRgb" }, "enabled": false },
+          { "id": "prof", "type": "utility.colorProfile", "params": { "inputSpace": "working", "outputSpace": "working" } },
+          { "id": "lut", "type": "utility.applyLut", "params": { "amount": 0 } }
+        ] }
+    ] } } }

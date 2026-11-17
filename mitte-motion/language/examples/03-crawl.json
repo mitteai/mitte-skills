@@ -1,0 +1,23 @@
+{
+  "motion": 1,
+  "meta": { "title": "Crawl: a ticker by duration, credits by speed" },
+  "comps": {
+    "sheet": {
+      "size": [1920, 1400], "fps": 24, "duration": 1,
+      "layers": [
+        { "id": "a", "type": "text", "text": "DIRECTED BY\nAda Lovelace", "style": { "font": "Inter", "weight": 600, "size": 56, "fill": "#E6E6E6" },
+          "paragraph": { "align": "center" }, "origin": "top", "position": [960, 200] },
+        { "id": "b", "type": "text", "text": "MUSIC\nGrace Hopper", "style": { "font": "Inter", "weight": 600, "size": 56, "fill": "#E6E6E6" },
+          "paragraph": { "align": "center" }, "origin": "top", "position": [960, 900] }
+      ]
+    },
+    "main": {
+      "size": [1920, 1080], "fps": 24, "duration": 40, "background": "#000000",
+      "layers": [
+        { "id": "credits", "type": "comp", "comp": "sheet", "crawl": { "dir": "up", "speed": 4, "from": "below", "to": "above", "hold": [1, 1] } },
+        { "id": "ticker", "type": "text", "text": "Breaking: the whole-pixel crawl never judders  •  ", "style": { "font": "Inter", "weight": 600, "size": 44, "fill": "#E6E6E6" },
+          "origin": "left", "position": [0, 900], "crawl": { "dir": "left", "duration": 20, "at": 2 } }
+      ]
+    }
+  }
+}

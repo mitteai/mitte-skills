@@ -1,0 +1,63 @@
+{
+  "motion": 1,
+  "data": {
+    "name": "Ada"
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 4,
+      "background": "#0B0B0F",
+      "layers": [
+        {
+          "id": "name",
+          "type": "text",
+          "text": "{{$data.name}}",
+          "style": {
+            "size": 140,
+            "fill": "#FFFFFF"
+          },
+          "align": {
+            "to": "comp",
+            "x": "center",
+            "y": "center"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "target": "name",
+          "preset": "rise",
+          "dur": 0.7
+        },
+        {
+          "target": "name",
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 3.3
+        }
+      ]
+    }
+  },
+  "variants": {
+    "vertical": {
+      "size": [
+        1080,
+        1920
+      ]
+    }
+  },
+  "output": {
+    "format": "mp4",
+    "codec": "h264",
+    "quality": "standard",
+    "audio": {
+      "loudness": -14
+    },
+    "poster": true
+  }
+}

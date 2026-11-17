@@ -1,0 +1,35 @@
+{
+  "motion": 1,
+  "meta": { "title": "Drivers and the keys list binding" },
+  "data": { "moves": [ { "t": 0, "x": 200, "y": 900 }, { "t": 1, "x": 600, "y": 700 }, { "t": 2.5, "x": 1400, "y": 850 }, { "t": 4, "x": 1700, "y": 600 } ] },
+  "comps": {
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 6, "background": "#0B0B0F",
+      "layers": [
+        { "id": "leader", "type": "shape", "shape": "circle", "radius": 30, "fill": "#F5F5F7",
+          "position": { "keys": { "from": "$data.moves", "t": "t", "v": ["x", "y"], "ease": "power2.inOut" } } },
+        { "id": "f1", "type": "shape", "shape": "circle", "radius": 22, "fill": "#7C5CFF",
+          "position": { "value": [0, 0], "follow": { "path": "leader.position", "delay": 0.12, "offset": [0, 0], "factor": 1 } } },
+        { "id": "f2", "type": "shape", "shape": "circle", "radius": 16, "fill": "#22D3EE",
+          "position": { "value": [0, 0], "follow": { "path": "f1.position", "delay": 0.12 } } },
+        { "id": "wig", "type": "shape", "shape": "roundedRect", "size": [160, 160], "radius": 24, "fill": "#F472B6", "origin": "center",
+          "position": { "value": [300, 300], "wiggle": { "freq": 1.5, "amp": [20, 8], "octaves": 2, "ampMult": 0.5, "seed": 3, "dims": ["x", "y"] } },
+          "rotation": { "value": 0, "noise": { "freq": 0.4, "amp": 6, "seed": 1 } } },
+        { "id": "osc1", "type": "shape", "shape": "circle", "radius": 30, "fill": "#FACC15", "position": [700, 300],
+          "opacity": { "value": 100, "oscillate": { "freq": 1, "amp": 40, "wave": "sine", "phase": 0 } } },
+        { "id": "osc2", "type": "shape", "shape": "circle", "radius": 30, "fill": "#FACC15", "position": [800, 300],
+          "scale": { "value": [100, 100], "oscillate": { "freq": 2, "amp": [30, 30], "wave": "triangle", "decay": 0.8 } } },
+        { "id": "osc3", "type": "shape", "shape": "circle", "radius": 30, "fill": "#FACC15", "position": [900, 300],
+          "rotation": { "value": 0, "oscillate": { "freq": 0.5, "amp": 45, "wave": "square" } } },
+        { "id": "osc4", "type": "shape", "shape": "circle", "radius": 30, "fill": "#FACC15",
+          "x-note": "saw wave on y via a separate dimension",
+          "position": { "x": 1000, "y": { "value": 300, "oscillate": { "freq": 1, "amp": 30, "wave": "saw" } } } },
+        { "id": "sprung", "type": "shape", "shape": "star", "points": 6, "outer": 60, "inner": 30, "fill": "#34D399",
+          "position": { "keys": [ { "t": 0.5, "v": [1300, 300], "ease": "hold" }, { "t": 1.5, "v": [1700, 300], "ease": "hold" }, { "t": 3, "v": [1300, 500] } ],
+                        "spring": { "stiffness": 120, "damping": 9, "mass": 1 } } },
+        { "id": "off", "type": "shape", "shape": "circle", "radius": 24, "fill": "#8A8A99", "position": [1500, 500],
+          "rotation": { "value": 0, "wiggle": { "freq": 2, "amp": 30, "enabled": false } } }
+      ]
+    }
+  }
+}

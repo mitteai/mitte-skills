@@ -1,0 +1,177 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 18: product demo: a laptop with a screen recording slot, a cursor tour with click zooms, a toast",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.missing_exit",
+        "lint.offscreen_while_visible"
+      ],
+      "note": "screen.demo holds the device until its duration; the fade on the instance is the exit. device.laptop's camera dot is reported offscreen by lint (false positive inside the component)."
+    }
+  },
+  "theme": {
+    "use": "mitte/soft@1"
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 10,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "demo",
+          "type": "component",
+          "use": "mitte/screen.demo@1",
+          "in": 0.3,
+          "props": {
+            "device": "laptop",
+            "duration": 9,
+            "fit": 46,
+            "float": 6,
+            "moves": [
+              {
+                "t": 0.0,
+                "x": 1280,
+                "y": 800
+              },
+              {
+                "t": 1.2,
+                "x": 1800,
+                "y": 420,
+                "click": true,
+                "zoom": 1.6
+              },
+              {
+                "t": 3.0,
+                "x": 1800,
+                "y": 420
+              },
+              {
+                "t": 3.8,
+                "x": 900,
+                "y": 1000,
+                "click": true,
+                "zoom": 1
+              },
+              {
+                "t": 5.2,
+                "x": 1500,
+                "y": 700,
+                "click": true,
+                "zoom": 1.8
+              },
+              {
+                "t": 6.8,
+                "x": 1500,
+                "y": 700
+              }
+            ]
+          },
+          "slots": {
+            "screen": [
+              {
+                "id": "app",
+                "type": "solid",
+                "color": "#FFFFFF",
+                "size": [
+                  2560,
+                  1600
+                ]
+              },
+              {
+                "id": "bar",
+                "type": "shape",
+                "shape": "rect",
+                "size": [
+                  2560,
+                  120
+                ],
+                "fill": "$theme.color.accent",
+                "origin": "top-left",
+                "position": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "id": "appTitle",
+                "type": "text",
+                "text": "Projects",
+                "style": {
+                  "font": "$theme.font.display",
+                  "size": 120,
+                  "fill": "$theme.color.fg"
+                },
+                "origin": "top-left",
+                "position": [
+                  160,
+                  260
+                ]
+              },
+              {
+                "id": "btn",
+                "type": "shape",
+                "shape": "roundedRect",
+                "size": [
+                  520,
+                  140
+                ],
+                "radius": 70,
+                "fill": "$theme.color.accent",
+                "origin": "center",
+                "position": [
+                  1800,
+                  420
+                ]
+              },
+              {
+                "id": "btnLabel",
+                "type": "text",
+                "text": "New video",
+                "style": {
+                  "font": "$theme.font.body",
+                  "size": 64,
+                  "fill": "$theme.color.accent.on"
+                },
+                "origin": "center",
+                "position": [
+                  1800,
+                  420
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "toast",
+          "type": "component",
+          "use": "mitte/ui.toast@1",
+          "in": 6.0,
+          "props": {
+            "message": "Render started",
+            "hold": 2
+          },
+          "origin": "top",
+          "align": {
+            "to": "safe",
+            "x": "center",
+            "y": "top"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "target": "demo",
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 9.3
+        }
+      ]
+    }
+  }
+}

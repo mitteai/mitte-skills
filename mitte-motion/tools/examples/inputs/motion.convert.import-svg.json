@@ -1,0 +1,9 @@
+{
+  "from": "svg",
+  "url": "library:mitte/demo/logo@1",
+  "options": {
+    "comp_id": "logo",
+    "fps": 30,
+    "duration": 4
+  }
+}

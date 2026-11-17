@@ -1,0 +1,60 @@
+{
+ "motion": 1,
+ "comps": {
+  "main": {
+   "size": [
+    960,
+    540
+   ],
+   "fps": 30,
+   "duration": 3,
+   "background": "#101418",
+   "layers": [
+    {
+     "id": "target",
+     "type": "text",
+     "text": "SHADER",
+     "origin": "center",
+     "position": [
+      480,
+      270
+     ],
+     "style": {
+      "font": "Inter",
+      "weight": 800,
+      "size": 150,
+      "fill": "#F7F3E8"
+     },
+     "effects": [
+      {
+       "id": "fx",
+       "type": "utility.shader",
+       "params": {
+        "code": "fn effect(uv: vec2f, t: f32) -> vec4f {\n  let c = textureSampleLevel(input, samp, uv, 0.0);\n  // premultiplied in, premultiplied out: scale rgb, keep alpha\n  return c * vec4f(params.tint.rgb, 1.0);\n}",
+        "params": {
+         "tint": {
+          "type": "color",
+          "default": {
+           "keys": [
+            {
+             "t": 0,
+             "v": "#FFB347",
+             "ease": "sine.inOut"
+            },
+            {
+             "t": 3,
+             "v": "#22D3EE"
+            }
+           ]
+          }
+         }
+        },
+        "inputs": []
+       }
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

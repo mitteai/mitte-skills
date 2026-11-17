@@ -1,0 +1,18 @@
+{
+  "x-library-examples": {
+    "component": "mitte/demo.card@1",
+    "golden": { "variants": ["default", "vertical", "square"], "frames": ["thumbnail", "25%", "50%", "90%"], "dir": "golden/demo.card/" },
+    "examples": [
+      { "id": "plain", "title": "Default props on the clean theme",
+        "doc": { "motion": 1, "theme": { "use": "mitte/clean@1" },
+                 "comps": { "main": { "size": [1920, 1080], "fps": 30, "duration": 4, "background": "$theme.color.bg",
+                   "layers": [ { "id": "card", "type": "component", "use": "mitte/demo.card@1", "in": 0.3, "props": { "title": "Hello" }, "origin": "center", "position": ["50%", "50%"] } ] } },
+                 "variants": { "vertical": { "size": [1080, 1920] }, "square": { "size": [1080, 1080] } } } },
+      { "id": "long-hold", "title": "Palette color, long hold, bold theme",
+        "doc": { "motion": 1, "theme": { "use": "mitte/bold@1" },
+                 "comps": { "main": { "size": [1920, 1080], "fps": 30, "duration": 8, "background": "$theme.color.bg",
+                   "layers": [ { "id": "card", "type": "component", "use": "mitte/demo.card@1", "in": 0.3, "props": { "title": "Six seconds", "accent": "$theme.color.palette.2", "hold": 6 }, "origin": "center", "position": ["50%", "50%"] } ] } },
+                 "variants": { "vertical": { "size": [1080, 1920] }, "square": { "size": [1080, 1080] } } } }
+    ]
+  }
+}

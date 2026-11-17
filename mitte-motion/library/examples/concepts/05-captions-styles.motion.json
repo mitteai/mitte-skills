@@ -1,0 +1,149 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Captions: the four styles on the same words, plus a hand-built words text layer with past and future styles",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.missing_exit",
+        "lint.text_too_short_on_screen",
+        "lint.text_outside_safe_area"
+      ],
+      "note": "Four caption instances stacked for comparison; each ends at its last word. Short words on screen are the nature of word-timed captions. text_outside_safe_area: the engine's caption box is 86 % x 30 % of the frame, larger than the 16:9 title-safe box; the words themselves sit inside."
+    }
+  },
+  "theme": {
+    "use": "mitte/midnight@1"
+  },
+  "data": {
+    "words": [
+      {
+        "text": "Every",
+        "start": 0.0,
+        "end": 0.3
+      },
+      {
+        "text": "word",
+        "start": 0.3,
+        "end": 0.6
+      },
+      {
+        "text": "lands",
+        "start": 0.6,
+        "end": 1.0
+      },
+      {
+        "text": "on",
+        "start": 1.1,
+        "end": 1.25
+      },
+      {
+        "text": "time.",
+        "start": 1.25,
+        "end": 1.8
+      }
+    ]
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 4,
+      "background": "$theme.color.bg",
+      "safe": "youtube",
+      "layers": [
+        {
+          "id": "hi",
+          "type": "component",
+          "use": "mitte/caption.highlight@1",
+          "in": 0.3,
+          "props": {
+            "words": "$data.words",
+            "position": "safe-top"
+          }
+        },
+        {
+          "id": "ka",
+          "type": "component",
+          "use": "mitte/caption.karaoke@1",
+          "in": 0.3,
+          "props": {
+            "words": "$data.words",
+            "position": "safe-center",
+            "style": {
+              "size": "$theme.type.size.2"
+            }
+          }
+        },
+        {
+          "id": "mi",
+          "type": "component",
+          "use": "mitte/caption.minimal@1",
+          "in": 0.3,
+          "props": {
+            "words": "$data.words",
+            "position": "safe-bottom"
+          }
+        },
+        {
+          "id": "hand",
+          "type": "text",
+          "in": 2.2,
+          "words": [
+            {
+              "text": "Built",
+              "start": 0.0,
+              "end": 0.3
+            },
+            {
+              "text": "by",
+              "start": 0.3,
+              "end": 0.5
+            },
+            {
+              "text": "hand.",
+              "start": 0.5,
+              "end": 1.0
+            }
+          ],
+          "wordStyle": {
+            "active": {
+              "fill": "$theme.color.accent",
+              "scale": 112
+            },
+            "past": {
+              "opacity": 100
+            },
+            "future": {
+              "opacity": 35
+            }
+          },
+          "paging": {
+            "maxWords": 3,
+            "maxChars": 18
+          },
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.3",
+            "fill": "#FFFFFF"
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "hand",
+          "preset": "fadeOut",
+          "dur": 0.3,
+          "at": 3.5
+        }
+      ]
+    }
+  }
+}

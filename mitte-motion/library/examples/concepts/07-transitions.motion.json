@@ -1,0 +1,40 @@
+{
+  "motion": 1,
+  "meta": { "title": "Transitions as components: two library transitions in a scene sequence, and one instanced by hand between two layers",
+            "x-skills": { "expectWarnings": ["lint.missing_exit", "lint.motion_blur_off_fast_motion"], "note": "Scene layers end on a cut by design (missing_exit); the glass-swipe's pane and wipe move fast on purpose (library component internals)." } },
+  "theme": { "use": "mitte/midnight@1" },
+  "comps": {
+    "one": { "size": [1920, 1080], "fps": 30, "duration": 3, "background": "$theme.color.bg",
+             "layers": [ { "id": "t", "type": "text", "text": "ONE", "style": { "font": "$theme.font.display", "size": "$theme.type.size.6", "fill": "$theme.color.fg" }, "origin": "center", "position": ["50%", "50%"] } ],
+             "timeline": [ { "target": "t", "preset": "rise", "at": 0.2 } ] },
+    "two": { "size": [1920, 1080], "fps": 30, "duration": 3, "background": "$theme.color.accent",
+             "layers": [ { "id": "t", "type": "text", "text": "TWO", "style": { "font": "$theme.font.display", "size": "$theme.type.size.6", "fill": "$theme.color.bg" }, "origin": "center", "position": ["50%", "50%"] } ],
+             "timeline": [ { "target": "t", "preset": "popIn", "at": 0.2 } ] },
+    "three": { "size": [1920, 1080], "fps": 30, "duration": 3, "background": "$theme.color.surface",
+               "layers": [ { "id": "t", "type": "text", "text": "THREE", "style": { "font": "$theme.font.display", "size": "$theme.type.size.6", "fill": "$theme.color.palette.3" }, "origin": "center", "position": ["50%", "50%"] } ],
+               "timeline": [ { "target": "t", "preset": "blurIn", "at": 0.2 } ] },
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": "auto",
+      "scenes": [
+        { "comp": "one", "dur": 3 },
+        { "transition": { "type": "mitte/transition.glass-swipe@1", "dur": 1.0, "props": { "tint": "#FFFFFF10", "frost": 6 } } },
+        { "comp": "two", "dur": 3 },
+        { "transition": { "type": "mitte/transition.iris@1", "dur": 0.8, "props": { "center": ["30%", "40%"], "thickness": 24 } } },
+        { "comp": "three", "dur": 3 }
+      ],
+      "layers": []
+    },
+    "byHand": {
+      "size": [1920, 1080], "fps": 30, "duration": 4, "background": "#000000",
+      "layers": [
+        { "id": "shotA", "type": "solid", "color": "#1D2B53", "out": 1.5 },
+        { "id": "labelA", "type": "text", "text": "A", "style": { "font": "$theme.font.display", "size": 300, "fill": "#FFFFFF" }, "origin": "center", "position": ["50%", "50%"], "out": 1.5 },
+        { "id": "shotB", "type": "solid", "color": "#7E2553", "in": 2.3 },
+        { "id": "labelB", "type": "text", "text": "B", "style": { "font": "$theme.font.display", "size": 300, "fill": "#FFFFFF" }, "origin": "center", "position": ["50%", "50%"], "in": 2.3 },
+        { "id": "tx", "type": "component", "use": "mitte/transition.wipe@1", "in": 1.5, "props": { "dur": 0.8, "angle": 120, "bar": 120, "slant": -20 },
+          "slots": { "a": [ { "id": "a1", "type": "solid", "color": "#1D2B53" }, { "id": "a2", "type": "text", "text": "A", "style": { "font": "$theme.font.display", "size": 300, "fill": "#FFFFFF" }, "origin": "center", "position": ["50%", "50%"] } ],
+                     "b": [ { "id": "b1", "type": "solid", "color": "#7E2553" }, { "id": "b2", "type": "text", "text": "B", "style": { "font": "$theme.font.display", "size": 300, "fill": "#FFFFFF" }, "origin": "center", "position": ["50%", "50%"] } ] } }
+      ]
+    }
+  }
+}

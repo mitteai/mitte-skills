@@ -1,0 +1,64 @@
+{
+ "motion": 1,
+ "comps": {
+  "main": {
+   "size": [
+    960,
+    540
+   ],
+   "fps": 30,
+   "duration": 3,
+   "background": "#101418",
+   "layers": [
+    {
+     "id": "target",
+     "type": "text",
+     "text": "SHADER",
+     "origin": "center",
+     "position": [
+      480,
+      270
+     ],
+     "style": {
+      "font": "Inter",
+      "weight": 800,
+      "size": 150,
+      "fill": "#F7F3E8"
+     },
+     "effects": [
+      {
+       "id": "fx",
+       "type": "utility.shader",
+       "params": {
+        "code": "fn effect(uv: vec2f, t: f32) -> vec4f {\n  let c = uv - 0.5;\n  let shift = c * params.amount * dot(c, c) * 4.0;\n  let r = textureSampleLevel(input, samp, uv + shift, 0.0);\n  let g = textureSampleLevel(input, samp, uv, 0.0);\n  let b = textureSampleLevel(input, samp, uv - shift, 0.0);\n  let a = max(max(r.a, g.a), b.a);\n  // keep the output premultiplied: no channel above the alpha\n  return vec4f(min(r.r, a), min(g.g, a), min(b.b, a), a);\n}",
+        "params": {
+         "amount": {
+          "type": "float",
+          "default": {
+           "keys": [
+            {
+             "t": 0,
+             "v": 0,
+             "ease": "expo.out"
+            },
+            {
+             "t": 1,
+             "v": 0.06
+            },
+            {
+             "t": 3,
+             "v": 0.02
+            }
+           ]
+          }
+         }
+        },
+        "inputs": []
+       }
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

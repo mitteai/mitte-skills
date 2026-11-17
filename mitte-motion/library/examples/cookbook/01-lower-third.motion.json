@@ -1,0 +1,104 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 01: lower third over footage, two speakers, corporate theme",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.motion_blur_off_fast_motion",
+        "lint.offscreen_while_visible"
+      ],
+      "note": "offscreen_while_visible on lower-third.bar's tick is a known lint false positive. motion_blur_off_fast_motion comes from lower-third.split's own exit slide."
+    }
+  },
+  "theme": {
+    "use": "mitte/corporate@1"
+  },
+  "assets": {
+    "clip": {
+      "src": "https://media.mitte.ai/u/p0/interview-16x9.mp4",
+      "type": "video"
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 14,
+      "background": "#000000",
+      "safe": "broadcast",
+      "layers": [
+        {
+          "id": "clip",
+          "type": "video",
+          "asset": "clip",
+          "fit": "cover",
+          "fadeOut": 1.0
+        },
+        {
+          "id": "grade",
+          "type": "adjustment",
+          "effects": [
+            {
+              "type": "stylize.vignette",
+              "params": {
+                "amount": -0.25
+              }
+            }
+          ]
+        },
+        {
+          "id": "lt1",
+          "type": "component",
+          "use": "mitte/lower-third.bar@1",
+          "in": 1.5,
+          "props": {
+            "name": "Ada Lovelace",
+            "role": "Chief Analyst, Engine Co.",
+            "hold": 3.5,
+            "plate": "$theme.color.surface.a80"
+          },
+          "align": {
+            "to": "safe",
+            "x": "left",
+            "y": "bottom"
+          }
+        },
+        {
+          "id": "lt2",
+          "type": "component",
+          "use": "mitte/lower-third.split@1",
+          "in": 8,
+          "props": {
+            "name": "Grace Hopper",
+            "role": "Rear Admiral",
+            "hold": 3
+          },
+          "align": {
+            "to": "safe",
+            "x": "left",
+            "y": "bottom"
+          }
+        }
+      ]
+    }
+  },
+  "variants": {
+    "vertical": {
+      "size": [
+        1080,
+        1920
+      ],
+      "safe": "reels",
+      "override": {
+        "lt1": {
+          "props": {
+            "role": "Chief Analyst"
+          }
+        }
+      }
+    }
+  }
+}

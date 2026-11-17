@@ -1,0 +1,88 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 10: a label tracked onto moving footage (the demo tracking clip), two steps: motion.track then this document",
+    "x-skills": {
+      "note": "tracking-clip.track.json beside this file was made by `rexx-engine track` on the demo clip (point item `tag` at [240, 300]); 10-tracked-title.assets.json maps the `tk` asset to it so the check runs offline."
+    }
+  },
+  "theme": {
+    "use": "mitte/midnight@1"
+  },
+  "assets": {
+    "clip": {
+      "src": "library:mitte/demo/tracking-clip@1",
+      "type": "video"
+    },
+    "tk": {
+      "src": "https://media.mitte.ai/u/p0/tracking-clip.track.json",
+      "type": "track"
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        960,
+        540
+      ],
+      "fps": 30,
+      "duration": 6,
+      "background": "#000000",
+      "layers": [
+        {
+          "id": "clip",
+          "type": "video",
+          "asset": "clip",
+          "box": [
+            960,
+            540
+          ],
+          "fit": "cover"
+        },
+        {
+          "id": "tag",
+          "type": "text",
+          "text": "TAG · tracked",
+          "style": {
+            "font": "$theme.font.display",
+            "size": 28,
+            "fill": "#FFFFFF"
+          },
+          "origin": "center",
+          "position": {
+            "track": {
+              "asset": "tk",
+              "item": "tag",
+              "layer": "clip",
+              "offset": [
+                90,
+                -60
+              ],
+              "smooth": 0.15,
+              "lost": "hold"
+            }
+          },
+          "effects": [
+            {
+              "id": "shadow",
+              "type": "stylize.dropShadow",
+              "params": {
+                "opacity": 60,
+                "distance": 4,
+                "softness": 12
+              }
+            }
+          ],
+          "motionBlur": true
+        }
+      ],
+      "timeline": [
+        {
+          "target": "tag",
+          "preset": "popIn",
+          "at": 0.5
+        }
+      ]
+    }
+  }
+}

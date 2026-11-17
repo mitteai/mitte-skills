@@ -1,0 +1,79 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 20: 9:16 outro: countdown, a subscribe CTA, a platform frame with handle and progress",
+    "x-skills": {
+      "expectWarnings": ["lint.missing_exit", "lint.text_outside_safe_area", "lint.text_too_short_on_screen"],
+      "note": "The frame's progress bar runs to the end by design; the countdown's digits hold one beat each (shorter than a word's reading time) and its GO punches past the frame, as a countdown does."
+    }
+  },
+  "theme": {
+    "use": "mitte/bold@1"
+  },
+  "lint": {
+    "platform": "shorts"
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1080,
+        1920
+      ],
+      "fps": 30,
+      "duration": 9,
+      "background": "$theme.color.bg",
+      "safe": "shorts",
+      "layers": [
+        {
+          "id": "bg",
+          "type": "component",
+          "use": "mitte/bg.gradient-mesh@1",
+          "props": {
+            "period": 6
+          }
+        },
+        {
+          "id": "frame",
+          "type": "component",
+          "use": "mitte/social.frame@1",
+          "props": {
+            "handle": "@mitte",
+            "platform": "shorts",
+            "duration": 9
+          }
+        },
+        {
+          "id": "count",
+          "type": "component",
+          "use": "mitte/countdown@1",
+          "in": 0.4,
+          "props": {
+            "go": "GO",
+            "hold": 1.0
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "42%"
+          ]
+        },
+        {
+          "id": "sub",
+          "type": "component",
+          "use": "mitte/cta.subscribe@1",
+          "in": 5.0,
+          "props": {
+            "channel": "mitte motion",
+            "initial": "m",
+            "hold": 2.0
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "58%"
+          ]
+        }
+      ]
+    }
+  }
+}

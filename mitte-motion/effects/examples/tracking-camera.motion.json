@@ -1,0 +1,13 @@
+{ "motion": 1,
+  "assets": {
+    "clip": { "src": "https://media.mitte.ai/u/demo/camera-scene.mp4", "type": "video" },
+    "camTk": { "src": "https://media.mitte.ai/u/demo/camera-scene.camera.track.json", "type": "track" }
+  },
+  "comps": { "main": { "size": [480, 270], "fps": 24, "duration": 1.5, "renderer3d": "classic",
+    "layers": [
+      { "id": "clip", "type": "video", "asset": "clip" },
+      { "id": "cam", "type": "camera", "solve": { "asset": "camTk", "layer": "clip", "anchors": { "floor": { "on": "ground", "at": [0, 160] }, "mark": { "point": 34 } } } },
+      { "id": "welcome", "type": "text", "text": "WELCOME", "threeD": true, "parent": "cam.floor", "origin": "center",
+        "style": { "font": "Inter", "weight": 800, "size": 46, "fill": "#FFD23F" }, "transform": { "rotationX": -90, "position": [0, 0, 0] } },
+      { "id": "card", "type": "shape", "shape": "roundedRect", "size": [64, 38], "radius": 7, "fill": "#FF4F8B", "threeD": true, "parent": "cam.mark", "transform": { "position": [0, -24, 0] } }
+    ] } } }

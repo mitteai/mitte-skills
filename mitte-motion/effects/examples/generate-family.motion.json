@@ -1,0 +1,39 @@
+{ "motion": 1,
+  "comps": { "main": { "size": [1280, 720], "fps": 30, "duration": 4, "background": "#0B0B0F",
+    "layers": [
+      { "id": "bg", "type": "solid", "color": "#000000",
+        "effects": [
+          { "id": "mesh", "type": "generate.gradient4", "params": { "points": [ { "position": ["10%", "10%"], "color": "#1B1F3B" }, { "position": ["90%", "10%"], "color": "#7C5CFF" }, { "position": ["10%", "90%"], "color": "#22D3EE" }, { "position": ["90%", "90%"], "color": "#F472B6" } ], "blend": 100, "composite": "replace" } },
+          { "id": "smoke", "type": "generate.fractalNoise", "params": { "fractal": "turbulentSmooth", "scale": 180, "complexity": 5, "contrast": 130, "brightness": -10,
+              "evolution": { "keys": [ { "t": 0, "v": 0 }, { "t": 4, "v": 360 } ] }, "cycleEvolution": true, "cycle": 1, "opacity": 35, "mode": "screen", "composite": "over" } },
+          { "id": "grid", "type": "generate.grid", "params": { "size": [80, 80], "border": 1, "color": "#FFFFFF", "opacity": 12, "composite": "over" } },
+          { "id": "check", "type": "generate.checkerboard", "params": { "size": [64, 64], "opacity": 0, "composite": "over" } },
+          { "id": "cells", "type": "generate.cells", "params": { "pattern": "crystals", "size": 120, "evolution": { "keys": [ { "t": 0, "v": 0 }, { "t": 4, "v": 360 } ] }, "cycleEvolution": true, "opacity": 20, "mode": "add", "composite": "over" } },
+          { "id": "curl", "type": "generate.curlNoise", "params": { "output": "flowLines", "scale": 240, "lineLength": 40, "composite": "over" }, "enabled": false },
+          { "id": "turb", "type": "generate.turbulentNoise", "params": { "scale": 100, "composite": "over", "opacity": 0 } },
+          { "id": "meshg", "type": "generate.meshGradient", "params": { "points": [ { "position": ["20%", "30%"], "color": "#FFB347", "radius": 300 }, { "position": ["70%", "60%"], "color": "#22D3EE", "radius": 400 }, { "position": ["50%", "90%"], "color": "#7C5CFF", "radius": 300 } ], "warp": { "amount": 40, "scale": 300, "speed": 0.3 }, "composite": "over", "opacity": 0 } }
+        ] },
+      { "id": "ring", "type": "solid", "color": "#000000", "size": [400, 400], "position": [320, 360],
+        "effects": [
+          { "id": "circle", "type": "generate.circle", "params": { "radius": 150, "edge": "thickness", "thickness": 14, "feather": { "outer": 2, "inner": 2 }, "color": "#FFFFFF", "composite": "replace" } },
+          { "id": "ellipse", "type": "generate.ellipse", "params": { "width": 300, "height": 200, "thickness": 6, "inside": "#FFB347", "outside": "#FF4D2E", "composite": "over" } },
+          { "id": "beam", "type": "generate.beam", "params": { "start": ["10%", "50%"], "end": ["90%", "50%"], "length": 40, "time": { "keys": [ { "t": 0, "v": 0 }, { "t": 4, "v": 100 } ] }, "startThickness": 8, "endThickness": 2, "inside": "#FFFFFF", "outside": "#22D3EE", "composite": "over" } }
+        ] },
+      { "id": "strokes", "type": "solid", "color": "#000000", "size": [500, 360], "position": [900, 360],
+        "masks": [ { "id": "loop", "shape": "ellipse", "mode": "none", "size": [400, 260] } ],
+        "effects": [
+          { "id": "stroke", "type": "generate.stroke", "params": { "path": "loop", "color": "#FFFFFF", "size": 6, "end": { "keys": [ { "t": 0, "v": 0 }, { "t": 2, "v": 100 } ] }, "paintStyle": "onTransparent" } },
+          { "id": "vegas", "type": "generate.vegas", "params": { "path": "loop", "segments": 16, "length": 0.5, "color": "#FFB347", "width": 4, "blend": "add" } },
+          { "id": "scribble", "type": "generate.scribble", "params": { "path": "loop", "color": "#22D3EE", "opacity": 60, "strokeWidth": 2, "composite": "over" }, "enabled": false },
+          { "id": "waves", "type": "generate.radioWaves", "params": { "producer": ["50%", "50%"], "frequency": 2, "lifespan": 2, "color": "#7C5CFF" } },
+          { "id": "write", "type": "generate.writeOn", "params": { "brushPosition": { "keys": [ { "t": 0, "v": [40, 40] }, { "t": 2, "v": [460, 320] } ] }, "color": "#F472B6", "size": 8, "paintStyle": "onOriginal" } },
+          { "id": "bolt", "type": "generate.advancedLightning", "params": { "lightningType": "strike", "origin": ["10%", "10%"], "direction": ["90%", "90%"], "conductivityState": { "keys": [ { "t": 0, "v": 0 }, { "t": 4, "v": 10 } ] }, "glow": { "color": "#4059FF" } } },
+          { "id": "glue", "type": "generate.ccGlueGun", "params": { "brushPosition": { "keys": [ { "t": 0, "v": [60, 300] }, { "t": 4, "v": [440, 60] } ] }, "strokeWidth": 16 }, "enabled": false },
+          { "id": "threads", "type": "generate.ccThreads", "params": { "coverage": 60 }, "enabled": false },
+          { "id": "eye", "type": "generate.eyedropperFill", "params": { "blendWithOriginal": 100 } },
+          { "id": "fract", "type": "generate.fractal", "params": { "set": "julia" }, "enabled": false },
+          { "id": "bucket", "type": "generate.paintBucket", "params": { "fillPoint": [10, 10], "color": "#FFFFFF", "opacity": 0 } },
+          { "id": "flareSimple", "type": "generate.lensFlareSimple", "params": { "brightness": 40, "lens": "35prime" }, "enabled": false },
+          { "id": "fill", "type": "generate.fill", "params": { "color": "#22D3EE", "opacity": 0 } }
+        ] }
+    ] } } }

@@ -1,0 +1,7 @@
+{
+  "doc_url": "library:mitte/demo/title-card@1",
+  "output": {
+    "codec": "hevc",
+    "encoder": "nvenc"
+  }
+}

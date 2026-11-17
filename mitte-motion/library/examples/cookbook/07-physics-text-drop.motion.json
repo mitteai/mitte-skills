@@ -1,0 +1,133 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 07: letters fall as rigid bodies, pile up, an explosion scatters them, they settle back into the layout",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.text_outside_safe_area",
+        "lint.offscreen_while_visible"
+      ],
+      "note": "Letters that are thrown against the walls leave the safe area; that is the piece."
+    }
+  },
+  "theme": {
+    "use": "mitte/bold@1"
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 6,
+      "background": "$theme.color.bg",
+      "motionBlur": {
+        "shutterAngle": 180
+      },
+      "physics": {
+        "gravity": [
+          0,
+          2600
+        ],
+        "world": {
+          "floor": 1000,
+          "walls": [
+            "left",
+            "right"
+          ]
+        },
+        "seed": 4,
+        "vary": {
+          "velocity": 80,
+          "spin": 60,
+          "rotation": 0,
+          "position": 0
+        },
+        "forces": [
+          {
+            "type": "explosion",
+            "at": 2.2,
+            "center": [
+              960,
+              760
+            ],
+            "strength": 700,
+            "radius": 900,
+            "spin": 200
+          }
+        ]
+      },
+      "layers": [
+        {
+          "id": "word",
+          "type": "text",
+          "text": "GRAVITY",
+          "style": {
+            "font": "$theme.font.display",
+            "size": 220,
+            "weight": 800,
+            "fill": "$theme.color.fg"
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "45%"
+          ],
+          "motionBlur": true,
+          "body": {
+            "type": "dynamic",
+            "per": "chars",
+            "shape": "hull",
+            "inset": 2,
+            "restitution": 0.25,
+            "friction": 0.6,
+            "start": 0.8,
+            "settle": {
+              "at": 3.6,
+              "dur": 0.9,
+              "to": "layout",
+              "ease": "back.out(1.4)",
+              "stagger": {
+                "each": 0.06,
+                "from": "start"
+              }
+            }
+          }
+        },
+        {
+          "id": "floorLine",
+          "type": "shape",
+          "shape": "rect",
+          "size": [
+            1920,
+            4
+          ],
+          "fill": "$theme.color.line",
+          "origin": "center",
+          "position": [
+            960,
+            1002
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "word",
+          "preset": "fadeIn",
+          "dur": 0.3,
+          "at": 0
+        },
+        {
+          "target": [
+            "word",
+            "floorLine"
+          ],
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 5.5
+        }
+      ]
+    }
+  }
+}

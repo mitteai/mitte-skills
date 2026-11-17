@@ -1,0 +1,55 @@
+{
+  "motion": 1,
+  "meta": { "title": "Themes, data, templates: every token group, modifier, format and placeholder function" },
+  "theme": {
+    "use": "mitte/midnight@1",
+    "override": {
+      "color": { "bg": "#060A1A", "fg": "#EAF0FF", "accent": "#4CC9F0", "muted": "#8B97B8", "surface": "#0E1630", "line": "#1C2750",
+                 "palette": ["#4CC9F0", "#7B61FF", "#F72585", "#FFD166", "#06D6A0"], "positive": "#06D6A0", "negative": "#F72585", "warning": "#FFD166" },
+      "font": { "display": { "family": "Space Grotesk", "weight": 700, "tracking": -15 }, "body": { "family": "Manrope", "weight": 500 }, "mono": { "family": "Geist Mono", "weight": 500 } },
+      "type": { "base": 0.042, "ratio": 1.333, "lineHeight": 1.15 },
+      "space": { "unit": 0.0125, "scale": [0, 1, 2, 3, 4, 6, 8, 12, 16, 24] },
+      "radius": { "s": 8, "m": 18, "l": 36, "pill": 9999 },
+      "motion": { "dur": { "xs": 0.15, "s": 0.3, "base": 0.55, "l": 0.85, "xl": 1.3, "transition": 0.55 }, "stagger": { "tight": 0.025, "base": 0.06, "loose": 0.11 } },
+      "ease": { "default": "power3.out", "enter": "expo.out", "exit": "power3.in", "move": [0.2, 0, 0, 1], "emphasis": "back.out(2.0)", "linear": "linear", "transition": "expo.inOut" },
+      "spring": { "gentle": { "bounce": 0, "duration": 0.55 }, "snappy": { "bounce": 0.15, "duration": 0.38 }, "bouncy": { "stiffness": 200, "damping": 10, "mass": 1 } },
+      "texture": { "grain": 0.04, "grainSize": 1.2, "vignette": 0.2 },
+      "styles": { "card": { "dropShadow": { "color": "#000000", "opacity": 30, "distance": 10, "size": 30 } } }
+    }
+  },
+  "data": {
+    "locale": "en-US", "quarter": 3, "revenue": 4182000, "growth": 0.124, "launch": "2027-03-14", "seconds": 95, "name": "ada lovelace", "n": 7,
+    "sales": [ { "label": "Jan", "value": 12 }, { "label": "Feb", "value": 19 }, { "label": "Mar", "value": 33 } ],
+    "brand": { "primary": "#F72585" }
+  },
+  "comps": { "main": {
+    "size": [1920, 1080], "fps": 30, "duration": 6, "background": "$theme.color.bg", "safe": "youtube",
+    "layers": [
+      { "id": "plate", "type": "shape", "shape": "roundedRect", "size": ["{{1920 * 0.6}}", 160], "radius": "$theme.radius.m", "fill": "$theme.color.surface", "styles": "$theme.styles.card", "origin": "center", "position": ["50%", "18%"] },
+      { "id": "t1", "type": "text", "text": "Q{{$data.quarter}} revenue {{$data.revenue | currency:USD:0}} · {{$data.growth | percent:1}} YoY",
+        "style": { "font": "$theme.font.display", "size": "$theme.type.size.3", "fill": "$theme.color.fg" }, "paragraph": { "align": "center" }, "origin": "center", "position": ["50%", "18%"] },
+      { "id": "t2", "type": "text", "text": "{{$data.revenue | number:1:compact}} · {{$data.launch | date:EEE d MMM}} · {{$data.seconds | time}} · {{$data.name | title}} · {{$data.n | pad:3:0}} · {{$data.missing | default:n/a}} · {{$data.name | upper}} · {{$data.name | lower}}",
+        "style": { "font": "$theme.font.body", "size": "$theme.type.size.0", "fill": "$theme.color.muted" }, "paragraph": { "align": "center" }, "origin": "center", "position": ["50%", "30%"] },
+      { "id": "t3", "type": "text", "text": "sum {{sum($data.sales.value)}} first2 {{sum($data.sales.value, 2)}} mid {{sum($data.sales.value, 1, 3)}} count {{count($data.sales)}} max {{max($data.sales.value)}} min {{min(3, 9)}} atan2 {{atan2(1, 1)}} sqrt {{sqrt(16)}} clamp {{clamp(15, 0, 10)}} lerp {{lerp(0, 100, 0.25)}} {{round(2.5)}} {{floor(2.7)}} {{ceil(2.1)}} {{abs(-4)}} {{(3 + 4) * 2 % 5}} {{$data.n > 5}} {{$data.sales[5].value | default:none}} {{$data.sales[$data.n - 6].label}}",
+        "style": { "font": "$theme.font.mono", "size": "$theme.type.size.-1", "fill": "$theme.color.fg.a70" }, "paragraph": { "align": "center" }, "box": [1600, 200], "origin": "center", "position": ["50%", "42%"] },
+      { "id": "sw1", "type": "shape", "shape": "circle", "radius": "$theme.space.4", "fill": "$theme.color.accent", "position": [400, 640] },
+      { "id": "sw2", "type": "shape", "shape": "circle", "radius": "$theme.space.4", "fill": "$theme.color.accent.a30", "position": [520, 640] },
+      { "id": "sw3", "type": "shape", "shape": "circle", "radius": "$theme.space.4", "fill": "$theme.color.accent.lighter", "position": [640, 640] },
+      { "id": "sw4", "type": "shape", "shape": "circle", "radius": "$theme.space.4", "fill": "$theme.color.accent.darker", "position": [760, 640] },
+      { "id": "sw5", "type": "shape", "shape": "circle", "radius": "$theme.space.4", "fill": "$theme.color.accent.on", "position": [880, 640] },
+      { "id": "sw6", "type": "shape", "shape": "circle", "radius": "$theme.space.4", "fill": "$data.brand.primary.a50", "position": [1000, 640] },
+      { "id": "sw7", "type": "shape", "shape": "circle", "radius": "$theme.space.4", "fill": "$theme.color.palette.7", "position": [1120, 640] },
+      { "id": "sw8", "type": "shape", "shape": "circle", "radius": "$theme.space.4", "fill": "$theme.color.positive", "position": [1240, 640] },
+      { "id": "sw9", "type": "shape", "shape": "circle", "radius": "$theme.space.4", "fill": "$theme.color.warning", "position": [1360, 640] },
+      { "id": "sw10", "type": "shape", "shape": "circle", "radius": "$theme.space.4", "fill": "$theme.color.negative", "position": [1480, 640] },
+      { "id": "stat", "type": "text", "text": "$4,182,000", "style": { "font": "$theme.font.display", "size": "$theme.type.size.5", "fill": "$theme.color.fg" }, "paragraph": { "align": "center" }, "origin": "center", "position": ["50%", "80%"] }
+    ],
+    "timeline": [
+      { "target": "plate", "preset": "popIn", "at": "$theme.motion.dur.xs" },
+      { "target": ["t1", "t2", "t3"], "preset": "rise", "stagger": "$theme.motion.stagger.base", "dur": "$theme.motion.dur.base", "ease": "$theme.ease.enter", "at": "<0.1" },
+      { "target": ["sw1", "sw2", "sw3", "sw4", "sw5", "sw6", "sw7", "sw8", "sw9", "sw10"], "preset": "popIn", "stagger": { "each": "$theme.motion.stagger.tight", "from": "center" }, "ease": "$theme.spring.bouncy", "at": "<" },
+      { "target": "stat", "preset": "countUp", "props": { "from": 0, "format": "currency:USD:0" }, "dur": 1.4, "at": 1 },
+      { "target": "stat", "to": { "scale": 104 }, "ease": "$theme.spring.snappy", "dur": "auto", "at": ">" }
+    ]
+  } }
+}

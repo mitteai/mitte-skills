@@ -1,0 +1,3 @@
+{ "motion": 1, "assets": { "hero": { "src": "https://media.mitte.ai/u/demo/hero.mp4", "type": "video" } },
+  "comps": { "main": { "size": [1280, 720], "fps": 30, "duration": 2,
+    "layers": [ { "id": "clip", "type": "video", "asset": "hero", "fit": "cover" } ] } } }

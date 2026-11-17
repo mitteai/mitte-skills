@@ -1,0 +1,33 @@
+{ "motion": 1,
+  "comps": { "main": { "size": [1280, 720], "fps": 30, "duration": 4, "background": "#0B0B0F",
+    "layers": [
+      { "id": "noise", "type": "solid", "color": "#000000", "visible": false,
+        "effects": [ { "id": "fn", "type": "generate.fractalNoise", "params": { "scale": 40, "contrast": 150, "composite": "replace" } } ] },
+      { "id": "incoming", "type": "solid", "color": "#2E3A59", "visible": false },
+      { "id": "scene", "type": "solid", "color": "#7C5CFF",
+        "effects": [
+          { "id": "dissolve", "type": "transition.gradientWipe", "params": { "gradient": "noise", "softness": 20, "completion": { "keys": [ { "t": 2.5, "v": 0 }, { "t": 3.5, "v": 100 } ] } } },
+          { "id": "cards", "type": "transition.cardWipe", "params": { "rows": 4, "columns": 8, "backLayer": "incoming", "completion": 0 }, "enabled": false },
+          { "id": "glass", "type": "transition.ccGlassWipe", "params": { "layerToReveal": "incoming", "completion": 0 }, "enabled": false },
+          { "id": "warpo", "type": "transition.ccWarpoMatic", "params": { "layerToReveal": "incoming", "completion": 0 }, "enabled": false },
+          { "id": "twister", "type": "transition.ccTwister", "params": { "backside": "incoming", "completion": 0 }, "enabled": false },
+          { "id": "page", "type": "transition.pageTurn", "params": { "fold": ["70%", "70%"] }, "enabled": false }
+        ] },
+      { "id": "title", "type": "text", "text": "WIPE", "origin": "center", "position": [640, 300],
+        "style": { "font": "Inter", "weight": 800, "size": 200, "fill": "#F7F3E8" },
+        "effects": [
+          { "id": "wipe", "type": "transition.linearWipe", "params": { "completion": { "keys": [ { "t": 0.2, "v": 100, "ease": "expo.out" }, { "t": 1.0, "v": 0 } ] }, "angle": 90, "feather": 40 } },
+          { "id": "radial", "type": "transition.radialWipe", "params": { "completion": 0 } },
+          { "id": "blinds", "type": "transition.venetianBlinds", "params": { "completion": 0 } },
+          { "id": "blocks", "type": "transition.blockDissolve", "params": { "completion": 0 } },
+          { "id": "grid", "type": "transition.ccGridWipe", "params": { "completion": 0 } },
+          { "id": "image", "type": "transition.ccImageWipe", "params": { "completion": 0 } },
+          { "id": "jaws", "type": "transition.ccJaws", "params": { "completion": 0 } },
+          { "id": "lightw", "type": "transition.ccLightWipe", "params": { "completion": 0 } },
+          { "id": "lines", "type": "transition.ccLineSweep", "params": { "completion": 0 } },
+          { "id": "rscale", "type": "transition.ccRadialScaleWipe", "params": { "completion": 0 } },
+          { "id": "scalew", "type": "transition.ccScaleWipe", "params": { "stretch": 0 } }
+        ] },
+      { "id": "logo", "type": "shape", "shape": "ellipse", "size": [220, 220], "fill": "#FFB347", "position": [640, 560],
+        "effects": [ { "id": "iris", "type": "transition.iris", "params": { "shape": "circle", "feather": 30, "completion": { "keys": [ { "t": 1.0, "v": 100, "ease": "back.out" }, { "t": 1.8, "v": 0 } ] } } } ] }
+    ] } } }

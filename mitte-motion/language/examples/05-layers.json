@@ -1,0 +1,58 @@
+{
+  "motion": 1,
+  "meta": { "title": "Layers: types, transform, placement, safe areas, styles, auto-orient" },
+  "assets": { "mark": { "src": "library:mitte/demo/logo@1", "type": "svg" } },
+  "comps": {
+    "card": {
+      "size": [400, 240], "fps": 30, "duration": 4,
+      "layers": [ { "id": "plate", "type": "solid", "color": "#2A2A35", "size": [400, 240] },
+                  { "id": "label", "type": "text", "text": "nested", "style": { "font": "Inter", "size": 40, "fill": "#F5F5F7" }, "origin": "center", "position": [200, 120] } ]
+    },
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 6, "background": "#0B0B0F",
+      "safe": { "preset": "youtube", "title": { "top": 0.08, "bottom": 0.12, "left": "96px", "right": "96px" } },
+      "globalLight": { "angle": 120, "altitude": 30 },
+      "layers": [
+        { "id": "bg", "type": "solid", "color": "#101014", "name": "Backdrop" },
+        { "id": "rig", "type": "null", "position": { "keys": [ { "t": 0, "v": [960, 540], "ease": "sine.inOut" }, { "t": 6, "v": [980, 540] } ] } },
+        { "id": "title", "type": "text", "text": "Every layer type", "parent": "rig",
+          "style": { "font": "Inter", "weight": 800, "size": 110, "fill": "#F5F5F7" }, "paragraph": { "align": "center" },
+          "origin": "baseline", "position": ["50%", "28%"], "measureAt": 0.5,
+          "styles": { "dropShadow": { "color": "#000000", "opacity": 35, "angle": 90, "distance": 12, "size": 32, "useGlobalLight": false },
+                      "outerGlow": { "color": "#7C5CFF", "size": 24, "opacity": 40 },
+                      "stroke": { "color": "#FACC15", "size": 3, "position": "outside", "enabled": false } } },
+        { "id": "kept", "type": "shape", "shape": "circle", "radius": 14, "fill": "#22D3EE", "position": [1700, 980], "parent": "rig", "keepPlace": true },
+        { "id": "kicker", "type": "text", "text": "aligned above the title", "style": { "font": "Inter", "weight": 500, "size": 36, "fill": "#8A8A99" },
+          "align": { "to": "title", "y": "above", "x": "center", "gap": 20, "offset": [0, -4] } },
+        { "id": "logo", "type": "image", "asset": "mark", "fit": "contain", "box": [240, 120], "focus": [0.5, 0.5],
+          "origin": "top-left", "align": { "to": "safe", "x": "left", "y": "top", "margin": [24, 24] }, "sampling": "lanczos" },
+        { "id": "plate", "type": "shape", "contents": [
+            { "type": "rect", "id": "r", "roundness": 16, "fitTo": { "layer": "tag", "padding": [28, 14] } },
+            { "type": "fill", "color": "#16161D" } ],
+          "styles": { "innerShadow": {}, "satin": { "opacity": 20 }, "bevelEmboss": { "size": 3, "depth": 60 },
+                      "colorOverlay": { "color": "#7C5CFF", "opacity": 10 }, "innerGlow": { "size": 8 },
+                      "gradientOverlay": { "gradient": { "stops": [[0, "#22D3EE"], [1, "#7C5CFF"]] }, "opacity": 25, "style": "linear", "angle": 45 } } },
+        { "id": "tag", "type": "text", "text": "fitTo plate", "style": { "font": "Inter", "weight": 600, "size": 40, "fill": "#F5F5F7" },
+          "align": { "to": "safe", "x": "right", "y": "bottom", "margin": 32 } },
+        { "id": "before", "type": "shape", "shape": "circle", "radius": 16, "fill": "#F472B6",
+          "align": { "to": "tag", "x": "before", "y": "center", "gap": 24, "live": true } },
+        { "id": "arrow", "type": "shape", "shape": "arrow", "from": [0, 0], "to": [120, 0], "head": 24, "stroke": { "color": "#34D399", "width": 6 },
+          "origin": [0.5, 0.5], "autoOrient": "path", "motionBlur": true, "quality": "best",
+          "position": { "keys": [ { "t": 0.5, "v": [300, 800], "ease": "sine.inOut", "path": { "out": [200, -300] } }, { "t": 3, "v": [900, 800], "path": { "in": [-200, -300] } } ] } },
+        { "id": "nested", "type": "comp", "comp": "card", "origin": "center", "position": ["70%", "70%"], "scale": [120, 120], "skew": 8, "skewAxis": 0,
+          "transform": { "opacity": 90 }, "in": 1, "dur": 4, "collapse": false },
+        { "id": "guide", "type": "shape", "shape": "rect", "size": [1728, 972], "stroke": { "color": "#FF0000", "width": 2 }, "guide": true, "position": ["50%", "50%"] },
+        { "id": "hidden", "type": "shape", "shape": "circle", "radius": 40, "fill": "#FFFFFF", "visible": false, "position": [100, 900] },
+        { "id": "grade", "type": "adjustment", "size": [1920, 1080], "opacity": 60,
+          "effects": [ { "id": "vig", "type": "stylize.vignette", "params": { "amount": 40 } } ] },
+        { "id": "cam", "type": "camera", "cameraType": "twoNode", "zoom": 2666.7, "position": [960, 540, -2666.7] }
+      ],
+      "timeline": [
+        { "target": "title", "preset": "rise", "at": 0.2 },
+        { "target": "kicker", "preset": "fadeIn", "at": "<0.1" },
+        { "target": ["logo", "plate", "tag", "before"], "preset": "popIn", "stagger": 0.06, "at": "<" },
+        { "target": ["title", "kicker", "logo", "plate", "tag", "before", "arrow", "nested"], "preset": "fadeOut", "at": 5.3, "dur": 0.5 }
+      ]
+    }
+  }
+}

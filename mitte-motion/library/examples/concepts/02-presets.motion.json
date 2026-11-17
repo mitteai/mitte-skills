@@ -1,0 +1,223 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Presets: library packs on text units, a custom preset with params, nesting and an effect sub-target",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.expensive_effect",
+        "lint.text_outside_safe_area"
+      ],
+      "note": "The slam starts at 240 % and crosses the safe box for a few frames; the glow is the point of heroIn."
+    }
+  },
+  "theme": {
+    "use": "mitte/bold@1"
+  },
+  "presets": {
+    "riseBlur": {
+      "params": {
+        "distance": {
+          "type": "number",
+          "default": 48
+        },
+        "blur": {
+          "type": "number",
+          "default": 16
+        }
+      },
+      "dur": "$theme.motion.dur.base",
+      "ease": "$theme.ease.enter",
+      "tweens": [
+        {
+          "from": {
+            "y": "+=$props.distance",
+            "opacity": 0,
+            "blur": "$props.blur"
+          }
+        }
+      ]
+    },
+    "heroIn": {
+      "params": {
+        "glow": {
+          "type": "number",
+          "default": 2.2
+        }
+      },
+      "dur": "$theme.motion.dur.l",
+      "tweens": [
+        {
+          "preset": "riseBlur",
+          "props": {
+            "distance": 90,
+            "blur": 24
+          },
+          "at": 0
+        },
+        {
+          "target": "$target.effects.glow",
+          "fromTo": [
+            {
+              "intensity": "$props.glow"
+            },
+            {
+              "intensity": 0.8
+            }
+          ],
+          "dur": 0.6,
+          "ease": "power2.out",
+          "at": 0.15
+        },
+        {
+          "preset": "shake",
+          "props": {
+            "amp": 10,
+            "freq": 12
+          },
+          "at": ">"
+        }
+      ]
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 6,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "slam",
+          "type": "text",
+          "text": "Make it loud",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.5",
+            "fill": "$theme.color.fg"
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "36%"
+          ]
+        },
+        {
+          "id": "kicker",
+          "type": "text",
+          "text": "A KICKER THAT STRETCHES",
+          "style": {
+            "font": "$theme.font.body",
+            "size": "$theme.type.size.0",
+            "fill": "$theme.color.accent",
+            "tracking": 120
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "52%"
+          ]
+        },
+        {
+          "id": "hero",
+          "type": "text",
+          "text": "Hero line",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.3",
+            "fill": "$theme.color.palette.2"
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "68%"
+          ],
+          "effects": [
+            {
+              "id": "glow",
+              "type": "light.glow",
+              "params": {
+                "radius": 18,
+                "intensity": 0.8
+              }
+            }
+          ]
+        },
+        {
+          "id": "card",
+          "type": "shape",
+          "shape": "roundedRect",
+          "size": [
+            520,
+            120
+          ],
+          "radius": "$theme.radius.m",
+          "fill": "$theme.color.surface",
+          "origin": "center",
+          "position": [
+            "50%",
+            "86%"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "slam/words",
+          "preset": "mitte/kinetic.slam@1",
+          "props": {
+            "from": 240,
+            "blur": 14
+          },
+          "stagger": 0.12,
+          "at": 0.3
+        },
+        {
+          "target": "kicker",
+          "preset": "mitte/kinetic.stretch@1",
+          "props": {
+            "tracking": 500,
+            "stretch": 160
+          },
+          "at": "<0.5"
+        },
+        {
+          "target": "hero",
+          "preset": "heroIn",
+          "props": {
+            "glow": 2.6
+          },
+          "at": "<0.4"
+        },
+        {
+          "target": "card",
+          "preset": "mitte/ui.pop@1",
+          "props": {
+            "from": 88
+          },
+          "dur": 0.3,
+          "at": "<0.3"
+        },
+        {
+          "target": "card",
+          "preset": "mitte/editorial.fade@1",
+          "ease": "sine.in",
+          "at": 4.6
+        },
+        {
+          "target": [
+            "slam",
+            "kicker",
+            "hero"
+          ],
+          "preset": "sink",
+          "dur": 0.35,
+          "ease": "$theme.ease.exit",
+          "stagger": "$theme.motion.stagger.base",
+          "at": 5.0
+        }
+      ]
+    }
+  }
+}

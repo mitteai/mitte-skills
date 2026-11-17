@@ -1,0 +1,48 @@
+{
+  "motion": 1,
+  "meta": { "title": "Every colour form, working colour settings, and a full output block" },
+  "theme": { "use": "mitte/neon@1" },
+  "output": {
+    "format": "mov", "codec": "prores", "profile": "4444", "quality": "master",
+    "crf": null, "bitrate": null, "preset": null, "encoder": "cpu",
+    "fps": 30, "scale": 1, "range": [0, 4],
+    "alpha": true, "pixelFormat": "yuva444p10",
+    "toneMap": "soft", "gamutMap": "compress", "dither": true, "transferTag": "srgb", "signalRange": "full",
+    "hdr": null, "hdrPeak": 1000,
+    "audio": { "codec": "pcm", "bitrate": 192, "limiter": true, "loudness": -14, "always": true },
+    "allowSolo": false, "locale": "de-DE", "poster": 1.5, "faststart": true,
+    "gif": { "fps": 25, "palette": "global", "dither": "blue-noise", "colors": 128, "transparency": true }, "loop": 0
+  },
+  "comps": {
+    "wide": {
+      "size": [600, 300], "fps": 30, "duration": 4, "color": { "working": "acescg", "blending": "linear", "interpolation": "srgb" },
+      "layers": [ { "id": "p3", "type": "solid", "color": "color(display-p3 1 0.2 0.4)", "size": [600, 300] },
+                  { "id": "mix", "type": "shape", "shape": "circle", "radius": 100, "position": [300, 150],
+                    "fill": { "keys": [ { "t": 0, "v": "#FF0000", "ease": "linear" }, { "t": 2, "v": "#00FF00" }, { "t": 4, "v": "oklch(0.7 0.2 20)" } ] } } ]
+    },
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 4, "background": "transparent",
+      "color": { "working": "linear-srgb", "blending": "display", "interpolation": "oklab" },
+      "layers": [
+        { "id": "c1", "type": "solid", "color": "#F36", "size": [200, 200], "origin": "top-left", "position": [40, 40] },
+        { "id": "c2", "type": "solid", "color": "#FF336680", "size": [200, 200], "origin": "top-left", "position": [260, 40] },
+        { "id": "c3", "type": "solid", "color": "rgb(255 51 102)", "size": [200, 200], "origin": "top-left", "position": [480, 40] },
+        { "id": "c4", "type": "solid", "color": "rgba(100% 20% 40% / 50%)", "size": [200, 200], "origin": "top-left", "position": [700, 40] },
+        { "id": "c5", "type": "solid", "color": "hsl(340 100% 60%)", "size": [200, 200], "origin": "top-left", "position": [920, 40] },
+        { "id": "c6", "type": "solid", "color": "oklch(68% 0.21 12 / 0.8)", "size": [200, 200], "origin": "top-left", "position": [1140, 40] },
+        { "id": "c7", "type": "solid", "color": "oklab(0.68 0.19 0.08)", "size": [200, 200], "origin": "top-left", "position": [1360, 40] },
+        { "id": "c8", "type": "solid", "color": "color(srgb-linear 4 2 1)", "size": [200, 200], "origin": "top-left", "position": [1580, 40], "blend": "add" },
+        { "id": "c9", "type": "solid", "color": "rebeccapurple", "size": [200, 200], "origin": "top-left", "position": [40, 280] },
+        { "id": "c10", "type": "solid", "color": { "r": 1.0, "g": 0.2, "b": 0.4, "a": 1 }, "size": [200, 200], "origin": "top-left", "position": [260, 280] },
+        { "id": "c11", "type": "solid", "color": "$theme.color.accent.a60", "size": [200, 200], "origin": "top-left", "position": [480, 280] },
+        { "id": "c12", "type": "solid", "color": "color(rec2020 0.9 0.1 0.1)", "size": [200, 200], "origin": "top-left", "position": [700, 280] },
+        { "id": "c13", "type": "solid", "color": "color(acescg 0.9 0.1 0.2)", "size": [200, 200], "origin": "top-left", "position": [920, 280] },
+        { "id": "c14", "type": "solid", "color": "color(xyz-d65 0.4 0.2 0.1)", "size": [200, 200], "origin": "top-left", "position": [1140, 280] },
+        { "id": "glow", "type": "shape", "shape": "circle", "radius": 120, "fill": { "r": 6, "g": 3, "b": 1, "a": 1 }, "position": [1500, 380], "blend": "add" },
+        { "id": "nested", "type": "comp", "comp": "wide", "origin": "center", "position": [960, 800], "scale": [200, 200] },
+        { "id": "beep", "type": "audio", "asset": "tone", "mute": true }
+      ]
+    }
+  },
+  "assets": { "tone": { "src": "https://media.mitte.ai/u/demo/tone.wav", "type": "audio" } }
+}

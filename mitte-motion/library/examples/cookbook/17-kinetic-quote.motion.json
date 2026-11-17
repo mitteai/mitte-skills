@@ -1,0 +1,67 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 17: kinetic quote on the editorial theme: words land one per beat, then the quote card with attribution",
+    "x-skills": {
+      "expectWarnings": ["lint.offscreen_while_visible", "lint.text_outside_safe_area", "lint.text_too_short_on_screen"],
+      "note": "One word per beat is the look. quote.card's dash and attribution sit outside its canvas before they align: a lint false positive inside the component; the quote's text, linted where the instance puts it in the frame, runs past the title-safe box at the bottom."
+    }
+  },
+  "theme": {
+    "use": "mitte/editorial@1"
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 10,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "words",
+          "type": "component",
+          "use": "mitte/kinetic.words@1",
+          "in": 0.3,
+          "props": {
+            "words": [
+              "Taste",
+              "is",
+              "a",
+              "verb."
+            ],
+            "beat": 0.55,
+            "hold": 1.0,
+            "tilt": 2
+          }
+        },
+        {
+          "id": "quote",
+          "type": "component",
+          "use": "mitte/quote.card@1",
+          "in": 4.2,
+          "props": {
+            "quote": "Taste is a verb. You practise it every time you cut.",
+            "attribution": "Ana Ruiz, editor",
+            "hold": 3.4
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "quote",
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 9.4
+        }
+      ]
+    }
+  }
+}

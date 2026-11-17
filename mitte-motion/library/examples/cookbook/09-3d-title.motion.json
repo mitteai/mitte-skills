@@ -1,0 +1,181 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 09: 3D title: per-character 3D text flipping in under a spot light with floor shadows and a camera dolly with focus pull",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.expensive_effect"
+      ],
+      "note": "Shadows plus depth of field cost about 0.5 s per frame at 1080p: the point of the piece."
+    }
+  },
+  "theme": {
+    "use": "mitte/midnight@1"
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 6,
+      "background": "$theme.color.bg",
+      "renderer3d": "classic",
+      "motionBlur": {
+        "shutterAngle": 180
+      },
+      "layers": [
+        {
+          "id": "cam",
+          "type": "camera",
+          "cameraType": "twoNode",
+          "focalLength": 50,
+          "transform": {
+            "position": {
+              "keys": [
+                {
+                  "t": 0,
+                  "v": [
+                    960,
+                    420,
+                    -2600
+                  ],
+                  "ease": "power2.inOut"
+                },
+                {
+                  "t": 5,
+                  "v": [
+                    960,
+                    480,
+                    -1900
+                  ]
+                }
+              ]
+            },
+            "pointOfInterest": [
+              960,
+              540,
+              0
+            ]
+          },
+          "dof": {
+            "enabled": true,
+            "focusOn": "title",
+            "aperture": 40,
+            "blurLevel": 80
+          }
+        },
+        {
+          "id": "ambient",
+          "type": "light",
+          "kind": "ambient",
+          "intensity": 35
+        },
+        {
+          "id": "key",
+          "type": "light",
+          "kind": "spot",
+          "intensity": 120,
+          "coneAngle": 70,
+          "castsShadows": true,
+          "transform": {
+            "position": [
+              700,
+              -200,
+              -900
+            ],
+            "pointOfInterest": [
+              960,
+              540,
+              0
+            ]
+          }
+        },
+        {
+          "id": "floor",
+          "type": "solid",
+          "color": "$theme.color.surface",
+          "size": [
+            4000,
+            3000
+          ],
+          "threeD": true,
+          "material": {
+            "acceptsShadows": true,
+            "diffuse": 70
+          },
+          "transform": {
+            "position": [
+              960,
+              760,
+              600
+            ],
+            "rotationX": 90
+          }
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "text": "DEPTH",
+          "threeD": true,
+          "threeDPerChar": true,
+          "style": {
+            "font": "$theme.font.display",
+            "size": 260,
+            "fill": "$theme.color.fg"
+          },
+          "origin": "center",
+          "material": {
+            "castsShadows": "on"
+          },
+          "transform": {
+            "position": [
+              960,
+              640,
+              0
+            ]
+          }
+        },
+        {
+          "id": "sub",
+          "type": "text",
+          "text": "a title filmed through the comp camera",
+          "style": {
+            "font": "$theme.font.mono",
+            "size": 30,
+            "fill": "$theme.color.muted"
+          },
+          "origin": "bottom",
+          "align": {
+            "to": "safe",
+            "x": "center",
+            "y": "bottom"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "target": "title/chars",
+          "preset": "flipIn",
+          "stagger": 0.08,
+          "at": 0.3
+        },
+        {
+          "target": "sub",
+          "preset": "fadeIn",
+          "at": 1.2
+        },
+        {
+          "target": [
+            "title",
+            "sub"
+          ],
+          "preset": "fadeOut",
+          "dur": 0.5,
+          "at": 5.3
+        }
+      ]
+    }
+  }
+}

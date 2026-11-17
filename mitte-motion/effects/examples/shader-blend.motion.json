@@ -1,0 +1,113 @@
+{
+ "motion": 1,
+ "comps": {
+  "main": {
+   "size": [
+    960,
+    540
+   ],
+   "fps": 30,
+   "duration": 3,
+   "background": "#101418",
+   "layers": [
+    {
+     "id": "plate",
+     "type": "solid",
+     "color": "#000000",
+     "effects": [
+      {
+       "id": "ramp",
+       "type": "generate.gradient",
+       "params": {
+        "type": "linear",
+        "start": [
+         "0%",
+         "0%"
+        ],
+        "end": [
+         "100%",
+         "100%"
+        ],
+        "gradient": {
+         "stops": [
+          [
+           0,
+           "#7C5CFF"
+          ],
+          [
+           1,
+           "#F472B6"
+          ]
+         ]
+        },
+        "composite": "replace"
+       }
+      }
+     ]
+    },
+    {
+     "id": "target",
+     "type": "solid",
+     "color": "#000000",
+     "effects": [
+      {
+       "id": "ramp",
+       "type": "generate.gradient",
+       "params": {
+        "type": "radial",
+        "start": [
+         "50%",
+         "50%"
+        ],
+        "end": [
+         "100%",
+         "50%"
+        ],
+        "gradient": {
+         "stops": [
+          [
+           0,
+           "#FFB347"
+          ],
+          [
+           1,
+           "#1B1F3B"
+          ]
+         ]
+        },
+        "composite": "replace"
+       }
+      },
+      {
+       "id": "fx",
+       "type": "utility.shader",
+       "params": {
+        "code": "fn effect(uv: vec2f, t: f32) -> vec4f {\n  let a = textureSampleLevel(input, samp, uv, 0.0);\n  let b = textureSampleLevel(input1, samp, uv, 0.0);\n  // a soft diagonal wipe driven by `mix`: 0 shows the layer, 1 the other layer\n  let k = smoothstep(params.mix - 0.1, params.mix + 0.1, uv.x * 0.7 + uv.y * 0.3);\n  return mix(b, a, k);\n}",
+        "params": {
+         "mix": {
+          "type": "float",
+          "default": {
+           "keys": [
+            {
+             "t": 0,
+             "v": -0.2
+            },
+            {
+             "t": 3,
+             "v": 1.2
+            }
+           ]
+          }
+         }
+        },
+        "inputs": [
+         "plate"
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

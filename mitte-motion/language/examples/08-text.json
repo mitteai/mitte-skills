@@ -1,0 +1,63 @@
+{
+  "motion": 1,
+  "meta": { "title": "Text: styles, paragraphs, fonts, path, animators, selectors, captions" },
+  "theme": { "use": "mitte/default@1" },
+  "comps": { "main": {
+    "size": [1920, 1080], "fps": 30, "duration": 6, "background": "#0B0B0F",
+    "layers": [
+      { "id": "spans", "type": "text",
+        "text": [ { "text": "Revenue up " }, { "text": "38%", "id": "num", "style": { "weight": 800, "fill": "$theme.color.accent", "fontFeatures": { "tnum": 1 } } },
+                  { "text": " year over year 🚀", "style": { "size": 40, "fill": "#FFFFFFB3" } } ],
+        "style": { "font": "$theme.font.display", "weight": 600, "italic": false, "size": 64, "leading": "auto", "tracking": -10, "kerning": "metrics",
+                   "fill": "#F5F5F7", "stroke": { "color": "#000000", "width": 2, "join": "round", "order": "fillOverStroke" },
+                   "allCaps": false, "smallCaps": false, "baselineShift": 0, "horizontalScale": 100, "verticalScale": 100,
+                   "superscript": false, "subscript": false, "fontFeatures": { "liga": 1 }, "axes": { "wght": { "keys": [ { "t": 0, "v": 400 }, { "t": 2, "v": 800 } ] } },
+                   "opticalSize": "auto", "language": "en", "underline": false, "strike": false },
+        "paragraph": { "align": "center" }, "origin": "center", "position": ["50%", "14%"] },
+      { "id": "box", "type": "text", "box": [700, 260],
+        "text": "Box text wraps within its width, justifies, shrinks to fit when overflow says so, and truncates with an ellipsis after the line limit is reached by a long run of words",
+        "style": { "font": "Source Serif 4", "size": 40, "fill": "#E6E6E6" },
+        "paragraph": { "align": "justifyLastLeft", "verticalAlign": "top", "spaceBefore": 0, "spaceAfter": 0, "indent": 0, "firstLineIndent": 40, "direction": "auto",
+                       "overflow": "shrink", "minSize": 18, "maxLines": 4, "ellipsis": true, "hyphenate": false, "balance": false, "tabSize": 2 },
+        "origin": "top-left", "position": [120, 240] },
+      { "id": "curve", "type": "shape", "contents": [ { "type": "path", "id": "spine", "d": "M0 0 C150 -140 350 -140 500 0" }, { "type": "stroke", "color": "#2A2A35", "width": 2 } ], "position": [1000, 420] },
+      { "id": "onShape", "type": "text", "text": "text on a shape path", "style": { "font": "Space Grotesk", "weight": 600, "size": 36, "fill": "#22D3EE" },
+        "paragraph": { "align": "center" }, "position": [1000, 420],
+        "path": { "source": { "shape": "curve.contents.spine" }, "firstMargin": { "keys": [ { "t": 0, "v": 0 }, { "t": 4, "v": 60 } ] }, "lastMargin": 0, "perpendicular": true, "forceAlign": false, "reverse": false } },
+      { "id": "onMask", "type": "text", "text": "and on a mask path", "style": { "font": "Caveat", "size": 48, "fill": "#F472B6" }, "position": [1000, 560],
+        "masks": [ { "id": "guide", "mode": "none", "path": "M0 0 Q250 120 500 0" } ],
+        "path": { "source": { "mask": "guide" } } },
+      { "id": "anim", "type": "text", "text": "ANIMATORS SELECT UNITS", "style": { "font": "Unbounded", "weight": 800, "size": 72, "fill": "#F5F5F7" },
+        "paragraph": { "align": "center" }, "origin": "center", "position": ["50%", "72%"],
+        "grouping": { "anchorGrouping": "char", "alignment": [0, -50] },
+        "animators": [
+          { "id": "wave", "props": { "position": [0, -24], "fill": "#FFD166", "rotation": 8, "scale": [110, 110], "blur": 0 },
+            "selectors": [ { "type": "range", "by": "chars", "units": "percent", "start": 0, "end": 30, "amount": 100, "shape": "triangle", "smoothness": 100, "easeHigh": 0, "easeLow": 0, "randomizeOrder": false, "seed": 0,
+                             "offset": { "value": 0, "oscillate": { "freq": 0.5, "amp": 100, "wave": "saw" } } } ] },
+          { "id": "jitter", "props": { "opacity": 60, "fillHue": 40, "strokeWidth": 0, "tracking": 20, "trackingType": "beforeAndAfter", "lineAnchor": 50, "skew": 10, "skewAxis": 0, "anchor": [0, 0], "axes.wght": 100 },
+            "selectors": [ { "type": "wiggly", "by": "words", "maxAmount": 100, "minAmount": -100, "wigglesPerSecond": 2, "correlation": 50, "temporalPhase": 0, "spatialPhase": 0, "lockDimensions": false, "seed": 2, "mode": "intersect" },
+                           { "type": "range", "by": "words", "units": "index", "start": 1, "end": 2, "shape": "square", "smoothness": 0, "mode": "intersect" } ] },
+          { "id": "expr", "props": { "fillSaturation": -60, "fillBrightness": 0, "fillOpacity": 100, "strokeOpacity": 100, "lineSpacing": [0, 0] },
+            "selectors": [ { "type": "expression", "by": "chars", "amount": "ease(time, textIndex * 0.05, textIndex * 0.05 + 0.5, 100, 0)" } ] },
+          { "id": "scramble", "props": { "characterOffset": 8, "characterRange": { "set": "A-Z0-9" } },
+            "selectors": [ { "type": "range", "by": "chars", "units": "index", "start": 0, "end": { "keys": [ { "t": 0, "v": 22, "ease": "linear" }, { "t": 1.5, "v": 0 } ] }, "shape": "square", "smoothness": 0 },
+                           { "type": "wiggly", "by": "chars", "wigglesPerSecond": 12, "correlation": 0, "mode": "intersect" } ] },
+          { "id": "stagger", "props": { "clip": { "bottom": 100 }, "opacity": 0 },
+            "selectors": [ { "type": "stagger", "by": "chars", "skipSpaces": true, "start": 0.2, "each": 0.03, "dur": 0.5, "ease": "back.out(1.4)", "direction": "out", "from": "center", "distribution": "linear", "seed": 0, "mode": "intersect" } ] }
+        ] },
+      { "id": "source", "type": "text", "text": { "keys": [ { "t": 0, "v": "Plan" }, { "t": 1, "v": "Build" }, { "t": 2, "v": "Ship" } ] },
+        "style": { "font": "JetBrains Mono", "weight": 700, "size": 48, "fill": "#34D399" }, "origin": "center", "position": [300, 900] },
+      { "id": "cap", "type": "text",
+        "words": [ { "text": "This", "start": 0.0, "end": 0.18 }, { "text": "changes", "start": 0.18, "end": 0.53 }, { "text": "everything", "start": 0.53, "end": 1.13 } ],
+        "wordStyle": { "active": { "fill": "$theme.color.accent", "scale": 112 }, "past": { "opacity": 100 }, "future": { "opacity": 35 } },
+        "paging": { "maxWords": 3, "maxChars": 18 },
+        "style": { "font": "Inter", "weight": 800, "size": 56, "fill": "#FFFFFF" }, "paragraph": { "align": "center" },
+        "origin": "center", "align": { "to": "safe", "x": "center", "y": "bottom" }, "in": 2.5 }
+    ],
+    "timeline": [
+      { "target": "spans/words", "preset": "rise", "stagger": 0.06, "at": 0.2 },
+      { "target": "spans/span:num", "to": { "scale": 120 }, "dur": 0.4, "ease": "back.out(2)", "at": 1.2 },
+      { "target": "box/lines", "from": { "opacity": 0, "y": "+=20" }, "stagger": 0.08, "at": 0.4 }
+    ]
+  } }
+}

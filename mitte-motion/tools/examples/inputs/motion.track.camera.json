@@ -1,0 +1,22 @@
+{
+  "video": "https://media.mitte.ai/u/a1/walk.mp4",
+  "type": "camera",
+  "camera": {
+    "focal": "fixed",
+    "features": 400,
+    "ground": [
+      [
+        512,
+        900
+      ],
+      [
+        1400,
+        910
+      ],
+      [
+        960,
+        1020
+      ]
+    ]
+  }
+}

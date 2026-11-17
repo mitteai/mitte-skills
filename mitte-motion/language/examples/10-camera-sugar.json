@@ -1,0 +1,15 @@
+{
+  "motion": 1,
+  "meta": { "title": "Camera sugar: dolly, dollyZoom, handheld" },
+  "comps": { "main": {
+    "size": [1920, 1080], "fps": 30, "duration": 9, "background": "#0B0B0F",
+    "layers": [
+      { "id": "back", "type": "shape", "contents": [ { "type": "rect", "size": [3000, 1800] }, { "type": "gradientFill", "gradient": { "from": [-1500, 0], "to": [1500, 0], "stops": [[0, "#16161D"], [1, "#2A2A35"]] } } ], "threeD": true, "position": [960, 540, 1200] },
+      { "id": "hero", "type": "text", "text": "VERTIGO", "style": { "font": "Anton", "size": 220, "fill": "#F5F5F7" }, "paragraph": { "align": "center" }, "threeD": true, "origin": "center", "position": [960, 540, 0] },
+      { "id": "amb", "type": "light", "kind": "ambient", "intensity": 100 },
+      { "id": "dolly", "type": "camera", "out": 3, "dolly": { "target": "hero", "from": 3200, "to": 1800, "dur": 3, "ease": "power2.inOut", "at": 0 } },
+      { "id": "vertigo", "type": "camera", "in": 3, "out": 6, "dollyZoom": { "subject": "hero", "fromZoom": 1800, "toZoom": 4200, "dur": 3, "ease": "power2.inOut", "at": 3 } },
+      { "id": "hand", "type": "camera", "in": 6, "position": [960, 540, -2200], "handheld": { "amount": 1, "freq": 0.7, "seed": 2 } }
+    ]
+  } }
+}

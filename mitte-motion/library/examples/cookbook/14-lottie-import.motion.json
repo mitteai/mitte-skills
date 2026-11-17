@@ -1,0 +1,123 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 14: a Lottie badge imported as a layer, placed, retimed and animated like any other layer, with a title beside it",
+    "x-skills": {
+      "expectWarnings": [
+        "convert.lottie_unsupported"
+      ],
+      "note": "The demo badge carries an embedded image, which the importer drops (images inside a Lottie are not loaded)."
+    }
+  },
+  "theme": {
+    "use": "mitte/soft@1"
+  },
+  "assets": {
+    "badge": {
+      "src": "library:mitte/demo/badge@1",
+      "type": "lottie"
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 5,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "card",
+          "type": "shape",
+          "shape": "roundedRect",
+          "size": [
+            1100,
+            420
+          ],
+          "radius": "$theme.radius.l",
+          "fill": "$theme.color.surface",
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ],
+          "styles": {
+            "dropShadow": {
+              "color": "#2B2440",
+              "opacity": 14,
+              "angle": 90,
+              "distance": 24,
+              "size": 64
+            }
+          }
+        },
+        {
+          "id": "badge",
+          "type": "comp",
+          "origin": "center",
+          "position": [
+            "36%",
+            "50%"
+          ],
+          "scale": [
+            220,
+            220
+          ],
+          "stretch": 150,
+          "lottie": "badge"
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "text": "Imported,\nthen edited",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.3",
+            "fill": "$theme.color.fg"
+          },
+          "origin": "left",
+          "position": [
+            "48%",
+            "50%"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "target": "card",
+          "preset": "popIn",
+          "ease": "$theme.spring.gentle",
+          "at": 0.2
+        },
+        {
+          "target": "badge",
+          "preset": "popIn",
+          "at": "<0.2"
+        },
+        {
+          "target": "title/lines",
+          "preset": "rise",
+          "stagger": 0.1,
+          "at": "<0.2"
+        },
+        {
+          "target": "badge",
+          "preset": "pulse",
+          "at": 2.0
+        },
+        {
+          "target": [
+            "card",
+            "badge",
+            "title"
+          ],
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 4.4
+        }
+      ]
+    }
+  }
+}

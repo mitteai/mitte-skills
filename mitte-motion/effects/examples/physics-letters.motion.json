@@ -1,0 +1,25 @@
+{ "motion": 1,
+  "comps": { "main": { "size": [1920, 1080], "fps": 30, "duration": 6, "background": "#0B0B0F",
+    "motionBlur": { "shutterAngle": 180 },
+    "physics": {
+      "gravity": [0, 2600], "world": { "floor": 1000, "walls": ["left", "right"], "friction": 0.6, "restitution": 0.1, "thickness": 200 },
+      "rate": 240, "substeps": 2, "iterations": 8, "seed": 4,
+      "vary": { "velocity": 80, "spin": 60, "rotation": 0, "position": 0 },
+      "start": 0, "end": "auto",
+      "forces": [ { "type": "explosion", "at": 0.8, "center": [960, 520], "strength": 700, "radius": 900, "spin": 200 },
+                  { "type": "impulse", "at": 2.2, "targets": "word/chars", "vector": [0, -500], "spread": { "vector": [200, 100], "spin": 120 }, "stagger": { "each": 0.03, "from": "start" } },
+                  { "type": "drag", "from": 2.6, "to": 3.4, "amount": 2, "ramp": 0.2 } ]
+    },
+    "layers": [
+      { "id": "word", "type": "text", "text": "GRAVITY", "origin": "center", "position": ["50%", "45%"], "motionBlur": true,
+        "style": { "font": "Inter", "size": 220, "weight": 800, "fill": "#F7F3E8" },
+        "body": { "type": "dynamic", "per": "chars", "shape": "hull", "inset": 2, "restitution": 0.25, "friction": 0.6, "start": 0.8, "before": "kinematic",
+                  "linearDamping": 0.05, "angularDamping": 0.1, "density": 1, "group": "letters", "collides": "all",
+                  "settle": { "at": 3.6, "dur": 0.9, "to": "layout", "ease": "back.out(1.4)", "stagger": { "each": 0.06, "from": "start" } } } },
+      { "id": "shelf", "type": "shape", "shape": "roundedRect", "size": [700, 30], "radius": 15, "fill": "#2E3A59", "position": [960, 860],
+        "body": { "type": "static", "shape": "box", "friction": 0.8 } },
+      { "id": "sweep", "type": "shape", "shape": "roundedRect", "size": [40, 300], "radius": 20, "fill": "#D7263D",
+        "position": { "keys": [ { "t": 0, "v": [-100, 900] }, { "t": 1.6, "v": [-100, 900] }, { "t": 2.6, "v": [2020, 900], "ease": "power2.inOut" } ] },
+        "body": { "type": "kinematic", "shape": "capsule", "fixAxes": ["rotation"] } },
+      { "id": "ghostWall", "type": "null", "position": [960, 200], "body": { "type": "static", "shape": { "box": [1600, 20] } } }
+    ] } } }

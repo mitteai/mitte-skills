@@ -1,0 +1,104 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 06: karaoke captions from a transcript data asset over a podcast still, 1:1",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.missing_exit",
+        "lint.text_outside_safe_area"
+      ],
+      "note": "06-captions-from-transcript.assets.json maps `transcript` to transcript.words.json beside it (the service fetches the https URL). The caption box is larger than the safe band on purpose."
+    }
+  },
+  "theme": {
+    "use": "mitte/mono@1"
+  },
+  "assets": {
+    "cover": {
+      "src": "https://media.mitte.ai/u/p0/podcast-cover.jpg",
+      "type": "image"
+    },
+    "vo": {
+      "src": "https://media.mitte.ai/u/p0/vo-fathom.wav",
+      "type": "audio"
+    },
+    "transcript": {
+      "src": "https://media.mitte.ai/u/p0/vo-fathom.words.json",
+      "type": "data"
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1080,
+        1080
+      ],
+      "fps": 30,
+      "duration": 8,
+      "background": "$theme.color.bg",
+      "safe": "square",
+      "layers": [
+        {
+          "id": "cover",
+          "type": "image",
+          "asset": "cover",
+          "fit": "cover",
+          "box": [
+            1080,
+            1080
+          ]
+        },
+        {
+          "id": "shade",
+          "type": "solid",
+          "color": "$theme.color.bg.a40"
+        },
+        {
+          "id": "show",
+          "type": "text",
+          "text": "THE MOTION HOUR",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.1",
+            "fill": "$theme.color.accent",
+            "tracking": 200
+          },
+          "align": {
+            "to": "safe",
+            "x": "center",
+            "y": "top"
+          }
+        },
+        {
+          "id": "captions",
+          "type": "component",
+          "use": "mitte/caption.karaoke@1",
+          "in": 0.5,
+          "props": {
+            "words": "$data.@transcript.words",
+            "group": {
+              "maxWords": 4,
+              "maxChars": 22
+            },
+            "position": "safe-bottom",
+            "lines": 2
+          }
+        },
+        {
+          "id": "voice",
+          "type": "audio",
+          "asset": "vo",
+          "in": 0.5,
+          "fadeOut": 0.5
+        }
+      ],
+      "timeline": [
+        {
+          "target": "show",
+          "preset": "trackIn",
+          "at": 0.2
+        }
+      ]
+    }
+  }
+}

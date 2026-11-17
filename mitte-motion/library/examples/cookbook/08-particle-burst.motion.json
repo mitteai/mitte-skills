@@ -1,0 +1,92 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 08: particle bursts on beat markers over an aurora background, kinetic words on the beat",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.text_too_short_on_screen",
+        "lint.expensive_effect"
+      ],
+      "note": "One word per beat is the look; the aurora and bursts are full-frame effects."
+    }
+  },
+  "theme": {
+    "use": "mitte/neon@1"
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 6,
+      "background": "$theme.color.bg",
+      "markers": [
+        {
+          "t": 0.5,
+          "name": "beat1"
+        },
+        {
+          "t": 1.0,
+          "name": "beat2"
+        },
+        {
+          "t": 1.5,
+          "name": "beat3"
+        },
+        {
+          "t": 2.0,
+          "name": "beat4"
+        },
+        {
+          "t": 2.5,
+          "name": "beat5"
+        },
+        {
+          "t": 3.0,
+          "name": "beat6"
+        }
+      ],
+      "layers": [
+        {
+          "id": "sky",
+          "type": "component",
+          "use": "mitte/bg.aurora@1",
+          "props": {
+            "intensity": 60,
+            "period": 8
+          }
+        },
+        {
+          "id": "bursts",
+          "type": "component",
+          "use": "mitte/particles.burst-on-beat@1",
+          "props": {
+            "markers": "@beat*",
+            "amount": 120
+          }
+        },
+        {
+          "id": "words",
+          "type": "component",
+          "use": "mitte/kinetic.words@1",
+          "in": 0.5,
+          "props": {
+            "words": [
+              "Loud",
+              "ideas",
+              "deserve",
+              "motion."
+            ],
+            "beat": 0.5,
+            "hold": 1.6
+          }
+        }
+      ]
+    }
+  },
+  "output": {
+    "toneMap": "soft"
+  }
+}

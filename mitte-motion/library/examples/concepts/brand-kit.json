@@ -1,0 +1,3 @@
+{ "color": { "accent": "#00875A", "palette": ["#00875A", "#0B3D2E", "#F2C14E", "#2A9D8F", "#E76F51"] },
+  "font": { "display": { "family": "Space Grotesk", "weight": 700, "tracking": -15 } },
+  "motion": { "dur": { "base": 0.4 } } }

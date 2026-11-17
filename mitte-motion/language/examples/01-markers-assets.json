@@ -1,0 +1,30 @@
+{
+  "motion": 1,
+  "meta": { "title": "Markers, marker-relative times, library assets", "notes": "x- keys and meta pass through" },
+  "x-author-tool": { "version": "demo" },
+  "lint": { "platform": "youtube", "disable": ["lint.on_beat"], "readingSpeed": 3, "contrast": 3 },
+  "assets": {
+    "mark": { "src": "library:mitte/demo/logo@1", "type": "svg" }
+  },
+  "comps": {
+    "main": {
+      "size": [1920, 1080], "fps": "30000/1001", "duration": "00:00:04:00", "background": "#101014",
+      "markers": [
+        { "t": 0, "name": "intro" },
+        { "t": "1s", "name": "hit1", "dur": "4f" },
+        { "t": 1.5, "name": "hit2" }
+      ],
+      "layers": [
+        { "id": "logo", "type": "image", "asset": "mark", "fit": "contain", "box": [600, 300],
+          "origin": "center", "position": ["50%", "50%"], "in": "@intro", "out": "@hit2+1.5s" },
+        { "id": "rule", "type": "shape", "shape": "line", "from": [-300, 0], "to": [300, 0],
+          "stroke": { "color": "#FFFFFF", "width": 4 }, "position": ["50%", "70%"], "in": "@hit1", "dur": "60f" }
+      ],
+      "timeline": [
+        { "target": "logo", "preset": "popIn", "at": "@intro+6f" },
+        { "target": "rule", "preset": "drawOn", "at": "@hit1" },
+        { "target": "logo", "preset": "pulse", "at": "@hit2", "dur": "250ms" }
+      ]
+    }
+  }
+}

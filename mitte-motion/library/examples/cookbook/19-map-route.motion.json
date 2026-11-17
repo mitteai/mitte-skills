@@ -1,0 +1,90 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 19: a route draws over a map image, a pin drops at the destination, a callout names a stop",
+    "x-skills": {
+      "note": "The map image is a placeholder asset offline (asset.unmaterialized info)."
+    }
+  },
+  "theme": {
+    "use": "mitte/clean@1"
+  },
+  "assets": {
+    "map": {
+      "src": "https://media.mitte.ai/u/p0/map-lisbon.jpg",
+      "type": "image"
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 9,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "route",
+          "type": "component",
+          "use": "mitte/map.route@1",
+          "in": 0.2,
+          "props": {
+            "map": "map",
+            "route": "M 240 620 C 500 300, 900 760, 1360 280",
+            "from": [
+              240,
+              620
+            ],
+            "to": [
+              1360,
+              280
+            ],
+            "fromLabel": "Porto",
+            "toLabel": "Lisbon",
+            "draw": 3,
+            "hold": 4.5
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        },
+        {
+          "id": "pin",
+          "type": "component",
+          "use": "mitte/map.pin@1",
+          "in": 3.6,
+          "props": {
+            "at": [
+              "76%",
+              "38%"
+            ],
+            "label": "Lisbon",
+            "sub": "Arrive 18:40",
+            "hold": 3.5
+          }
+        },
+        {
+          "id": "stop",
+          "type": "component",
+          "use": "mitte/callout.line@1",
+          "in": 5.2,
+          "props": {
+            "at": [
+              "47%",
+              "55%"
+            ],
+            "title": "Coimbra",
+            "body": "Coffee stop, 20 min",
+            "dx": -240,
+            "dy": -160,
+            "hold": 2.6
+          }
+        }
+      ]
+    }
+  }
+}

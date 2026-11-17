@@ -1,0 +1,81 @@
+{
+  "motion": 1,
+  "meta": { "title": "Shapes: every item, every operator, gradients, morphing, presets, SVG import, fitTo, points from data" },
+  "assets": { "logo": { "src": "library:mitte/demo/logo@1", "type": "svg" } },
+  "data": { "series": [[0, 10], [1, 40], [2, 25], [3, 60], [4, 35]] },
+  "comps": { "main": {
+    "size": [1920, 1080], "fps": 30, "duration": 6, "background": "#0B0B0F",
+    "layers": [
+      { "id": "items", "type": "shape", "position": [300, 260], "contents": [
+        { "type": "group", "id": "ring", "blend": "screen", "transform": { "rotation": { "keys": [ { "t": 0, "v": 0 }, { "t": 6, "v": 360 } ] } }, "contents": [
+          { "type": "ellipse", "id": "e", "size": [200, 200], "direction": "ccw" },
+          { "type": "stroke", "id": "s", "color": "#FFFFFF", "width": 10, "lineCap": "round", "lineJoin": "round", "miterLimit": 4,
+            "dashes": [24, 12, { "keys": [ { "t": 0, "v": 4 }, { "t": 3, "v": 20 } ] }, 12], "dashOffset": { "keys": [ { "t": 0, "v": 0 }, { "t": 6, "v": -200 } ] },
+            "taper": { "startLength": 20, "endLength": 20, "startWidth": 0, "endWidth": 0, "startEase": 50, "endEase": 50, "lengthUnits": "percent" },
+            "wave": { "amount": 40, "units": "cycles", "wavelength": 6, "phase": { "keys": [ { "t": 0, "v": 0 }, { "t": 6, "v": 720 } ] } } },
+          { "type": "trim", "id": "trim", "start": 0, "end": { "keys": [ { "t": 0, "v": 0, "ease": "expo.out" }, { "t": 1.2, "v": 100 } ] }, "offset": 0, "mode": "simultaneously" } ] },
+        { "type": "group", "id": "poly", "position": [260, 0], "contents": [
+          { "type": "polystar", "id": "star", "kind": "star", "points": 5, "outerRadius": 90, "innerRadius": 40, "outerRoundness": 0, "innerRoundness": 20, "rotation": 0 },
+          { "type": "rect", "id": "sq", "size": [60, 60], "position": [0, -120], "roundness": 12 },
+          { "type": "roundCorners", "radius": 8 },
+          { "type": "zigzag", "size": 6, "ridges": 4, "per": "segment", "points": "smooth" },
+          { "type": "gradientFill", "rule": "evenodd", "opacity": 100, "gradient": { "type": "radial", "from": [0, 0], "to": [90, 0], "highlightLength": 30, "highlightAngle": 45,
+              "stops": [[0, "#FFE29A"], [0.55, "#FF6A88"], [1, "#6A5BFF"]], "opacityStops": [[0, 1], [1, 0.6]], "midpoints": [0.4, 0.5], "interpolation": "oklab", "spread": "pad", "dither": true } },
+          { "type": "gradientStroke", "width": 4, "gradient": { "type": "angular", "from": [0, 0], "to": [1, 0], "stops": [[0, "#22D3EE"], [1, "#F472B6"]] } } ] },
+        { "type": "group", "id": "booleans", "position": [520, 0], "contents": [
+          { "type": "ellipse", "size": [160, 160] },
+          { "type": "rect", "size": [160, 160], "position": [60, 40] },
+          { "type": "merge", "mode": "subtract" },
+          { "type": "offset", "amount": 6, "lineJoin": "round", "miterLimit": 4, "copies": 3, "copyOffset": { "keys": [ { "t": 0, "v": 0 }, { "t": 3, "v": 1 } ] } },
+          { "type": "fill", "color": "#34D399", "rule": "nonzero", "blend": "normal", "composite": "below" },
+          { "type": "fill", "color": "#FACC15", "opacity": 30, "composite": "above" } ] },
+        { "type": "group", "id": "distort", "position": [780, 0], "contents": [
+          { "type": "path", "id": "blob", "d": "M-80 0 C-80 -50 -50 -80 0 -80 C50 -80 80 -50 80 0 C80 50 50 80 0 80 C-50 80 -80 50 -80 0 Z M-30 0 L30 0 M0 -30 L0 30" },
+          { "type": "puckerBloat", "amount": { "keys": [ { "t": 0, "v": -40, "ease": "sine.inOut" }, { "t": 3, "v": 40 } ] } },
+          { "type": "twist", "angle": 45, "center": [0, 0] },
+          { "type": "wigglePaths", "size": 6, "detail": 3, "points": "smooth", "wigglesPerSecond": 2, "correlation": 50, "temporalPhase": 0, "spatialPhase": 0, "seed": 4 },
+          { "type": "stroke", "color": "#F5F5F7", "width": 3 } ] },
+        { "type": "group", "id": "grid", "position": [1040, -80], "contents": [
+          { "type": "group", "id": "row", "contents": [
+            { "type": "rect", "size": [24, 24] }, { "type": "fill", "color": "#7C5CFF" },
+            { "type": "repeater", "copies": 5, "offset": 0, "composite": "below", "transform": { "anchor": [0, 0], "position": [36, 0], "scale": [100, 100], "rotation": 0, "startOpacity": 100, "endOpacity": 40 } } ] },
+          { "type": "repeater", "copies": { "keys": [ { "t": 0, "v": 1 }, { "t": 2, "v": 4 } ] }, "transform": { "position": [0, 36], "rotation": 0 } } ] },
+        { "type": "group", "id": "morph", "position": [1300, 0], "contents": [
+          { "type": "path", "morph": { "match": "auto", "samples": 0 },
+            "path": { "keys": [ { "t": 0, "v": "M0 -100 L87 50 L-87 50 Z", "ease": "expo.inOut" },
+                                { "t": 1.5, "v": { "d": "M100 0 A100 100 0 1 1 -100 0 A100 100 0 1 1 100 0 Z" }, "firstVertex": 2, "ease": "expo.inOut" },
+                                { "t": 3, "v": "M-90 -90 L90 -90 L90 90 L-90 90 Z" } ] } },
+          { "type": "fill", "color": "#F87171" },
+          { "type": "merge", "mode": "merge" } ] } ] },
+      { "id": "rect1", "type": "shape", "shape": "rect", "size": [200, 100], "radius": 0, "position": [200, 600], "fill": "#7C5CFF" },
+      { "id": "rr", "type": "shape", "shape": "roundedRect", "size": [200, 100], "position": [440, 600], "fill": "#22D3EE", "stroke": { "color": "#FFFFFF", "width": 3, "lineCap": "round" } },
+      { "id": "circ", "type": "shape", "shape": "circle", "radius": 50, "position": [680, 600], "gradient": { "type": "diamond", "from": [0, 0], "to": [50, 0], "stops": [[0, "#FACC15"], [1, "#F87171"]] } },
+      { "id": "ell", "type": "shape", "shape": "ellipse", "size": [200, 100], "position": [920, 600], "fill": "#34D399" },
+      { "id": "pgon", "type": "shape", "shape": "polygon", "sides": 6, "radius": 50, "roundness": 10, "position": [1160, 600], "fill": "#F472B6" },
+      { "id": "st", "type": "shape", "shape": "star", "points": 7, "outer": 50, "inner": 24, "roundness": 0, "position": [1400, 600], "fill": "#F5F5F7" },
+      { "id": "line", "type": "shape", "shape": "line", "from": [-80, 0], "to": [80, 0], "position": [1640, 600], "stroke": { "color": "#FFFFFF", "width": 4 } },
+      { "id": "pl", "type": "shape", "shape": "polyline", "points": [[0, 0], [40, -40], [80, 0], [120, -40]], "closed": false, "smooth": true, "position": [140, 800], "stroke": { "color": "#22D3EE", "width": 4 } },
+      { "id": "arr", "type": "shape", "shape": "arrow", "from": [0, 0], "to": [160, 0], "head": 24, "headAngle": 40, "position": [360, 800], "stroke": { "color": "#FACC15", "width": 6 } },
+      { "id": "arc", "type": "shape", "shape": "arc", "radius": 50, "startAngle": -90, "endAngle": 180, "position": [660, 800], "stroke": { "color": "#F87171", "width": 6 } },
+      { "id": "ring2", "type": "shape", "shape": "ring", "radius": 50, "thickness": 12, "position": [860, 800], "stroke": { "color": "#34D399", "width": 12 } },
+      { "id": "dataLine", "type": "shape", "contents": [
+        { "type": "path", "points": "$data.series", "closed": false, "smooth": true, "pointTransform": ["{{$index * 60}}", "{{-$item[1] * 2}}"] },
+        { "type": "stroke", "color": "#F5F5F7", "width": 4 } ], "position": [1040, 860] },
+      { "id": "logo", "type": "shape", "fromSvg": "logo", "fit": { "width": 240 }, "origin": "center", "position": [1500, 820] },
+      { "id": "logoDraw", "type": "shape", "fromSvg": "logo", "fill": null, "stroke": { "color": "#FFFFFF", "width": 3 }, "fit": { "width": 240 }, "origin": "center", "position": [1760, 820] },
+      { "id": "plate", "type": "shape", "contents": [
+        { "type": "rect", "id": "box", "roundness": 16, "fitTo": { "layers": ["name", "role"], "padding": [28, 14], "includeExtents": true, "live": true, "minSize": [0, 0], "fit": "both" } },
+        { "type": "fill", "color": "#16161D" } ] },
+      { "id": "name", "type": "text", "text": "fitTo plate", "style": { "font": "Inter", "weight": 700, "size": 44, "fill": "#F5F5F7" }, "origin": "top-left", "position": [120, 880] },
+      { "id": "role", "type": "text", "text": "two layers, width only below", "style": { "font": "Inter", "weight": 400, "size": 28, "fill": "#8A8A99" }, "align": { "to": "name", "y": "below", "x": "left", "gap": 6 } },
+      { "id": "underline", "type": "shape", "contents": [
+        { "type": "rect", "size": [100, 4], "position": [0, 964], "fitTo": { "layer": "role", "fit": "width", "live": false } },
+        { "type": "fill", "color": "#7C5CFF" } ], "position": [0, 0] }
+    ],
+    "timeline": [
+      { "target": "logoDraw", "preset": "drawOn", "dur": 1.5, "at": 0.5 },
+      { "target": "dataLine", "preset": "drawOn", "at": "<" },
+      { "target": "rr", "to": { "trimEnd": 50, "fill": "#F472B6", "strokeWidth": 8 }, "dur": 1, "at": 2 }
+    ]
+  } }
+}

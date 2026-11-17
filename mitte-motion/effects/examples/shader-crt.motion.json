@@ -1,0 +1,58 @@
+{
+ "motion": 1,
+ "comps": {
+  "main": {
+   "size": [
+    960,
+    540
+   ],
+   "fps": 30,
+   "duration": 3,
+   "background": "#101418",
+   "layers": [
+    {
+     "id": "target",
+     "type": "solid",
+     "color": "#2E3A59",
+     "effects": [
+      {
+       "id": "grid",
+       "type": "generate.grid",
+       "params": {
+        "size": [
+         120,
+         120
+        ],
+        "border": 6,
+        "color": "#7CF2FF",
+        "composite": "over"
+       }
+      },
+      {
+       "id": "fx",
+       "type": "utility.shader",
+       "params": {
+        "code": "fn effect(uv: vec2f, t: f32) -> vec4f {\n  // barrel curvature about the centre\n  let c = uv - 0.5;\n  let r2 = dot(c, c);\n  let q = 0.5 + c * (1.0 + params.curvature * r2);\n  var col = textureSampleLevel(input, samp, q, 0.0);\n  // scanlines: one dark line per `lines` rows of the layer\n  let line = 0.5 + 0.5 * sin(q.y * params.lines * 6.2831853);\n  col *= 1.0 - params.strength * line;\n  // phosphor triads on the columns\n  let px = i32(q.x * rexx.size.x) % 3;\n  var triad = vec3f(1.0);\n  if (px == 0) { triad = vec3f(1.0, 0.7, 0.7); } else if (px == 1) { triad = vec3f(0.7, 1.0, 0.7); } else { triad = vec3f(0.7, 0.7, 1.0); }\n  col = vec4f(col.rgb * triad, col.a);\n  // vignette\n  col *= 1.0 - smoothstep(0.3, 0.75, length(c));\n  // outside the curved frame is black\n  let inside = step(0.0, q.x) * step(q.x, 1.0) * step(0.0, q.y) * step(q.y, 1.0);\n  return col * inside;\n}",
+        "params": {
+         "curvature": {
+          "type": "float",
+          "default": 0.25
+         },
+         "lines": {
+          "type": "float",
+          "default": 270
+         },
+         "strength": {
+          "type": "float",
+          "default": 0.35
+         }
+        },
+        "inputs": []
+       }
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

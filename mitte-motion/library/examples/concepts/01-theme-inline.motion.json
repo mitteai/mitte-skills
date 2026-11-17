@@ -1,0 +1,105 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Theme: an inline theme, deep-merged over mitte/default@1 (font.display and font.body replaced)"
+  },
+  "theme": {
+    "color": {
+      "bg": "#101010",
+      "fg": "#FAFAFA",
+      "accent": "#FF0066",
+      "surface": "#1C1C1C",
+      "line": "#2E2E2E",
+      "muted": "#9A9A9A",
+      "palette": [
+        "#FF0066",
+        "#00D1FF",
+        "#FFE600"
+      ]
+    },
+    "font": {
+      "display": {
+        "family": "Anton",
+        "weight": 400,
+        "tracking": 0
+      },
+      "body": {
+        "family": "Inter",
+        "weight": 500
+      }
+    },
+    "type": {
+      "base": 0.05,
+      "ratio": 1.25
+    },
+    "ease": {
+      "enter": "back.out(1.4)"
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1080,
+        1080
+      ],
+      "fps": 30,
+      "duration": 4,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "w",
+          "type": "text",
+          "text": "INLINE",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.6",
+            "fill": "$theme.color.accent"
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        },
+        {
+          "id": "s",
+          "type": "text",
+          "text": "mono from the default theme",
+          "style": {
+            "font": "$theme.font.mono",
+            "size": "$theme.type.size.-1",
+            "fill": "$theme.color.muted"
+          },
+          "origin": "top",
+          "align": {
+            "to": "w",
+            "y": "below",
+            "gap": "$theme.space.2",
+            "x": "center"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "target": "w",
+          "preset": "popIn",
+          "at": 0.2
+        },
+        {
+          "target": "s",
+          "preset": "fadeIn",
+          "at": "<0.3"
+        },
+        {
+          "target": [
+            "w",
+            "s"
+          ],
+          "preset": "fadeOut",
+          "dur": 0.3,
+          "at": 3.5
+        }
+      ]
+    }
+  }
+}

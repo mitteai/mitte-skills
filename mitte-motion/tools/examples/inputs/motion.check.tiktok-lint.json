@@ -1,0 +1,10 @@
+{
+  "doc_url": "library:mitte/demo/title-card@1",
+  "variant": "vertical",
+  "lint": {
+    "platform": "tiktok",
+    "disable": [
+      "lint.linear_spatial_ease"
+    ]
+  }
+}

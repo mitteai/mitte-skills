@@ -1,0 +1,97 @@
+{
+ "motion": 1,
+ "theme": {
+  "use": "mitte/neon@1"
+ },
+ "comps": {
+  "main": {
+   "size": [
+    1280,
+    720
+   ],
+   "fps": 30,
+   "duration": 3,
+   "background": "#06060C",
+   "markers": [
+    {
+     "t": 0.5,
+     "name": "pop"
+    }
+   ],
+   "layers": [
+    {
+     "id": "snow",
+     "type": "component",
+     "use": "mitte/particles.snow@1",
+     "props": {
+      "density": 80,
+      "wind": 30,
+      "sizeRange": [
+       3,
+       8
+      ]
+     }
+    },
+    {
+     "id": "boom",
+     "type": "component",
+     "use": "mitte/particles.confetti@1",
+     "props": {
+      "at": "@pop",
+      "origin": [
+       "50%",
+       "100%"
+      ],
+      "palette": "$theme.color.palette",
+      "amount": 200,
+      "spread": 35,
+      "power": 1600
+     }
+    },
+    {
+     "id": "net",
+     "type": "component",
+     "use": "mitte/particles.plexus@1",
+     "props": {
+      "count": 120,
+      "maxDistance": 150,
+      "color": "#7CC4FF",
+      "depth": 400
+     }
+    },
+    {
+     "id": "dust",
+     "type": "component",
+     "use": "mitte/particles.disintegrate@1",
+     "props": {
+      "at": 0.6,
+      "dur": 1.2,
+      "direction": "right",
+      "wind": 320,
+      "turbulence": 90
+     },
+     "slots": {
+      "layer": [
+       {
+        "id": "word",
+        "type": "text",
+        "text": "DUST",
+        "origin": "center",
+        "position": [
+         640,
+         360
+        ],
+        "style": {
+         "font": "Inter",
+         "size": 180,
+         "weight": 800,
+         "fill": "#FFB347"
+        }
+       }
+      ]
+     }
+    }
+   ]
+  }
+ }
+}

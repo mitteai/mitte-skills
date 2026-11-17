@@ -1,0 +1,109 @@
+{
+ "motion": 1,
+ "comps": {
+  "main": {
+   "size": [
+    960,
+    540
+   ],
+   "fps": 30,
+   "duration": 3,
+   "background": "#101418",
+   "layers": [
+    {
+     "id": "holdout",
+     "type": "solid",
+     "color": "#000000",
+     "visible": false,
+     "effects": [
+      {
+       "id": "disc",
+       "type": "generate.circle",
+       "params": {
+        "center": {
+         "keys": [
+          {
+           "t": 0,
+           "v": [
+            200,
+            270
+           ]
+          },
+          {
+           "t": 3,
+           "v": [
+            760,
+            270
+           ]
+          }
+         ]
+        },
+        "radius": 180,
+        "feather": {
+         "outer": 40
+        },
+        "color": "#FFFFFF",
+        "composite": "replace"
+       }
+      }
+     ]
+    },
+    {
+     "id": "target",
+     "type": "solid",
+     "color": "#000000",
+     "effects": [
+      {
+       "id": "ramp",
+       "type": "generate.gradient",
+       "params": {
+        "type": "linear",
+        "start": [
+         "0%",
+         "0%"
+        ],
+        "end": [
+         "100%",
+         "100%"
+        ],
+        "gradient": {
+         "stops": [
+          [
+           0,
+           "#F472B6"
+          ],
+          [
+           0.5,
+           "#FFB347"
+          ],
+          [
+           1,
+           "#22D3EE"
+          ]
+         ]
+        },
+        "composite": "replace"
+       }
+      },
+      {
+       "id": "fx",
+       "type": "utility.shader",
+       "params": {
+        "code": "fn effect(uv: vec2f, t: f32) -> vec4f {\n  let c = textureSampleLevel(input, samp, uv, 0.0);\n  // the second layer is read over ITS OWN rect: here it is comp-sized, as the target is, so uv lines up\n  let m = textureSampleLevel(input1, samp, uv, 0.0).a;\n  let k = select(m, 1.0 - m, params.invert > 0.5);\n  return c * k;  // every channel scaled: the result stays premultiplied\n}",
+        "params": {
+         "invert": {
+          "type": "float",
+          "default": 0
+         }
+        },
+        "inputs": [
+         "holdout"
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

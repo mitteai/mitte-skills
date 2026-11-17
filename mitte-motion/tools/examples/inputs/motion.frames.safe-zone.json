@@ -1,0 +1,9 @@
+{
+  "doc_url": "library:mitte/demo/title-card@1",
+  "variant": "vertical",
+  "times": [
+    "@beat2",
+    "50%"
+  ],
+  "safe_overlay": "reels"
+}

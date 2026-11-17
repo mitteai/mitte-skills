@@ -1,0 +1,22 @@
+{
+  "motion": 1,
+  "meta": { "title": "Recipe pattern: a bar meter driven by audio bands, beat markers from the music, a kick that pops on onsets",
+            "x-skills": { "expectWarnings": ["lint.beats_none", "lint.duration_mismatch"], "note": "Offline the music asset is not available: beat detection finds nothing (markers.from yields no @beat markers, so the tweens on them are dropped with an info) and the audio drivers rest at their floor. On the service the file is analysed." } },
+  "theme": { "use": "mitte/mono@1" },
+  "assets": { "music": { "src": "https://media.mitte.ai/u/p0/drop-128bpm.wav", "type": "audio" } },
+  "comps": {
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 8, "background": "$theme.color.bg",
+      "markers": [ { "from": { "audio": "music", "detect": "beats", "prefix": "beat", "tempo": 128 } } ],
+      "layers": [
+        { "id": "track", "type": "audio", "asset": "music", "volume": -6, "fadeOut": 1.0 },
+        { "id": "kick", "type": "shape", "shape": "circle", "radius": 90, "fill": "$theme.color.accent", "position": [1500, 300],
+          "scale": { "value": [100, 100], "audio": { "asset": "music", "band": [30, 150], "gain": [45, 45], "mode": "onset", "decay": 0.3 } } },
+        { "id": "meter", "type": "repeat", "count": 24,
+          "layout": { "type": "stack", "direction": "row", "gap": 14, "justify": "center", "align": "end", "box": ["10%", "55%", "80%", "20%"] },
+          "layer": { "type": "shape", "shape": "roundedRect", "size": [22, 120], "radius": 11, "fill": "$theme.color.accent", "origin": "bottom",
+                     "scale": { "value": [100, 100], "audio": { "asset": "music", "band": ["{{60 + $index * 110}}", "{{170 + $index * 110}}"], "gain": [0, 160], "smooth": 0.08, "floor": 0.05 } } } }
+      ]
+    }
+  }
+}

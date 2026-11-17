@@ -1,0 +1,21 @@
+{ "motion": 1,
+  "comps": { "main": { "size": [1280, 720], "fps": 30, "duration": 6, "background": "#0B0B0F",
+    "layers": [
+      { "id": "globe", "type": "solid", "color": "#000000", "size": [560, 560], "position": [380, 360],
+        "effects": [
+          { "id": "tex", "type": "generate.grid", "params": { "size": [40, 40], "border": 2, "color": "#22D3EE", "composite": "replace" } },
+          { "id": "sphere", "type": "perspective.sphere", "params": { "radius": 220, "rotation": { "keys": [ { "t": 0, "v": [0, 0, 0] }, { "t": 6, "v": [0, 360, 0] } ] }, "light": { "direction": -45 }, "shading": { "specular": 30 } } }
+        ] },
+      { "id": "can", "type": "solid", "color": "#D7263D", "size": [400, 300], "position": [960, 360],
+        "effects": [
+          { "id": "cyl", "type": "perspective.cylinder", "params": { "radius": 100, "render": "outside", "rotation": { "keys": [ { "t": 0, "v": [0, 0, 0] }, { "t": 6, "v": [0, 360, 0] } ] } } }
+        ] },
+      { "id": "logo", "type": "text", "text": "BEVEL", "origin": "center", "position": [640, 640],
+        "style": { "font": "Inter", "weight": 800, "size": 110, "fill": "#FFB347" },
+        "effects": [
+          { "id": "bevel", "type": "perspective.bevelAlpha", "params": { "edgeThickness": 6, "lightAngle": -60, "lightIntensity": 0.6 } },
+          { "id": "edges", "type": "perspective.bevelEdges", "params": { "lightIntensity": 0 } },
+          { "id": "shadow3d", "type": "perspective.dropShadow3d", "params": { "opacity": 40, "softness": 10 } },
+          { "id": "env", "type": "perspective.ccEnvironment", "params": { "environment": "globe" }, "enabled": false }
+        ] }
+    ] } } }

@@ -1,0 +1,10 @@
+{ "motion": 1,
+  "assets": {
+    "clip": { "src": "https://media.mitte.ai/u/demo/camera-scene.mp4", "type": "video" },
+    "stab": { "src": "https://media.mitte.ai/u/demo/camera-scene.stabilize.track.json", "type": "track" }
+  },
+  "comps": { "main": { "size": [480, 270], "fps": 24, "duration": 1.5, "background": "#000000",
+    "layers": [
+      { "id": "clip", "type": "video", "asset": "clip", "stabilize": { "asset": "stab", "amount": 100 } },
+      { "id": "title", "type": "text", "text": "STEADY", "origin": "center", "position": [240, 230], "style": { "font": "Inter", "weight": 800, "size": 28, "fill": "#FFD23F" } }
+    ] } } }

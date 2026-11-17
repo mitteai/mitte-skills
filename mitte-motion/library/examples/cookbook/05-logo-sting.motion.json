@@ -1,0 +1,78 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Cookbook 05: logo sting on neon with confetti on the resolve, soft tone map",
+    "x-skills": {
+      "expectWarnings": [
+        "lint.too_many_simultaneous_moves",
+        "lint.expensive_effect"
+      ],
+      "note": "logo.sting's six sparkles and its glow and bloom are the component's own; the confetti burst is the point."
+    }
+  },
+  "theme": {
+    "use": "mitte/neon@1"
+  },
+  "assets": {
+    "logo": {
+      "src": "library:mitte/demo/logo@1",
+      "type": "svg"
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 5,
+      "background": "$theme.color.bg",
+      "markers": [
+        {
+          "t": 0.9,
+          "name": "resolve"
+        }
+      ],
+      "layers": [
+        {
+          "id": "sting",
+          "type": "component",
+          "use": "mitte/logo.sting@1",
+          "in": 0.2,
+          "props": {
+            "logo": "logo",
+            "width": 460,
+            "tagline": "made with motion",
+            "glow": 2.8,
+            "hold": 2.4
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        },
+        {
+          "id": "boom",
+          "type": "component",
+          "use": "mitte/particles.confetti@1",
+          "props": {
+            "at": "@resolve",
+            "amount": 220,
+            "origin": [
+              "50%",
+              "60%"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "output": {
+    "format": "mp4",
+    "codec": "h264",
+    "quality": "high",
+    "toneMap": "soft"
+  }
+}

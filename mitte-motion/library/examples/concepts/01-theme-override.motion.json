@@ -1,0 +1,210 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Theme: library theme plus override, every derived token and modifier"
+  },
+  "theme": {
+    "use": "mitte/soft@1",
+    "override": {
+      "color": {
+        "accent": "#FF4D00",
+        "surface": "$theme.color.bg.darker"
+      },
+      "font": {
+        "display": {
+          "family": "Space Grotesk",
+          "weight": 700,
+          "tracking": -20
+        }
+      },
+      "motion": {
+        "dur": {
+          "base": 0.4
+        }
+      },
+      "texture": {
+        "grain": 0.1,
+        "vignette": 0.2
+      },
+      "styles": {
+        "card": {
+          "dropShadow": {
+            "color": "#2B2440",
+            "opacity": 30,
+            "angle": 90,
+            "distance": 18,
+            "size": 48
+          }
+        }
+      }
+    }
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 5,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "card",
+          "type": "shape",
+          "shape": "roundedRect",
+          "size": [
+            900,
+            420
+          ],
+          "radius": "$theme.radius.l",
+          "fill": "$theme.color.surface",
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ],
+          "styles": "$theme.styles.card"
+        },
+        {
+          "id": "tint",
+          "type": "shape",
+          "shape": "roundedRect",
+          "size": [
+            900,
+            420
+          ],
+          "radius": "$theme.radius.l",
+          "fill": "$theme.color.accent.a20",
+          "origin": "center",
+          "position": [
+            "50%",
+            "50%"
+          ]
+        },
+        {
+          "id": "headline",
+          "type": "text",
+          "text": "Softer, faster",
+          "style": {
+            "font": "$theme.font.display",
+            "size": "$theme.type.size.5",
+            "fill": "$theme.color.fg"
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "44%"
+          ]
+        },
+        {
+          "id": "chip",
+          "type": "shape",
+          "shape": "roundedRect",
+          "size": [
+            300,
+            72
+          ],
+          "radius": "$theme.radius.pill",
+          "fill": "$theme.color.accent",
+          "origin": "center",
+          "position": [
+            "50%",
+            "62%"
+          ]
+        },
+        {
+          "id": "chipLabel",
+          "type": "text",
+          "text": "Get started",
+          "style": {
+            "font": "$theme.font.body",
+            "size": "$theme.type.size.0",
+            "fill": "$theme.color.accent.on"
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "62%"
+          ]
+        },
+        {
+          "id": "dots",
+          "type": "repeat",
+          "count": 6,
+          "layout": {
+            "type": "stack",
+            "direction": "row",
+            "gap": "$theme.space.3",
+            "justify": "center",
+            "align": "center",
+            "box": [
+              "30%",
+              "78%",
+              "40%",
+              "6%"
+            ]
+          },
+          "layer": {
+            "type": "shape",
+            "shape": "circle",
+            "radius": 14,
+            "fill": "$theme.color.palette.$index"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "target": [
+            "card",
+            "tint"
+          ],
+          "preset": "popIn",
+          "ease": "$theme.spring.gentle",
+          "at": 0.2
+        },
+        {
+          "target": "headline",
+          "preset": "rise",
+          "dur": "$theme.motion.dur.base",
+          "ease": "$theme.ease.enter",
+          "at": "<0.2"
+        },
+        {
+          "target": [
+            "chip",
+            "chipLabel"
+          ],
+          "preset": "scaleIn",
+          "ease": "$theme.spring.bouncy",
+          "at": "<0.15"
+        },
+        {
+          "target": "dots.*",
+          "preset": "popIn",
+          "stagger": "$theme.motion.stagger.base",
+          "at": "<0.1"
+        },
+        {
+          "target": "chip",
+          "preset": "pulse",
+          "at": "+=0.3"
+        },
+        {
+          "target": [
+            "card",
+            "tint",
+            "headline",
+            "chip",
+            "chipLabel",
+            "dots.*"
+          ],
+          "preset": "fadeOut",
+          "dur": "$theme.motion.dur.s",
+          "ease": "$theme.ease.exit",
+          "at": 4.4
+        }
+      ]
+    }
+  }
+}

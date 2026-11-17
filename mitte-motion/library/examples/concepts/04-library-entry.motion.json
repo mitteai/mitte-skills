@@ -1,0 +1,11 @@
+{
+  "motion": 1,
+  "meta": { "title": "Writing components: a document that uses the example library entry mitte/demo.card@1",
+            "x-skills": { "library": "SKILLS/library/examples/concepts/04-library", "note": "Checked with --library pointing at the example library directory next to it, which holds only demo.card; the built-in default theme covers the tokens." } },
+  "comps": {
+    "main": {
+      "size": [1920, 1080], "fps": 30, "duration": 4, "background": "$theme.color.bg",
+      "layers": [ { "id": "card", "type": "component", "use": "mitte/demo.card@1", "in": 0.3, "props": { "title": "From the example library" }, "origin": "center", "position": ["50%", "50%"] } ]
+    }
+  }
+}

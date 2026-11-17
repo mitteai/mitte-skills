@@ -1,0 +1,15 @@
+{ "motion": 1,
+  "assets": {
+    "clip": { "src": "https://media.mitte.ai/u/demo/camera-scene.mp4", "type": "video" },
+    "tk": { "src": "https://media.mitte.ai/u/demo/camera-scene.point.track.json", "type": "track" }
+  },
+  "comps": { "main": { "size": [480, 270], "fps": 24, "duration": 1.5, "background": "#000000",
+    "layers": [
+      { "id": "clip", "type": "video", "asset": "clip" },
+      { "id": "tag", "type": "text", "text": "MARK", "origin": "center",
+        "style": { "font": "Inter", "weight": 700, "size": 22, "fill": "#FFFFFF" },
+        "position": { "track": { "asset": "tk", "item": "mark", "layer": "clip", "use": "position", "offset": [0, -40], "smooth": 0.1, "lost": "hold", "keysPerFrame": 1 } },
+        "motionBlur": true },
+      { "id": "dot", "type": "shape", "shape": "ellipse", "size": [10, 10], "fill": "#FF4F8B",
+        "position": { "track": { "asset": "tk", "item": "mark", "layer": "clip", "offset": "keep" } } }
+    ] } } }

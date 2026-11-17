@@ -1,0 +1,228 @@
+{
+  "motion": 1,
+  "meta": {
+    "title": "Instances: props, slots, in/out/dur, collapse, a repeat of instances, variant overrides of props",
+    "x-skills": {
+      "expectWarnings": ["lint.expensive_effect", "lint.offscreen_while_visible", "lint.text_outside_safe_area", "lint.too_many_simultaneous_moves"],
+      "note": "The three expected warnings come from inside library components (lower-third.bar's tick alignment, logo.sting's six sparkles and its glow/bloom), not from this document."
+    }
+  },
+  "theme": {
+    "use": "mitte/clean@1"
+  },
+  "assets": {
+    "logo": {
+      "src": "library:mitte/demo/logo@1",
+      "type": "svg"
+    }
+  },
+  "data": {
+    "people": [
+      {
+        "id": "ada",
+        "name": "Ada Lovelace",
+        "role": "Analyst",
+        "initials": "AL"
+      },
+      {
+        "id": "grace",
+        "name": "Grace Hopper",
+        "role": "Rear Admiral",
+        "initials": "GH"
+      }
+    ]
+  },
+  "comps": {
+    "main": {
+      "size": [
+        1920,
+        1080
+      ],
+      "fps": 30,
+      "duration": 10,
+      "background": "$theme.color.bg",
+      "layers": [
+        {
+          "id": "grid",
+          "type": "component",
+          "use": "mitte/bg.grid@1",
+          "in": 0,
+          "out": 10,
+          "props": {
+            "cell": 120,
+            "speed": 16
+          }
+        },
+        {
+          "id": "sting",
+          "type": "component",
+          "use": "mitte/logo.sting@1",
+          "in": 0.2,
+          "props": {
+            "logo": "logo",
+            "width": 420,
+            "tagline": "Motion for everyone"
+          },
+          "origin": "center",
+          "position": [
+            "50%",
+            "40%"
+          ]
+        },
+        {
+          "id": "phone",
+          "type": "component",
+          "use": "mitte/device.phone@1",
+          "in": 3.5,
+          "out": 9.5,
+          "props": {
+            "tilt": -6,
+            "float": 10,
+            "duration": 6
+          },
+          "slots": {
+            "screen": [
+              {
+                "id": "screenFill",
+                "type": "solid",
+                "color": "$theme.color.accent",
+                "size": [
+                  1170,
+                  2532
+                ]
+              },
+              {
+                "id": "screenText",
+                "type": "text",
+                "text": "Hello",
+                "style": {
+                  "font": "$theme.font.display",
+                  "size": 160,
+                  "fill": "#FFFFFF"
+                },
+                "origin": "center",
+                "position": [
+                  585,
+                  1266
+                ]
+              }
+            ]
+          },
+          "scale": [
+            28,
+            28
+          ],
+          "origin": "center",
+          "position": [
+            "76%",
+            "52%"
+          ]
+        },
+        {
+          "id": "lt",
+          "type": "component",
+          "use": "mitte/lower-third.bar@1",
+          "in": 4,
+          "collapse": false,
+          "props": {
+            "name": "Ada Lovelace",
+            "role": "Analyst, Engine Co.",
+            "hold": 2.5,
+            "side": "left"
+          },
+          "align": {
+            "to": "safe",
+            "x": "left",
+            "y": "bottom"
+          }
+        },
+        {
+          "id": "people",
+          "type": "repeat",
+          "data": "$data.people",
+          "ids": "{{$item.id}}",
+          "layout": {
+            "type": "stack",
+            "direction": "column",
+            "gap": "$theme.space.4",
+            "align": "start",
+            "justify": "start",
+            "box": [
+              "6%",
+              "8%",
+              "50%",
+              "40%"
+            ]
+          },
+          "layer": {
+            "type": "component",
+            "use": "mitte/lower-third.pill@1",
+            "in": 4.2,
+            "props": {
+              "name": "$item.name",
+              "role": "$item.role",
+              "initials": "$item.initials",
+              "hold": 2
+            }
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "target": "phone",
+          "preset": "fadeOut",
+          "dur": 0.4,
+          "at": 9.1
+        }
+      ]
+    }
+  },
+  "variants": {
+    "vertical": {
+      "size": [
+        1080,
+        1920
+      ],
+      "safe": "reels",
+      "override": {
+        "phone": {
+          "position": [
+            "50%",
+            "62%"
+          ],
+          "scale": [
+            36,
+            36
+          ]
+        },
+        "lt": {
+          "props": {
+            "side": "right",
+            "hold": 1.5
+          },
+          "align": {
+            "to": "safe",
+            "x": "right",
+            "y": "bottom"
+          }
+        },
+        "people": {
+          "enabled": false
+        }
+      }
+    },
+    "square": {
+      "size": [
+        1080,
+        1080
+      ],
+      "override": {
+        "grid": {
+          "props": {
+            "cell": 90
+          }
+        }
+      }
+    }
+  }
+}

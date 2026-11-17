@@ -1,0 +1,38 @@
+{ "motion": 1,
+  "comps": {
+    "plate": { "size": [640, 360], "fps": 30, "duration": 3, "background": "#2AA84A",
+      "layers": [ { "id": "subject", "type": "text", "text": "KEY", "origin": "center", "position": [320, 180], "style": { "font": "Inter", "weight": 800, "size": 160, "fill": "#F7F3E8" } } ] },
+    "main": { "size": [1280, 720], "fps": 30, "duration": 3, "background": "#0B0B0F",
+      "layers": [
+        { "id": "holdout", "type": "shape", "shape": "ellipse", "size": [400, 400], "fill": "#FFFFFF", "position": [640, 360], "visible": false },
+        { "id": "keyed", "type": "comp", "comp": "plate", "position": [640, 360],
+          "effects": [
+            { "id": "key", "type": "key.chroma", "params": { "screenColor": "#2AA84A", "clipBlack": 12, "clipWhite": 88, "screenSoftness": 1, "view": "final" } },
+            { "id": "clean", "type": "matte.keyCleaner", "params": { "additionalEdgeRadius": 2 } },
+            { "id": "spill", "type": "matte.spill", "params": { "method": "ultra", "keyColor": "#2AA84A", "suppression": 100 } },
+            { "id": "choke", "type": "matte.simpleChoker", "params": { "choke": 1 } },
+            { "id": "choker", "type": "matte.choker", "params": { "geometricSoftness1": 0 } },
+            { "id": "alpha", "type": "matte.alphaLevels", "params": { "gamma": 1 } },
+            { "id": "refine", "type": "matte.refine", "params": { "feather": 10, "decontaminate": true }, "enabled": false },
+            { "id": "refineHard", "type": "matte.refineHard", "params": { "smooth": 20 }, "enabled": false },
+            { "id": "setmatte", "type": "matte.set", "params": { "source": "holdout", "sourceSource": "source", "channel": "alpha", "stretch": true }, "enabled": false }
+          ] },
+        { "id": "flare", "type": "solid", "color": "#000000", "size": [500, 300], "position": [240, 560],
+          "effects": [
+            { "id": "rays", "type": "light.rays", "params": { "center": [250, 150], "length": 60, "intensity": 1.5, "threshold": 0.1, "composite": "glowOnly" }, "enabled": false },
+            { "id": "spot", "type": "generate.circle", "params": { "center": [250, 150], "radius": 80, "edge": "none", "feather": { "outer": 60 }, "color": "#FFD166", "composite": "replace" } },
+            { "id": "unmult", "type": "key.unmult", "params": { "threshold": 0.02 } },
+            { "id": "luma", "type": "key.luma", "params": { "type": "keyOutDarker", "threshold": 5, "tolerance": 2 } },
+            { "id": "color", "type": "key.color", "params": { "color": "#000000", "tolerance": 2 }, "enabled": false },
+            { "id": "linear", "type": "key.linearColor", "params": { "color": "#000000", "tolerance": 5, "softness": 5 }, "enabled": false },
+            { "id": "diff", "type": "key.difference", "params": { "layer": null } },
+            { "id": "cdiff", "type": "key.colorDifference", "params": { "keyColor": "#0000FF" }, "enabled": false },
+            { "id": "range", "type": "key.colorRange", "params": { "colorSpace": "lab" }, "enabled": false },
+            { "id": "extract", "type": "key.extract", "params": { "channel": "luminance", "blackPoint": 0, "whitePoint": 255 } },
+            { "id": "screen", "type": "key.screen", "params": { "screenColor": "#0000FF" }, "enabled": false },
+            { "id": "wire", "type": "key.ccWireRemoval", "params": { "pointA": [0, 150], "pointB": [500, 150], "thickness": 5 }, "enabled": false }
+          ], "blend": "add" },
+        { "id": "cut", "type": "solid", "color": "#7C5CFF", "size": [400, 300], "position": [1040, 560],
+          "masks": [ { "id": "inner", "shape": "ellipse", "mode": "none", "size": [180, 120] }, { "id": "outer", "shape": "ellipse", "mode": "none", "size": [320, 240] } ],
+          "effects": [ { "id": "io", "type": "key.innerOuter", "params": { "foreground": "inner", "background": "outer", "edgeFeather": 4 } } ] }
+      ] } } }

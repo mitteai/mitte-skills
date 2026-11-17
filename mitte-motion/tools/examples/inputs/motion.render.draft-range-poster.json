@@ -1,0 +1,13 @@
+{
+  "doc_url": "library:mitte/demo/title-card@1",
+  "output": {
+    "quality": "draft",
+    "scale": 0.5,
+    "fps": 15,
+    "range": [
+      0,
+      2
+    ]
+  },
+  "poster": 1.2
+}
